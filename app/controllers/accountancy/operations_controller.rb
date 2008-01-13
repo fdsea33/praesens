@@ -4,7 +4,7 @@ class Accountancy::OperationsController < ApplicationController
   auto_complete_for :accountancy, :losses, :label
   auto_complete_for :accountancy, :profits, :label
   auto_complete_for :accountancy, :newyear, :name
-  auto_complete_for :journal, :type, :name
+  auto_complete_for :journal, :nature, :name
   auto_complete_for :journal, :counterpart, :label
 
   def index
@@ -239,6 +239,11 @@ class Accountancy::OperationsController < ApplicationController
   def print_general_journal
     @journals = @current_company.journals
     @months = []
+		if @current_company.first_financialyear.nil?
+      flash[:error] = "There is no opened financial years".t
+			redirect_to :action=>:journal_list
+			return
+		end
     the_date = @current_company.first_financialyear.started_on.beginning_of_month
     stop_date = ::Date.today.beginning_of_month
     while the_date<=stop_date
@@ -456,7 +461,7 @@ class Accountancy::OperationsController < ApplicationController
   def financialyear_list
     @years = []
     @max_fyears = 0
-    for year in @current_company.financialyear_types
+    for year in @current_company.financialyear_natures
       fyears = year.financialyears
       unless fyears.nil?
         @max_fyears = fyears.size if fyears.size>@max_fyears
@@ -468,23 +473,23 @@ class Accountancy::OperationsController < ApplicationController
   
   def financialyear_open
     if request.post?
-      params[:financialyear][:type_id]    = session[:current_financialyear_type_id]
+      params[:financialyear][:nature_id]    = session[:current_financialyear_nature_id]
       params[:financialyear][:company_id] = @current_company_id
 #      params[:financialyear][:written_on] = params[:financialyear][:stopped_on]
       @financialyear = Financialyear.new(params[:financialyear])
       if @financialyear.save
-        session[:current_financialyear_type_id] = nil
+        session[:current_financialyear_nature_id] = nil
         redirect_to :action=>:financialyear_list
       end
     else
-      session[:current_financialyear_type_id] = params[:id]
-      financialyear_type = FinancialyearType.find(session[:current_financialyear_type_id])
-      unless financialyear_type.can_open_financialyear?
+      session[:current_financialyear_nature_id] = params[:id]
+      financialyear_nature = FinancialyearNature.find(session[:current_financialyear_nature_id])
+      unless financialyear_nature.can_open_financialyear?
         flash[:error] = "Only one financial year can be opened by type at the same time".t
         redirect_to :action=>:financialyear_list
         return
       end
-      @financialyear = Financialyear.new :type_id=>session[:current_financialyear_type_id]
+      @financialyear = Financialyear.new :nature_id=>session[:current_financialyear_nature_id]
     end
   end
 

@@ -1,7 +1,7 @@
 # == Schema Information
 # Schema version: 9
 #
-# Table name: currency_rates
+# Table name: currency_versions
 #
 #  id           :integer       not null, primary key
 #  format       :string(16)    not null

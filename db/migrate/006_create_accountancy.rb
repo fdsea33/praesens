@@ -15,8 +15,8 @@
 		add_index :currencies, [:code, :company_id], :unique=>true
 		add_index :currencies, :name
 		
-    # CurrencyRate
-    create_table :currency_rates do |t|
+    # CurrencyVersion
+    create_table :currency_versions do |t|
       t.column :format,           :string,   :null=>false, :limit=>16
       t.column :rate,             :decimal,  :null=>false, :precision=>16, :scale=>6, :default=>1
       t.column :started_at,       :datetime, :null=>false, :default=>Time.at(0)
@@ -24,8 +24,8 @@
       t.column :currency_id,      :integer,  :null=>false, :references=>:currencies, :on_delete=>:cascade, :on_update=>:cascade
       t.column :company_id,       :integer,  :null=>false, :references=>:companies, :on_delete=>:cascade, :on_update=>:cascade
     end
-		add_index :currency_rates, :company_id
-		add_index :currency_rates, :currency_id
+		add_index :currency_versions, :company_id
+		add_index :currency_versions, :currency_id
 		
 		
     # Delay : Délais
@@ -242,7 +242,7 @@
       t.column :name,             :string,  :null=>false
       t.column :currency_debit,   :decimal, :null=>false, :precision=>16, :scale=>2, :default=>0
       t.column :currency_credit,  :decimal, :null=>false, :precision=>16, :scale=>2, :default=>0
-      t.column :currency_rate_id, :integer, :null=>false, :references=>:currency_rates, :on_delete=>:restrict, :on_update=>:cascade
+      t.column :currency_version_id, :integer, :null=>false, :references=>:currency_versions, :on_delete=>:restrict, :on_update=>:cascade
       t.column :currency_id,      :integer, :null=>false, :references=>:currencies, :on_delete=>:restrict, :on_update=>:cascade
       t.column :debit,            :decimal, :null=>false, :precision=>16, :scale=>2, :default=>0
       t.column :credit,           :decimal, :null=>false, :precision=>16, :scale=>2, :default=>0
@@ -334,7 +334,7 @@
     drop_table :accounts                        #
     drop_table :accountancies                   #
     drop_table :delays                       #
-    drop_table :currency_rates                  #
+    drop_table :currency_versions                  #
     drop_table :currencies                      #
   end
 end

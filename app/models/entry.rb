@@ -3,28 +3,28 @@
 #
 # Table name: entries
 #
-#  id               :integer       not null, primary key
-#  record_id        :integer       not null
-#  account_id       :integer       not null
-#  name             :string(255)   not null
-#  currency_debit   :decimal(16, 2 default(0.0), not null
-#  currency_credit  :decimal(16, 2 default(0.0), not null
-#  currency_rate_id :integer       not null
-#  currency_id      :integer       not null
-#  debit            :decimal(16, 2 default(0.0), not null
-#  credit           :decimal(16, 2 default(0.0), not null
-#  intermediate_id  :integer       
-#  statement_id     :integer       
-#  letter           :string(8)     
-#  expired_on       :date          
-#  position         :integer       
-#  comment          :text          
-#  company_id       :integer       not null
-#  created_at       :datetime      
-#  created_by       :integer       
-#  updated_at       :datetime      
-#  updated_by       :integer       
-#  lock_version     :integer       default(0), not null
+#  id                  :integer       not null, primary key
+#  record_id           :integer       not null
+#  account_id          :integer       not null
+#  name                :string(255)   not null
+#  currency_debit      :decimal(16, 2 default(0.0), not null
+#  currency_credit     :decimal(16, 2 default(0.0), not null
+#  currency_version_id :integer       not null
+#  currency_id         :integer       not null
+#  debit               :decimal(16, 2 default(0.0), not null
+#  credit              :decimal(16, 2 default(0.0), not null
+#  intermediate_id     :integer       
+#  statement_id        :integer       
+#  letter              :string(8)     
+#  expired_on          :date          
+#  position            :integer       
+#  comment             :text          
+#  company_id          :integer       not null
+#  created_at          :datetime      
+#  created_by          :integer       
+#  updated_at          :datetime      
+#  updated_by          :integer       
+#  lock_version        :integer       default(0), not null
 #
 
 require 'bigdecimal/math'
@@ -47,8 +47,8 @@ class Entry < ActiveRecord::Base
     self.currency_debit=0  if self.currency_debit.nil?
     self.currency_credit=0 if self.currency_credit.nil?
     unless self.currency.nil?
-      self.currency_rate = self.currency.current_rate if self.currency_rate.nil? or (self.currency_rate.currency_id!=self.currency_id)
-      rate = self.currency_rate.rate
+      self.currency_version = self.currency.current_version if self.currency_version.nil? or (self.currency_version.currency_id!=self.currency_id)
+      rate = self.currency_version.rate
       self.debit  = (self.currency_debit*rate).round(2)
       self.credit = (self.currency_credit*rate).round(2)
     end

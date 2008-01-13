@@ -9,7 +9,7 @@ class Accountancy::SettingsController < ApplicationController
   auto_complete_for :bank_account, :journal, :name
 #  auto_complete_for :journal, :type, :name
 
-  controls :currency, :deadline, :bank, :bank_account, :journal_type
+  controls :currency, :delay, :bank, :bank_account, :journal_nature
   
   def currency_activate
     if request.post?

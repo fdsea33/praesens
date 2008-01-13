@@ -25,21 +25,21 @@
   </ul>
 </div>
 <% end -%>
-<% if auth :journal_type -%>
+<% if auth :journal_nature -%>
 <div>
-  <h3><%=JournalType.localized_model_name-%></h3>
+  <h3><%=JournalNature.localized_model_name-%></h3>
   <ul>
-    <li><%= link_to "List journal_types".t, {:action=>"journal_type_list"} %></li>
-    <li><%= link_to "New journal_type".t, {:action=>"journal_type_new"} %></li>
+    <li><%= link_to "List journal natures".t, {:action=>"journal_nature_list"} %></li>
+    <li><%= link_to "New journal nature".t, {:action=>"journal_nature_new"} %></li>
   </ul>
 </div>
 <% end -%>
-<% if auth :financialyear_type -%>
+<% if auth :financialyear_nature -%>
 <div>
-  <h3><%=FinancialyearType.localized_model_name-%></h3>
+  <h3><%=FinancialyearNature.localized_model_name-%></h3>
   <ul>
-    <li><%= link_to "List financialyear_types".t, {:action=>"financialyear_type_list"} %></li>
-    <li><%= link_to "New financialyear_type".t, {:action=>"financialyear_type_new"} %></li>
+    <li><%= link_to "List financialyear_natures".t, {:action=>"financialyear_nature_list"} %></li>
+    <li><%= link_to "New financialyear_nature".t, {:action=>"financialyear_nature_new"} %></li>
   </ul>
 </div>
 <% end -%>

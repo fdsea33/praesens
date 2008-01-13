@@ -1,14 +1,14 @@
 <%=
-print_table :deadline.to_s.pluralize.to_sym do |t|
+print_table :delay.to_s.pluralize.to_sym do |t|
   t.datum :name
   t.datum :active
   t.datum :months
   t.datum :days
   t.datum :end_of_month
   t.datum :additional_days
-  t.action :action=>(:deadline.to_s+'_edit').to_sym, :image=>:edit
-  t.action :action=>(:deadline.to_s+'_destroy').to_sym, :image=>:destroy, :method=>:post, :confirm=>'Are you sure?'
+  t.action :action=>(:delay.to_s+'_edit').to_sym, :image=>:edit
+  t.action :action=>(:delay.to_s+'_destroy').to_sym, :image=>:destroy, :method=>:post, :confirm=>'Are you sure?'
 end
 -%>
 
-<%= link_to ('New '+:deadline.to_s.humanize).t, :action => (:deadline.to_s+'_new').to_sym %>
+<%= link_to ('New '+:delay.to_s.humanize).t, :action => (:delay.to_s+'_new').to_sym %>

@@ -46,7 +46,7 @@ class CreateData < ActiveRecord::Migration
     AccountBalance.delete_all
     Financialyear.delete_all
 
-    CurrencyRate.update_all("created_by=NULL, updated_by=NULL")
+    CurrencyVersion.update_all("created_by=NULL, updated_by=NULL")
     Currency.update_all("created_by=NULL, updated_by=NULL")
     Delay.update_all("created_by=NULL, updated_by=NULL")
     FinancialyearNature.update_all("created_by=NULL, updated_by=NULL")

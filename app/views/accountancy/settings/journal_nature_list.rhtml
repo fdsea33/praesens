@@ -1,10 +1,10 @@
 <%=
-print_table :journal_types do |t|
+print_table :journal_nature.to_s.pluralize.to_sym do |t|
   t.datum :name
   t.datum :comment
-  t.action :action=>:journal_type_edit, :image=>:edit
-  t.action :action=>:journal_type_destroy, :image=>:destroy, :method=>:post, :confirm=>'Are you sure?'
+  t.action :action=>:journal_nature_edit, :image=>:edit
+  t.action :action=>:journal_nature_destroy, :image=>:destroy, :method=>:post, :confirm=>'Are you sure?'
 end
 -%>
 
-<%= link_to 'New journal type'.t, :action => 'journal_type_new' %>
+<%= link_to ('New '+:journal_nature.to_s.humanize).t, :action =>  :journal_nature_new %>

@@ -22,22 +22,19 @@ class Currency < ActiveRecord::Base
 
   validates_constancy_of :code
   
-  def before_save
-    old = Currency.find_by_id self.id
-    new = self
-    if not old or (old.format!=new.format or old.current_rate!=new.current_rate)
-      time = Time.now
-      last_one = CurrencyRate.find_by_currency_id(self.id, :order=>"started_at DESC")
-      if last_one
-        last_one.stopped_at = time 
-        last_one.save
-      end
-      new_one = self.create_in_rates :format=>self.format, :rate=>self.current_rate, :started_at=>time, :company_id=>self.company_id
-    end
+  def after_save
+    time = Time.now
+  	last_one = self.current_version
+		add_version = true
+		add_version = last_one.rate!=self.rate or last_one.format!=self.format if last_one
+		if add_version
+	    last_one.update_attribute(:stopped_at, time) if last_one
+  	  self.create_in_versions :format=>self.format, :rate=>self.rate, :started_at=>time, :company_id=>self.company_id
+		end
   end
   
-  def current_rate
-    self.rates.find(:first, :conditions=>{:stopped_at=>nil})
+  def current_version
+    self.versions.find(:first, :conditions=>{:stopped_at=>nil})
   end
 
 end
