@@ -108,11 +108,11 @@ class CreateSales < ActiveRecord::Migration
   end
 
   def self.down
-		drop_table :delivery_lines
-		drop_table :deliveries
-		drop_table :invoices
-		drop_table :estimate_lines
-		drop_table :estimates
-		drop_table :estimate_natures
+    drop_table :delivery_lines
+    drop_table :deliveries
+    drop_table :invoices
+    drop_table :estimate_lines
+    drop_table :estimates
+    drop_table :estimate_natures
   end
 end
