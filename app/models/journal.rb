@@ -4,21 +4,21 @@
 # Table name: journals
 #
 #  id             :integer       not null, primary key
-#  type_id        :integer       not null
+#  nature_id      :integer       not null
 #  name           :string(255)   not null
 #  code           :string(4)     not null
 #  counterpart_id :integer       
 #  closed_on      :date          default(#<Date: 4534211/2,0,2299161>), not null
 #  company_id     :integer       not null
-#  created_at     :datetime      not null
+#  created_at     :datetime      
 #  created_by     :integer       
-#  updated_at     :datetime      not null
+#  updated_at     :datetime      
 #  updated_by     :integer       
 #  lock_version   :integer       default(0), not null
 #
 
 class Journal < ActiveRecord::Base
-  validates_constancy_of :type_id, :company_id
+  validates_constancy_of :nature_id, :company_id
 
   def validate_on_update
     old = Journal.find self.id

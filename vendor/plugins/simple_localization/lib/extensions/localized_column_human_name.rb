@@ -52,12 +52,14 @@ module ActiveRecord #:nodoc:
       end
 
       def self.string_to_time(string)
+#				ActionController::Base.logger.info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>> '+string+' <<<')
         return string unless string.is_a?(String)
         time_hash = Date._strptime(string, ArkanisDevelopment::SimpleLocalization::Language[:dates, :time_formats, :db])
-        #time_hash = Date._parse(string)
+#        time_hash = Date._parse(string)
+				return nil if time_hash.nil?
         index = string.index(/\.\d\d\d\d\d\d/)
         time_hash[:sec_fraction] = string[index+1, index+6] if index;
-        #time_hash[:sec_fraction] = microseconds(time_hash)
+#        time_hash[:sec_fraction] = microseconds(time_hash)
         time_array = time_hash.values_at(:year, :mon, :mday, :hour, :min, :sec, :sec_fraction)
         # treat 0000-00-00 00:00:00 as nil
         Time.send(Base.default_timezone, *time_array) rescue DateTime.new(*time_array[0..5]) rescue nil

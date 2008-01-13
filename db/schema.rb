@@ -2,6 +2,1472 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 9) do
+
+  create_table "account_balances", :force => true do |t|
+    t.column "account_id",       :integer,                                                  :null => false
+    t.column "financialyear_id", :integer,                                                  :null => false
+    t.column "global_debit",     :decimal,  :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "global_credit",    :decimal,  :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "global_balance",   :decimal,  :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "global_count",     :integer,                                 :default => 0,   :null => false
+    t.column "local_debit",      :decimal,  :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "local_credit",     :decimal,  :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "local_balance",    :decimal,  :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "local_count",      :integer,                                 :default => 0,   :null => false
+    t.column "company_id",       :integer,                                                  :null => false
+    t.column "created_at",       :datetime
+    t.column "created_by",       :integer
+    t.column "updated_at",       :datetime
+    t.column "updated_by",       :integer
+    t.column "lock_version",     :integer,                                 :default => 0,   :null => false
+  end
+
+  add_index "account_balances", ["account_id", "financialyear_id", "company_id"], :name => "index_account_balances_on_account_id_and_financialyear_id_and_c", :unique => true
+  add_index "account_balances", ["company_id"], :name => "index_account_balances_on_company_id"
+  add_index "account_balances", ["created_at"], :name => "index_account_balances_on_created_at"
+  add_index "account_balances", ["created_by"], :name => "index_account_balances_on_created_by"
+  add_index "account_balances", ["financialyear_id"], :name => "index_account_balances_on_financialyear_id"
+  add_index "account_balances", ["updated_at"], :name => "index_account_balances_on_updated_at"
+  add_index "account_balances", ["updated_by"], :name => "index_account_balances_on_updated_by"
+
+  create_table "accountancies", :force => true do |t|
+    t.column "name",             :string
+    t.column "comment",          :text
+    t.column "master_nature_id", :integer,                 :null => false
+    t.column "currency_id",      :integer,                 :null => false
+    t.column "report_credit_id", :integer,                 :null => false
+    t.column "report_debit_id",  :integer,                 :null => false
+    t.column "profits_id",       :integer,                 :null => false
+    t.column "losses_id",        :integer,                 :null => false
+    t.column "sales_id",         :integer,                 :null => false
+    t.column "purchases_id",     :integer,                 :null => false
+    t.column "newyear_id",       :integer,                 :null => false
+    t.column "company_id",       :integer,                 :null => false
+    t.column "created_at",       :datetime
+    t.column "created_by",       :integer
+    t.column "updated_at",       :datetime
+    t.column "updated_by",       :integer
+    t.column "lock_version",     :integer,  :default => 0, :null => false
+  end
+
+  add_index "accountancies", ["company_id"], :name => "index_accountancies_on_company_id", :unique => true
+  add_index "accountancies", ["created_at"], :name => "index_accountancies_on_created_at"
+  add_index "accountancies", ["created_by"], :name => "index_accountancies_on_created_by"
+  add_index "accountancies", ["updated_at"], :name => "index_accountancies_on_updated_at"
+  add_index "accountancies", ["updated_by"], :name => "index_accountancies_on_updated_by"
+
+  create_table "accounts", :force => true do |t|
+    t.column "number",       :string,   :limit => 16,                     :null => false
+    t.column "alpha",        :string,   :limit => 16
+    t.column "name",         :string,   :limit => 208,                    :null => false
+    t.column "label",        :string,                                     :null => false
+    t.column "usable",       :boolean,                 :default => false, :null => false
+    t.column "groupable",    :boolean,                 :default => false, :null => false
+    t.column "keep_entries", :boolean,                 :default => false, :null => false
+    t.column "transferable", :boolean,                 :default => false, :null => false
+    t.column "letterable",   :boolean,                 :default => false, :null => false
+    t.column "pointable",    :boolean,                 :default => false, :null => false
+    t.column "is_debit",     :boolean,                 :default => false, :null => false
+    t.column "last_letter",  :string,   :limit => 8
+    t.column "comment",      :text
+    t.column "delay_id",     :integer
+    t.column "entity_id",    :integer
+    t.column "parent_id",    :integer,                                    :null => false
+    t.column "company_id",   :integer,                                    :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,                 :default => 0,     :null => false
+  end
+
+  add_index "accounts", ["alpha", "company_id"], :name => "index_accounts_on_alpha_and_company_id", :unique => true
+  add_index "accounts", ["company_id"], :name => "index_accounts_on_company_id"
+  add_index "accounts", ["created_at"], :name => "index_accounts_on_created_at"
+  add_index "accounts", ["created_by"], :name => "index_accounts_on_created_by"
+  add_index "accounts", ["delay_id"], :name => "index_accounts_on_delay_id"
+  add_index "accounts", ["entity_id"], :name => "index_accounts_on_entity_id"
+  add_index "accounts", ["company_id", "entity_id"], :name => "index_accounts_on_entity_id_and_company_id"
+  add_index "accounts", ["company_id", "label"], :name => "index_accounts_on_label_and_company_id", :unique => true
+  add_index "accounts", ["name", "company_id"], :name => "index_accounts_on_name_and_company_id"
+  add_index "accounts", ["company_id", "number"], :name => "index_accounts_on_number_and_company_id", :unique => true
+  add_index "accounts", ["parent_id"], :name => "index_accounts_on_parent_id"
+  add_index "accounts", ["updated_at"], :name => "index_accounts_on_updated_at"
+  add_index "accounts", ["updated_by"], :name => "index_accounts_on_updated_by"
+
+  create_table "bank_account_statements", :force => true do |t|
+    t.column "bank_account_id", :integer,                                                    :null => false
+    t.column "started_on",      :date,                                                       :null => false
+    t.column "stopped_on",      :date,                                                       :null => false
+    t.column "printed_on",      :date,                                                       :null => false
+    t.column "intermediate",    :boolean,                                 :default => false, :null => false
+    t.column "number",          :string,                                                     :null => false
+    t.column "debit",           :decimal,  :precision => 16, :scale => 2, :default => 0.0,   :null => false
+    t.column "credit",          :decimal,  :precision => 16, :scale => 2, :default => 0.0,   :null => false
+    t.column "company_id",      :integer,                                                    :null => false
+    t.column "created_at",      :datetime
+    t.column "created_by",      :integer
+    t.column "updated_at",      :datetime
+    t.column "updated_by",      :integer
+    t.column "lock_version",    :integer,                                 :default => 0,     :null => false
+  end
+
+  add_index "bank_account_statements", ["bank_account_id"], :name => "index_bank_account_statements_on_bank_account_id"
+  add_index "bank_account_statements", ["company_id"], :name => "index_bank_account_statements_on_company_id"
+  add_index "bank_account_statements", ["created_at"], :name => "index_bank_account_statements_on_created_at"
+  add_index "bank_account_statements", ["created_by"], :name => "index_bank_account_statements_on_created_by"
+  add_index "bank_account_statements", ["updated_at"], :name => "index_bank_account_statements_on_updated_at"
+  add_index "bank_account_statements", ["updated_by"], :name => "index_bank_account_statements_on_updated_by"
+
+  create_table "bank_accounts", :force => true do |t|
+    t.column "name",         :string,                                :null => false
+    t.column "agency",       :string
+    t.column "counter",      :string,   :limit => 16
+    t.column "number",       :string,   :limit => 32
+    t.column "key",          :string,   :limit => 4
+    t.column "iban",         :string,   :limit => 34,                :null => false
+    t.column "iban_text",    :string,   :limit => 48,                :null => false
+    t.column "bic",          :string,   :limit => 16
+    t.column "bank_id",      :integer,                               :null => false
+    t.column "journal_id",   :integer,                               :null => false
+    t.column "currency_id",  :integer,                               :null => false
+    t.column "account_id",   :integer,                               :null => false
+    t.column "company_id",   :integer,                               :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,                :default => 0, :null => false
+  end
+
+  add_index "bank_accounts", ["account_id"], :name => "index_bank_accounts_on_account_id"
+  add_index "bank_accounts", ["bank_id"], :name => "index_bank_accounts_on_bank_id"
+  add_index "bank_accounts", ["account_id", "bank_id"], :name => "index_bank_accounts_on_bank_id_and_account_id", :unique => true
+  add_index "bank_accounts", ["company_id"], :name => "index_bank_accounts_on_company_id"
+  add_index "bank_accounts", ["created_at"], :name => "index_bank_accounts_on_created_at"
+  add_index "bank_accounts", ["created_by"], :name => "index_bank_accounts_on_created_by"
+  add_index "bank_accounts", ["currency_id"], :name => "index_bank_accounts_on_currency_id"
+  add_index "bank_accounts", ["journal_id"], :name => "index_bank_accounts_on_journal_id"
+  add_index "bank_accounts", ["account_id", "bank_id", "name"], :name => "index_bank_accounts_on_name_and_bank_id_and_account_id", :unique => true
+  add_index "bank_accounts", ["updated_at"], :name => "index_bank_accounts_on_updated_at"
+  add_index "bank_accounts", ["updated_by"], :name => "index_bank_accounts_on_updated_by"
+
+  create_table "banks", :force => true do |t|
+    t.column "name",         :string,                                :null => false
+    t.column "code",         :string,   :limit => 16,                :null => false
+    t.column "company_id",   :integer,                               :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,                :default => 0, :null => false
+  end
+
+  add_index "banks", ["code", "company_id"], :name => "index_banks_on_code_and_company_id", :unique => true
+  add_index "banks", ["company_id"], :name => "index_banks_on_company_id"
+  add_index "banks", ["created_at"], :name => "index_banks_on_created_at"
+  add_index "banks", ["created_by"], :name => "index_banks_on_created_by"
+  add_index "banks", ["company_id", "name"], :name => "index_banks_on_name_and_company_id", :unique => true
+  add_index "banks", ["updated_at"], :name => "index_banks_on_updated_at"
+  add_index "banks", ["updated_by"], :name => "index_banks_on_updated_by"
+
+  create_table "companies", :force => true do |t|
+    t.column "name",         :string,                                         :null => false
+    t.column "code",         :string,   :limit => 8,                          :null => false
+    t.column "admin",        :boolean,               :default => false,       :null => false
+    t.column "siren",        :string,   :limit => 9, :default => "000000000", :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,               :default => 0,           :null => false
+  end
+
+  add_index "companies", ["code"], :name => "index_companies_on_code", :unique => true
+  add_index "companies", ["created_at"], :name => "index_companies_on_created_at"
+  add_index "companies", ["created_by"], :name => "index_companies_on_created_by"
+  add_index "companies", ["name"], :name => "index_companies_on_name", :unique => true
+  add_index "companies", ["updated_at"], :name => "index_companies_on_updated_at"
+  add_index "companies", ["updated_by"], :name => "index_companies_on_updated_by"
+
+  create_table "company_departments", :force => true do |t|
+    t.column "name",                     :string,                  :null => false
+    t.column "parent_id",                :integer
+    t.column "company_establishment_id", :integer,                 :null => false
+    t.column "company_id",               :integer,                 :null => false
+    t.column "created_at",               :datetime
+    t.column "created_by",               :integer
+    t.column "updated_at",               :datetime
+    t.column "updated_by",               :integer
+    t.column "lock_version",             :integer,  :default => 0, :null => false
+  end
+
+  add_index "company_departments", ["created_at"], :name => "index_company_departments_on_created_at"
+  add_index "company_departments", ["created_by"], :name => "index_company_departments_on_created_by"
+  add_index "company_departments", ["name", "company_id"], :name => "index_company_departments_on_name_and_company_id", :unique => true
+  add_index "company_departments", ["parent_id"], :name => "index_company_departments_on_parent_id"
+  add_index "company_departments", ["updated_at"], :name => "index_company_departments_on_updated_at"
+  add_index "company_departments", ["updated_by"], :name => "index_company_departments_on_updated_by"
+
+  create_table "company_employees", :force => true do |t|
+    t.column "company_department_id", :integer,                               :null => false
+    t.column "user_id",               :integer
+    t.column "title",                 :string,   :limit => 32,                :null => false
+    t.column "surname",               :string,                                :null => false
+    t.column "first_name",            :string,                                :null => false
+    t.column "arrived_on",            :date,                                  :null => false
+    t.column "role",                  :string
+    t.column "phone",                 :string,   :limit => 32
+    t.column "email",                 :string
+    t.column "mobile",                :string,   :limit => 32
+    t.column "fax",                   :string,   :limit => 32
+    t.column "office",                :string,   :limit => 32
+    t.column "note",                  :text
+    t.column "company_id",            :integer,                               :null => false
+    t.column "created_at",            :datetime
+    t.column "created_by",            :integer
+    t.column "updated_at",            :datetime
+    t.column "updated_by",            :integer
+    t.column "lock_version",          :integer,                :default => 0, :null => false
+  end
+
+  add_index "company_employees", ["user_id", "company_id"], :name => "index_company_employees_on_company_id_and_user_id", :unique => true
+  add_index "company_employees", ["created_at"], :name => "index_company_employees_on_created_at"
+  add_index "company_employees", ["created_by"], :name => "index_company_employees_on_created_by"
+  add_index "company_employees", ["updated_at"], :name => "index_company_employees_on_updated_at"
+  add_index "company_employees", ["updated_by"], :name => "index_company_employees_on_updated_by"
+
+  create_table "company_establishments", :force => true do |t|
+    t.column "name",         :string,                               :null => false
+    t.column "nic",          :string,   :limit => 5,                :null => false
+    t.column "siret",        :string,                               :null => false
+    t.column "address",      :text
+    t.column "note",         :text
+    t.column "company_id",   :integer,                              :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,               :default => 0, :null => false
+  end
+
+  add_index "company_establishments", ["created_at"], :name => "index_company_establishments_on_created_at"
+  add_index "company_establishments", ["created_by"], :name => "index_company_establishments_on_created_by"
+  add_index "company_establishments", ["name", "company_id"], :name => "index_company_establishments_on_name_and_company_id", :unique => true
+  add_index "company_establishments", ["siret", "company_id"], :name => "index_company_establishments_on_siret_and_company_id", :unique => true
+  add_index "company_establishments", ["updated_at"], :name => "index_company_establishments_on_updated_at"
+  add_index "company_establishments", ["updated_by"], :name => "index_company_establishments_on_updated_by"
+
+  create_table "currencies", :force => true do |t|
+    t.column "name",         :string,                                                                  :null => false
+    t.column "code",         :string,                                                                  :null => false
+    t.column "format",       :string,   :limit => 16,                                                  :null => false
+    t.column "rate",         :decimal,                :precision => 16, :scale => 6, :default => 1.0,  :null => false
+    t.column "active",       :boolean,                                               :default => true, :null => false
+    t.column "comment",      :text
+    t.column "company_id",   :integer,                                                                 :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,                                               :default => 0,    :null => false
+  end
+
+  add_index "currencies", ["active"], :name => "index_currencies_on_active"
+  add_index "currencies", ["code", "company_id"], :name => "index_currencies_on_code_and_company_id", :unique => true
+  add_index "currencies", ["company_id"], :name => "index_currencies_on_company_id"
+  add_index "currencies", ["created_at"], :name => "index_currencies_on_created_at"
+  add_index "currencies", ["created_by"], :name => "index_currencies_on_created_by"
+  add_index "currencies", ["name"], :name => "index_currencies_on_name"
+  add_index "currencies", ["updated_at"], :name => "index_currencies_on_updated_at"
+  add_index "currencies", ["updated_by"], :name => "index_currencies_on_updated_by"
+
+  create_table "currency_rates", :force => true do |t|
+    t.column "format",       :string,   :limit => 16,                                                                   :null => false
+    t.column "rate",         :decimal,                :precision => 16, :scale => 6, :default => 1.0,                   :null => false
+    t.column "started_at",   :datetime,                                              :default => '01/01/1970 01:00:00', :null => false
+    t.column "stopped_at",   :datetime
+    t.column "currency_id",  :integer,                                                                                  :null => false
+    t.column "company_id",   :integer,                                                                                  :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,                                               :default => 0,                     :null => false
+  end
+
+  add_index "currency_rates", ["company_id"], :name => "index_currency_rates_on_company_id"
+  add_index "currency_rates", ["created_at"], :name => "index_currency_rates_on_created_at"
+  add_index "currency_rates", ["created_by"], :name => "index_currency_rates_on_created_by"
+  add_index "currency_rates", ["currency_id"], :name => "index_currency_rates_on_currency_id"
+  add_index "currency_rates", ["updated_at"], :name => "index_currency_rates_on_updated_at"
+  add_index "currency_rates", ["updated_by"], :name => "index_currency_rates_on_updated_by"
+
+  create_table "delays", :force => true do |t|
+    t.column "name",            :string,                      :null => false
+    t.column "active",          :boolean,  :default => false, :null => false
+    t.column "months",          :integer,  :default => 0,     :null => false
+    t.column "days",            :integer,  :default => 0,     :null => false
+    t.column "end_of_month",    :boolean,  :default => false, :null => false
+    t.column "additional_days", :integer,  :default => 0,     :null => false
+    t.column "company_id",      :integer,                     :null => false
+    t.column "created_at",      :datetime
+    t.column "created_by",      :integer
+    t.column "updated_at",      :datetime
+    t.column "updated_by",      :integer
+    t.column "lock_version",    :integer,  :default => 0,     :null => false
+  end
+
+  add_index "delays", ["created_at"], :name => "index_delays_on_created_at"
+  add_index "delays", ["created_by"], :name => "index_delays_on_created_by"
+  add_index "delays", ["name", "company_id"], :name => "index_delays_on_name_and_company_id", :unique => true
+  add_index "delays", ["updated_at"], :name => "index_delays_on_updated_at"
+  add_index "delays", ["updated_by"], :name => "index_delays_on_updated_by"
+
+  create_table "deliveries", :force => true do |t|
+    t.column "estimate_id",  :integer,                                                  :null => false
+    t.column "invoice_id",   :integer,                                                  :null => false
+    t.column "delivered_on", :date,                                                     :null => false
+    t.column "price",        :decimal,  :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "taxed_price",  :decimal,  :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "company_id",   :integer,                                                  :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,                                 :default => 0,   :null => false
+  end
+
+  add_index "deliveries", ["created_at"], :name => "index_deliveries_on_created_at"
+  add_index "deliveries", ["created_by"], :name => "index_deliveries_on_created_by"
+  add_index "deliveries", ["updated_at"], :name => "index_deliveries_on_updated_at"
+  add_index "deliveries", ["updated_by"], :name => "index_deliveries_on_updated_by"
+
+  create_table "delivery_lines", :force => true do |t|
+    t.column "delivery_id",      :integer,                                                  :null => false
+    t.column "estimate_line_id", :integer,                                                  :null => false
+    t.column "product_id",       :integer,                                                  :null => false
+    t.column "pricelist_id",     :integer,                                                  :null => false
+    t.column "price_id",         :integer,                                                  :null => false
+    t.column "price_version_id", :integer,                                                  :null => false
+    t.column "quantity",         :decimal,  :precision => 16, :scale => 2, :default => 1.0, :null => false
+    t.column "price",            :decimal,  :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "taxed_price",      :decimal,  :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "company_id",       :integer,                                                  :null => false
+    t.column "created_at",       :datetime
+    t.column "created_by",       :integer
+    t.column "updated_at",       :datetime
+    t.column "updated_by",       :integer
+    t.column "lock_version",     :integer,                                 :default => 0,   :null => false
+  end
+
+  add_index "delivery_lines", ["created_at"], :name => "index_delivery_lines_on_created_at"
+  add_index "delivery_lines", ["created_by"], :name => "index_delivery_lines_on_created_by"
+  add_index "delivery_lines", ["updated_at"], :name => "index_delivery_lines_on_updated_at"
+  add_index "delivery_lines", ["updated_by"], :name => "index_delivery_lines_on_updated_by"
+
+  create_table "entities", :force => true do |t|
+    t.column "nature_id",        :integer,                                  :null => false
+    t.column "language_id",      :integer,                                  :null => false
+    t.column "code",             :string,                                   :null => false
+    t.column "surname",          :string,                                   :null => false
+    t.column "first_name",       :string
+    t.column "full_name",        :string,                                   :null => false
+    t.column "active",           :boolean,                :default => true, :null => false
+    t.column "born_on",          :date
+    t.column "ean13",            :string,   :limit => 13
+    t.column "surname_soundex2", :string,   :limit => 4
+    t.column "web_site",         :string
+    t.column "company_id",       :integer,                                  :null => false
+    t.column "created_at",       :datetime
+    t.column "created_by",       :integer
+    t.column "updated_at",       :datetime
+    t.column "updated_by",       :integer
+    t.column "lock_version",     :integer,                :default => 0,    :null => false
+  end
+
+  add_index "entities", ["code", "company_id"], :name => "index_entities_on_code_and_company_id", :unique => true
+  add_index "entities", ["company_id"], :name => "index_entities_on_company_id"
+  add_index "entities", ["created_at"], :name => "index_entities_on_created_at"
+  add_index "entities", ["created_by"], :name => "index_entities_on_created_by"
+  add_index "entities", ["company_id", "first_name"], :name => "index_entities_on_first_name_and_company_id"
+  add_index "entities", ["surname", "company_id"], :name => "index_entities_on_surname_and_company_id"
+  add_index "entities", ["surname_soundex2", "company_id"], :name => "index_entities_on_surname_soundex2_and_company_id"
+  add_index "entities", ["updated_at"], :name => "index_entities_on_updated_at"
+  add_index "entities", ["updated_by"], :name => "index_entities_on_updated_by"
+
+  create_table "entity_contact_natures", :force => true do |t|
+    t.column "name",         :string,                     :null => false
+    t.column "active",       :boolean,  :default => true, :null => false
+    t.column "description",  :text
+    t.column "company_id",   :integer,                    :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,  :default => 0,    :null => false
+  end
+
+  add_index "entity_contact_natures", ["company_id"], :name => "index_entity_contact_natures_on_company_id"
+  add_index "entity_contact_natures", ["created_at"], :name => "index_entity_contact_natures_on_created_at"
+  add_index "entity_contact_natures", ["created_by"], :name => "index_entity_contact_natures_on_created_by"
+  add_index "entity_contact_natures", ["company_id", "name"], :name => "index_entity_contact_natures_on_name_and_company_id", :unique => true
+  add_index "entity_contact_natures", ["updated_at"], :name => "index_entity_contact_natures_on_updated_at"
+  add_index "entity_contact_natures", ["updated_by"], :name => "index_entity_contact_natures_on_updated_by"
+
+  create_table "entity_contact_norm_items", :force => true do |t|
+    t.column "contact_norm_id", :integer,                                       :null => false
+    t.column "title",           :string,                                        :null => false
+    t.column "nature",          :string,   :limit => 15, :default => "content", :null => false
+    t.column "maxlength",       :integer,                :default => 38,        :null => false
+    t.column "content",         :string
+    t.column "left_nature",     :string,   :limit => 15
+    t.column "left_value",      :string,   :limit => 63
+    t.column "right_nature",    :string,   :limit => 15, :default => "space"
+    t.column "right_value",     :string,   :limit => 63
+    t.column "position",        :integer
+    t.column "company_id",      :integer,                                       :null => false
+    t.column "created_at",      :datetime
+    t.column "created_by",      :integer
+    t.column "updated_at",      :datetime
+    t.column "updated_by",      :integer
+    t.column "lock_version",    :integer,                :default => 0,         :null => false
+  end
+
+  add_index "entity_contact_norm_items", ["company_id"], :name => "index_entity_contact_norm_items_on_company_id"
+  add_index "entity_contact_norm_items", ["created_at"], :name => "index_entity_contact_norm_items_on_created_at"
+  add_index "entity_contact_norm_items", ["created_by"], :name => "index_entity_contact_norm_items_on_created_by"
+  add_index "entity_contact_norm_items", ["company_id", "contact_norm_id", "nature"], :name => "index_entity_contact_norm_items_on_nature_and_contact_norm_id_a", :unique => true
+  add_index "entity_contact_norm_items", ["contact_norm_id", "company_id", "title"], :name => "index_entity_contact_norm_items_on_title_and_contact_norm_id_an", :unique => true
+  add_index "entity_contact_norm_items", ["updated_at"], :name => "index_entity_contact_norm_items_on_updated_at"
+  add_index "entity_contact_norm_items", ["updated_by"], :name => "index_entity_contact_norm_items_on_updated_by"
+
+  create_table "entity_contact_norms", :force => true do |t|
+    t.column "name",         :string,                                    :null => false
+    t.column "reference",    :string
+    t.column "preferred",    :boolean,               :default => false,  :null => false
+    t.column "rtl",          :boolean,               :default => false,  :null => false
+    t.column "align",        :string,   :limit => 7, :default => "left", :null => false
+    t.column "company_id",   :integer,                                   :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,               :default => 0,      :null => false
+  end
+
+  add_index "entity_contact_norms", ["company_id"], :name => "index_entity_contact_norms_on_company_id"
+  add_index "entity_contact_norms", ["created_at"], :name => "index_entity_contact_norms_on_created_at"
+  add_index "entity_contact_norms", ["created_by"], :name => "index_entity_contact_norms_on_created_by"
+  add_index "entity_contact_norms", ["company_id", "name"], :name => "index_entity_contact_norms_on_name_and_company_id", :unique => true
+  add_index "entity_contact_norms", ["updated_at"], :name => "index_entity_contact_norms_on_updated_at"
+  add_index "entity_contact_norms", ["updated_by"], :name => "index_entity_contact_norms_on_updated_by"
+
+  create_table "entity_contact_versions", :force => true do |t|
+    t.column "contact_id",     :integer,                               :null => false
+    t.column "installed_at",   :datetime
+    t.column "abandoned_at",   :datetime
+    t.column "ligne_2",        :string,   :limit => 38
+    t.column "ligne_3",        :string,   :limit => 38
+    t.column "ligne_4_number", :string,   :limit => 38
+    t.column "ligne_4_street", :string,   :limit => 38
+    t.column "ligne_5",        :string,   :limit => 38
+    t.column "ligne_6_code",   :string,   :limit => 38
+    t.column "ligne_6_city",   :string,   :limit => 38
+    t.column "phone",          :string,   :limit => 32
+    t.column "fax",            :string,   :limit => 32
+    t.column "mobile",         :string,   :limit => 32
+    t.column "email",          :string
+    t.column "created_at",     :datetime
+    t.column "created_by",     :integer
+    t.column "updated_at",     :datetime
+    t.column "updated_by",     :integer
+    t.column "lock_version",   :integer,                :default => 0, :null => false
+  end
+
+  add_index "entity_contact_versions", ["contact_id"], :name => "index_entity_contact_versions_on_contact_id"
+  add_index "entity_contact_versions", ["created_at"], :name => "index_entity_contact_versions_on_created_at"
+  add_index "entity_contact_versions", ["created_by"], :name => "index_entity_contact_versions_on_created_by"
+  add_index "entity_contact_versions", ["updated_at"], :name => "index_entity_contact_versions_on_updated_at"
+  add_index "entity_contact_versions", ["updated_by"], :name => "index_entity_contact_versions_on_updated_by"
+
+  create_table "entity_contacts", :force => true do |t|
+    t.column "entity_id",     :integer,                                  :null => false
+    t.column "nature_id",     :integer,                                  :null => false
+    t.column "norm_id",       :integer,                                  :null => false
+    t.column "active",        :boolean,                :default => true, :null => false
+    t.column "closed_on",     :date
+    t.column "line_2",        :string,   :limit => 38
+    t.column "line_3",        :string,   :limit => 38
+    t.column "line_4_number", :string,   :limit => 38
+    t.column "line_4_street", :string,   :limit => 38
+    t.column "line_5",        :string,   :limit => 38
+    t.column "line_6_code",   :string,   :limit => 38
+    t.column "line_6_city",   :string,   :limit => 38
+    t.column "phone",         :string,   :limit => 32
+    t.column "fax",           :string,   :limit => 32
+    t.column "mobile",        :string,   :limit => 32
+    t.column "email",         :string
+    t.column "company_id",    :integer,                                  :null => false
+    t.column "created_at",    :datetime
+    t.column "created_by",    :integer
+    t.column "updated_at",    :datetime
+    t.column "updated_by",    :integer
+    t.column "lock_version",  :integer,                :default => 0,    :null => false
+  end
+
+  add_index "entity_contacts", ["company_id"], :name => "index_entity_contacts_on_company_id"
+  add_index "entity_contacts", ["created_at"], :name => "index_entity_contacts_on_created_at"
+  add_index "entity_contacts", ["created_by"], :name => "index_entity_contacts_on_created_by"
+  add_index "entity_contacts", ["updated_at"], :name => "index_entity_contacts_on_updated_at"
+  add_index "entity_contacts", ["updated_by"], :name => "index_entity_contacts_on_updated_by"
+
+  create_table "entity_natures", :force => true do |t|
+    t.column "name",         :string,                      :null => false
+    t.column "active",       :boolean,  :default => true,  :null => false
+    t.column "physical",     :boolean,  :default => false, :null => false
+    t.column "title",        :string,                      :null => false
+    t.column "description",  :text
+    t.column "company_id",   :integer,                     :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,  :default => 0,     :null => false
+  end
+
+  add_index "entity_natures", ["company_id"], :name => "index_entity_natures_on_company_id"
+  add_index "entity_natures", ["created_at"], :name => "index_entity_natures_on_created_at"
+  add_index "entity_natures", ["created_by"], :name => "index_entity_natures_on_created_by"
+  add_index "entity_natures", ["company_id", "name"], :name => "index_entity_natures_on_name_and_company_id", :unique => true
+  add_index "entity_natures", ["updated_at"], :name => "index_entity_natures_on_updated_at"
+  add_index "entity_natures", ["updated_by"], :name => "index_entity_natures_on_updated_by"
+
+  create_table "entries", :force => true do |t|
+    t.column "record_id",        :integer,                                                               :null => false
+    t.column "account_id",       :integer,                                                               :null => false
+    t.column "name",             :string,                                                                :null => false
+    t.column "currency_debit",   :decimal,               :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "currency_credit",  :decimal,               :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "currency_rate_id", :integer,                                                               :null => false
+    t.column "currency_id",      :integer,                                                               :null => false
+    t.column "debit",            :decimal,               :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "credit",           :decimal,               :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "intermediate_id",  :integer
+    t.column "statement_id",     :integer
+    t.column "letter",           :string,   :limit => 8
+    t.column "expired_on",       :date
+    t.column "position",         :integer
+    t.column "comment",          :text
+    t.column "company_id",       :integer,                                                               :null => false
+    t.column "created_at",       :datetime
+    t.column "created_by",       :integer
+    t.column "updated_at",       :datetime
+    t.column "updated_by",       :integer
+    t.column "lock_version",     :integer,                                              :default => 0,   :null => false
+  end
+
+  add_index "entries", ["account_id"], :name => "index_entries_on_account_id"
+  add_index "entries", ["company_id"], :name => "index_entries_on_company_id"
+  add_index "entries", ["created_at"], :name => "index_entries_on_created_at"
+  add_index "entries", ["created_by"], :name => "index_entries_on_created_by"
+  add_index "entries", ["intermediate_id"], :name => "index_entries_on_intermediate_id"
+  add_index "entries", ["letter"], :name => "index_entries_on_letter"
+  add_index "entries", ["name"], :name => "index_entries_on_name"
+  add_index "entries", ["record_id"], :name => "index_entries_on_record_id"
+  add_index "entries", ["statement_id"], :name => "index_entries_on_statement_id"
+  add_index "entries", ["updated_at"], :name => "index_entries_on_updated_at"
+  add_index "entries", ["updated_by"], :name => "index_entries_on_updated_by"
+
+  create_table "estimate_lines", :force => true do |t|
+    t.column "estimate_id",         :integer,                                                                :null => false
+    t.column "product_id",          :integer,                                                                :null => false
+    t.column "pricelist_id",        :integer,                                                                :null => false
+    t.column "price_id",            :integer,                                                                :null => false
+    t.column "price_version_id",    :integer,                                                                :null => false
+    t.column "number",              :integer,                                                                :null => false
+    t.column "quantity",            :decimal,                :precision => 16, :scale => 2, :default => 1.0, :null => false
+    t.column "price",               :decimal,                :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "taxed_price",         :decimal,                :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "code",                :string,   :limit => 32,                                                 :null => false
+    t.column "ean13",               :string,   :limit => 13
+    t.column "catalog_name",        :string,                                                                 :null => false
+    t.column "catalog_description", :text
+    t.column "description",         :text
+    t.column "account_id",          :integer,                                                                :null => false
+    t.column "company_id",          :integer,                                                                :null => false
+    t.column "created_at",          :datetime
+    t.column "created_by",          :integer
+    t.column "updated_at",          :datetime
+    t.column "updated_by",          :integer
+    t.column "lock_version",        :integer,                                               :default => 0,   :null => false
+  end
+
+  add_index "estimate_lines", ["created_at"], :name => "index_estimate_lines_on_created_at"
+  add_index "estimate_lines", ["created_by"], :name => "index_estimate_lines_on_created_by"
+  add_index "estimate_lines", ["updated_at"], :name => "index_estimate_lines_on_updated_at"
+  add_index "estimate_lines", ["updated_by"], :name => "index_estimate_lines_on_updated_by"
+
+  create_table "estimate_natures", :force => true do |t|
+    t.column "code",             :string,   :limit => 16,                                                  :null => false
+    t.column "name",             :string,                                                                  :null => false
+    t.column "expiration_id",    :integer,                                                                 :null => false
+    t.column "is_active",        :boolean,                                               :default => true, :null => false
+    t.column "payment_delay_id", :integer,                                                                 :null => false
+    t.column "downpayment_rate", :decimal,                :precision => 16, :scale => 2, :default => 0.0,  :null => false
+    t.column "note",             :text
+    t.column "company_id",       :integer,                                                                 :null => false
+    t.column "created_at",       :datetime
+    t.column "created_by",       :integer
+    t.column "updated_at",       :datetime
+    t.column "updated_by",       :integer
+    t.column "lock_version",     :integer,                                               :default => 0,    :null => false
+  end
+
+  add_index "estimate_natures", ["created_at"], :name => "index_estimate_natures_on_created_at"
+  add_index "estimate_natures", ["created_by"], :name => "index_estimate_natures_on_created_by"
+  add_index "estimate_natures", ["updated_at"], :name => "index_estimate_natures_on_updated_at"
+  add_index "estimate_natures", ["updated_by"], :name => "index_estimate_natures_on_updated_by"
+
+  create_table "estimates", :force => true do |t|
+    t.column "number",              :string,   :limit => 64,                                                   :null => false
+    t.column "nature_id",           :integer,                                                                  :null => false
+    t.column "price",               :decimal,                :precision => 16, :scale => 2, :default => 0.0,   :null => false
+    t.column "taxed_price",         :decimal,                :precision => 16, :scale => 2, :default => 0.0,   :null => false
+    t.column "state",               :string,   :limit => 1,                                 :default => "O",   :null => false
+    t.column "expired_on",          :date,                                                                     :null => false
+    t.column "expiration_id",       :integer,                                                                  :null => false
+    t.column "payment_delay_id",    :integer,                                                                  :null => false
+    t.column "has_downpayment",     :boolean,                                               :default => false, :null => false
+    t.column "downpayment_price",   :decimal,                :precision => 16, :scale => 2, :default => 0.0,   :null => false
+    t.column "client_id",           :integer,                                                                  :null => false
+    t.column "contact_id",          :integer,                                                                  :null => false
+    t.column "contact_version_id",  :integer,                                                                  :null => false
+    t.column "invoice_contact_id",  :integer,                                                                  :null => false
+    t.column "delivery_contact_id", :integer,                                                                  :null => false
+    t.column "object",              :string
+    t.column "function_title",      :string
+    t.column "introduction",        :text
+    t.column "conclusion",          :text
+    t.column "note",                :text
+    t.column "company_id",          :integer,                                                                  :null => false
+    t.column "created_at",          :datetime
+    t.column "created_by",          :integer
+    t.column "updated_at",          :datetime
+    t.column "updated_by",          :integer
+    t.column "lock_version",        :integer,                                               :default => 0,     :null => false
+  end
+
+  add_index "estimates", ["created_at"], :name => "index_estimates_on_created_at"
+  add_index "estimates", ["created_by"], :name => "index_estimates_on_created_by"
+  add_index "estimates", ["updated_at"], :name => "index_estimates_on_updated_at"
+  add_index "estimates", ["updated_by"], :name => "index_estimates_on_updated_by"
+
+  create_table "financialyear_natures", :force => true do |t|
+    t.column "name",         :string,                                   :null => false
+    t.column "code",         :string,   :limit => 2,                    :null => false
+    t.column "fiscal",       :boolean,               :default => false, :null => false
+    t.column "month_number", :integer,               :default => 12,    :null => false
+    t.column "company_id",   :integer,                                  :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,               :default => 0,     :null => false
+  end
+
+  add_index "financialyear_natures", ["code", "company_id"], :name => "index_financialyear_natures_on_code_and_company_id", :unique => true
+  add_index "financialyear_natures", ["company_id"], :name => "index_financialyear_natures_on_company_id"
+  add_index "financialyear_natures", ["created_at"], :name => "index_financialyear_natures_on_created_at"
+  add_index "financialyear_natures", ["created_by"], :name => "index_financialyear_natures_on_created_by"
+  add_index "financialyear_natures", ["fiscal", "company_id"], :name => "index_financialyear_natures_on_fiscal_and_company_id"
+  add_index "financialyear_natures", ["name", "company_id"], :name => "index_financialyear_natures_on_name_and_company_id", :unique => true
+  add_index "financialyear_natures", ["updated_at"], :name => "index_financialyear_natures_on_updated_at"
+  add_index "financialyear_natures", ["updated_by"], :name => "index_financialyear_natures_on_updated_by"
+
+  create_table "financialyears", :force => true do |t|
+    t.column "code",         :string,   :limit => 12,                                                   :null => false
+    t.column "nature_id",    :integer,                                                                  :null => false
+    t.column "closed",       :boolean,                                               :default => false, :null => false
+    t.column "started_on",   :date,                                                                     :null => false
+    t.column "stopped_on",   :date,                                                                     :null => false
+    t.column "written_on",   :date,                                                                     :null => false
+    t.column "debit",        :decimal,                :precision => 16, :scale => 2, :default => 0.0,   :null => false
+    t.column "credit",       :decimal,                :precision => 16, :scale => 2, :default => 0.0,   :null => false
+    t.column "position",     :integer,                                                                  :null => false
+    t.column "company_id",   :integer,                                                                  :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,                                               :default => 0,     :null => false
+  end
+
+  add_index "financialyears", ["code", "company_id"], :name => "index_financialyears_on_code_and_company_id", :unique => true
+  add_index "financialyears", ["company_id"], :name => "index_financialyears_on_company_id"
+  add_index "financialyears", ["created_at"], :name => "index_financialyears_on_created_at"
+  add_index "financialyears", ["created_by"], :name => "index_financialyears_on_created_by"
+  add_index "financialyears", ["company_id", "nature_id"], :name => "index_financialyears_on_nature_id_and_company_id"
+  add_index "financialyears", ["updated_at"], :name => "index_financialyears_on_updated_at"
+  add_index "financialyears", ["updated_by"], :name => "index_financialyears_on_updated_by"
+
+  create_table "invoices", :force => true do |t|
+    t.column "number",                      :string,   :limit => 64,                                                   :null => false
+    t.column "price",                       :decimal,                :precision => 16, :scale => 2, :default => 0.0,   :null => false
+    t.column "taxed_price",                 :decimal,                :precision => 16, :scale => 2, :default => 0.0,   :null => false
+    t.column "payment_delay_id",            :integer,                                                                  :null => false
+    t.column "payment_on",                  :date,                                                                     :null => false
+    t.column "has_downpayment",             :boolean,                                               :default => false, :null => false
+    t.column "downpayment_price",           :decimal,                :precision => 16, :scale => 2, :default => 0.0,   :null => false
+    t.column "client_id",                   :integer,                                                                  :null => false
+    t.column "contact_id",                  :integer,                                                                  :null => false
+    t.column "contact_version_id",          :integer,                                                                  :null => false
+    t.column "delivery_contact_id",         :integer,                                                                  :null => false
+    t.column "delivery_contact_version_id", :integer,                                                                  :null => false
+    t.column "object",                      :string
+    t.column "function_title",              :string
+    t.column "introduction",                :text
+    t.column "conclusion",                  :text
+    t.column "note",                        :text
+    t.column "company_id",                  :integer,                                                                  :null => false
+    t.column "created_at",                  :datetime
+    t.column "created_by",                  :integer
+    t.column "updated_at",                  :datetime
+    t.column "updated_by",                  :integer
+    t.column "lock_version",                :integer,                                               :default => 0,     :null => false
+  end
+
+  add_index "invoices", ["created_at"], :name => "index_invoices_on_created_at"
+  add_index "invoices", ["created_by"], :name => "index_invoices_on_created_by"
+  add_index "invoices", ["updated_at"], :name => "index_invoices_on_updated_at"
+  add_index "invoices", ["updated_by"], :name => "index_invoices_on_updated_by"
+
+  create_table "journal_natures", :force => true do |t|
+    t.column "name",         :string,                  :null => false
+    t.column "comment",      :text
+    t.column "company_id",   :integer,                 :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,  :default => 0, :null => false
+  end
+
+  add_index "journal_natures", ["company_id"], :name => "index_journal_natures_on_company_id"
+  add_index "journal_natures", ["created_at"], :name => "index_journal_natures_on_created_at"
+  add_index "journal_natures", ["created_by"], :name => "index_journal_natures_on_created_by"
+  add_index "journal_natures", ["company_id", "name"], :name => "index_journal_natures_on_name_and_company_id", :unique => true
+  add_index "journal_natures", ["updated_at"], :name => "index_journal_natures_on_updated_at"
+  add_index "journal_natures", ["updated_by"], :name => "index_journal_natures_on_updated_by"
+
+  create_table "journal_periods", :force => true do |t|
+    t.column "journal_id",       :integer,                                                    :null => false
+    t.column "financialyear_id", :integer,                                                    :null => false
+    t.column "started_on",       :date,                                                       :null => false
+    t.column "stopped_on",       :date,                                                       :null => false
+    t.column "closed",           :boolean,                                 :default => false
+    t.column "debit",            :decimal,  :precision => 16, :scale => 2, :default => 0.0,   :null => false
+    t.column "credit",           :decimal,  :precision => 16, :scale => 2, :default => 0.0,   :null => false
+    t.column "balance",          :decimal,  :precision => 16, :scale => 2, :default => 0.0,   :null => false
+    t.column "company_id",       :integer,                                                    :null => false
+    t.column "created_at",       :datetime
+    t.column "created_by",       :integer
+    t.column "updated_at",       :datetime
+    t.column "updated_by",       :integer
+    t.column "lock_version",     :integer,                                 :default => 0,     :null => false
+  end
+
+  add_index "journal_periods", ["company_id"], :name => "index_journal_periods_on_company_id"
+  add_index "journal_periods", ["created_at"], :name => "index_journal_periods_on_created_at"
+  add_index "journal_periods", ["created_by"], :name => "index_journal_periods_on_created_by"
+  add_index "journal_periods", ["financialyear_id"], :name => "index_journal_periods_on_financialyear_id"
+  add_index "journal_periods", ["journal_id"], :name => "index_journal_periods_on_journal_id"
+  add_index "journal_periods", ["started_on"], :name => "index_journal_periods_on_started_on"
+  add_index "journal_periods", ["started_on", "journal_id"], :name => "index_journal_periods_on_started_on_and_journal_id", :unique => true
+  add_index "journal_periods", ["stopped_on"], :name => "index_journal_periods_on_stopped_on"
+  add_index "journal_periods", ["journal_id", "stopped_on"], :name => "index_journal_periods_on_stopped_on_and_journal_id", :unique => true
+  add_index "journal_periods", ["updated_at"], :name => "index_journal_periods_on_updated_at"
+  add_index "journal_periods", ["updated_by"], :name => "index_journal_periods_on_updated_by"
+
+  create_table "journal_records", :force => true do |t|
+    t.column "created_on",   :date,                                                                  :null => false
+    t.column "printed_on",   :date,                                                                  :null => false
+    t.column "number",       :integer,                                                               :null => false
+    t.column "status",       :string,   :limit => 1,                                :default => "A", :null => false
+    t.column "debit",        :decimal,               :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "credit",       :decimal,               :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "balance",      :decimal,               :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "position",     :integer,                                                               :null => false
+    t.column "period_id",    :integer,                                                               :null => false
+    t.column "journal_id",   :integer,                                                               :null => false
+    t.column "company_id",   :integer,                                                               :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,                                              :default => 0,   :null => false
+  end
+
+  add_index "journal_records", ["company_id"], :name => "index_journal_records_on_company_id"
+  add_index "journal_records", ["created_at"], :name => "index_journal_records_on_created_at"
+  add_index "journal_records", ["created_by"], :name => "index_journal_records_on_created_by"
+  add_index "journal_records", ["company_id", "created_on"], :name => "index_journal_records_on_created_on_and_company_id"
+  add_index "journal_records", ["journal_id"], :name => "index_journal_records_on_journal_id"
+  add_index "journal_records", ["period_id"], :name => "index_journal_records_on_period_id"
+  add_index "journal_records", ["company_id", "printed_on"], :name => "index_journal_records_on_printed_on_and_company_id"
+  add_index "journal_records", ["status", "company_id"], :name => "index_journal_records_on_status_and_company_id"
+  add_index "journal_records", ["updated_at"], :name => "index_journal_records_on_updated_at"
+  add_index "journal_records", ["updated_by"], :name => "index_journal_records_on_updated_by"
+
+  create_table "journals", :force => true do |t|
+    t.column "nature_id",      :integer,                                         :null => false
+    t.column "name",           :string,                                          :null => false
+    t.column "code",           :string,   :limit => 4,                           :null => false
+    t.column "counterpart_id", :integer
+    t.column "closed_on",      :date,                  :default => '31/12/1494', :null => false
+    t.column "company_id",     :integer,                                         :null => false
+    t.column "created_at",     :datetime
+    t.column "created_by",     :integer
+    t.column "updated_at",     :datetime
+    t.column "updated_by",     :integer
+    t.column "lock_version",   :integer,               :default => 0,            :null => false
+  end
+
+  add_index "journals", ["code", "company_id"], :name => "index_journals_on_code_and_company_id", :unique => true
+  add_index "journals", ["company_id"], :name => "index_journals_on_company_id"
+  add_index "journals", ["created_at"], :name => "index_journals_on_created_at"
+  add_index "journals", ["created_by"], :name => "index_journals_on_created_by"
+  add_index "journals", ["name", "company_id"], :name => "index_journals_on_name_and_company_id", :unique => true
+  add_index "journals", ["nature_id"], :name => "index_journals_on_nature_id"
+  add_index "journals", ["updated_at"], :name => "index_journals_on_updated_at"
+  add_index "journals", ["updated_by"], :name => "index_journals_on_updated_by"
+
+  create_table "languages", :force => true do |t|
+    t.column "code",         :string,                      :null => false
+    t.column "active",       :boolean,  :default => false, :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,  :default => 0,     :null => false
+  end
+
+  add_index "languages", ["code"], :name => "index_languages_on_code", :unique => true
+  add_index "languages", ["created_at"], :name => "index_languages_on_created_at"
+  add_index "languages", ["created_by"], :name => "index_languages_on_created_by"
+  add_index "languages", ["updated_at"], :name => "index_languages_on_updated_at"
+  add_index "languages", ["updated_by"], :name => "index_languages_on_updated_by"
+
+  create_table "part_component_procedures", :force => true do |t|
+    t.column "name",            :string,                                     :null => false
+    t.column "controller_path", :string,   :default => "[NoControllerPath]", :null => false
+    t.column "contextual",      :boolean,  :default => false,                :null => false
+    t.column "actions",         :text,     :default => ":",                  :null => false
+    t.column "component_id",    :integer,                                    :null => false
+    t.column "parent_id",       :integer
+    t.column "position",        :integer
+    t.column "created_at",      :datetime
+    t.column "created_by",      :integer
+    t.column "updated_at",      :datetime
+    t.column "updated_by",      :integer
+    t.column "lock_version",    :integer,  :default => 0,                    :null => false
+  end
+
+  add_index "part_component_procedures", ["actions"], :name => "index_part_component_procedures_on_actions"
+  add_index "part_component_procedures", ["component_id"], :name => "index_part_component_procedures_on_component_id"
+  add_index "part_component_procedures", ["contextual"], :name => "index_part_component_procedures_on_contextual"
+  add_index "part_component_procedures", ["created_at"], :name => "index_part_component_procedures_on_created_at"
+  add_index "part_component_procedures", ["created_by"], :name => "index_part_component_procedures_on_created_by"
+  add_index "part_component_procedures", ["component_id", "name"], :name => "index_part_component_procedures_on_name_and_component_id", :unique => true
+  add_index "part_component_procedures", ["parent_id"], :name => "index_part_component_procedures_on_parent_id"
+  add_index "part_component_procedures", ["updated_at"], :name => "index_part_component_procedures_on_updated_at"
+  add_index "part_component_procedures", ["updated_by"], :name => "index_part_component_procedures_on_updated_by"
+
+  create_table "part_components", :force => true do |t|
+    t.column "name",         :string,                  :null => false
+    t.column "part_id",      :integer,                 :null => false
+    t.column "position",     :integer
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,  :default => 0, :null => false
+  end
+
+  add_index "part_components", ["created_at"], :name => "index_part_components_on_created_at"
+  add_index "part_components", ["created_by"], :name => "index_part_components_on_created_by"
+  add_index "part_components", ["name", "part_id"], :name => "index_part_components_on_name_and_part_id", :unique => true
+  add_index "part_components", ["part_id"], :name => "index_part_components_on_part_id"
+  add_index "part_components", ["updated_at"], :name => "index_part_components_on_updated_at"
+  add_index "part_components", ["updated_by"], :name => "index_part_components_on_updated_by"
+
+  create_table "parts", :force => true do |t|
+    t.column "name",         :string,                                  :null => false
+    t.column "code",         :string,   :limit => 8,                   :null => false
+    t.column "active",       :boolean,               :default => true, :null => false
+    t.column "image_url",    :string
+    t.column "position",     :integer
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,               :default => 0,    :null => false
+  end
+
+  add_index "parts", ["code"], :name => "index_parts_on_code", :unique => true
+  add_index "parts", ["created_at"], :name => "index_parts_on_created_at"
+  add_index "parts", ["created_by"], :name => "index_parts_on_created_by"
+  add_index "parts", ["name"], :name => "index_parts_on_name", :unique => true
+  add_index "parts", ["updated_at"], :name => "index_parts_on_updated_at"
+  add_index "parts", ["updated_by"], :name => "index_parts_on_updated_by"
+
+  create_table "pricelist_item_versions", :force => true do |t|
+    t.column "price",            :decimal,  :precision => 16, :scale => 4,                    :null => false
+    t.column "price_with_taxes", :decimal,  :precision => 16, :scale => 4,                    :null => false
+    t.column "is_active",        :boolean,                                 :default => true,  :null => false
+    t.column "use_range",        :boolean,                                 :default => false, :null => false
+    t.column "quantity_min",     :decimal,  :precision => 16, :scale => 2, :default => 0.0,   :null => false
+    t.column "quantity_max",     :decimal,  :precision => 16, :scale => 2, :default => 0.0,   :null => false
+    t.column "product_id",       :integer,                                                    :null => false
+    t.column "pricelist_id",     :integer,                                                    :null => false
+    t.column "company_id",       :integer,                                                    :null => false
+    t.column "item_id",          :integer,                                                    :null => false
+    t.column "created_at",       :datetime
+    t.column "created_by",       :integer
+    t.column "updated_at",       :datetime
+    t.column "updated_by",       :integer
+    t.column "lock_version",     :integer,                                 :default => 0,     :null => false
+  end
+
+  add_index "pricelist_item_versions", ["created_at"], :name => "index_pricelist_item_versions_on_created_at"
+  add_index "pricelist_item_versions", ["created_by"], :name => "index_pricelist_item_versions_on_created_by"
+  add_index "pricelist_item_versions", ["item_id"], :name => "index_pricelist_item_versions_on_item_id"
+  add_index "pricelist_item_versions", ["pricelist_id"], :name => "index_pricelist_item_versions_on_pricelist_id"
+  add_index "pricelist_item_versions", ["product_id"], :name => "index_pricelist_item_versions_on_product_id"
+  add_index "pricelist_item_versions", ["updated_at"], :name => "index_pricelist_item_versions_on_updated_at"
+  add_index "pricelist_item_versions", ["updated_by"], :name => "index_pricelist_item_versions_on_updated_by"
+
+  create_table "pricelist_items", :force => true do |t|
+    t.column "price",            :decimal,  :precision => 16, :scale => 4,                    :null => false
+    t.column "price_with_taxes", :decimal,  :precision => 16, :scale => 4,                    :null => false
+    t.column "is_active",        :boolean,                                 :default => true,  :null => false
+    t.column "use_range",        :boolean,                                 :default => false, :null => false
+    t.column "quantity_min",     :decimal,  :precision => 16, :scale => 2, :default => 0.0,   :null => false
+    t.column "quantity_max",     :decimal,  :precision => 16, :scale => 2, :default => 0.0,   :null => false
+    t.column "product_id",       :integer,                                                    :null => false
+    t.column "pricelist_id",     :integer,                                                    :null => false
+    t.column "company_id",       :integer,                                                    :null => false
+    t.column "created_at",       :datetime
+    t.column "created_by",       :integer
+    t.column "updated_at",       :datetime
+    t.column "updated_by",       :integer
+    t.column "lock_version",     :integer,                                 :default => 0,     :null => false
+  end
+
+  add_index "pricelist_items", ["created_at"], :name => "index_pricelist_items_on_created_at"
+  add_index "pricelist_items", ["created_by"], :name => "index_pricelist_items_on_created_by"
+  add_index "pricelist_items", ["pricelist_id"], :name => "index_pricelist_items_on_pricelist_id"
+  add_index "pricelist_items", ["product_id"], :name => "index_pricelist_items_on_product_id"
+  add_index "pricelist_items", ["company_id", "quantity_min", "pricelist_id", "product_id"], :name => "index_pricelist_items_on_quantity_min_and_product_id_and_pricel", :unique => true
+  add_index "pricelist_items", ["updated_at"], :name => "index_pricelist_items_on_updated_at"
+  add_index "pricelist_items", ["updated_by"], :name => "index_pricelist_items_on_updated_by"
+
+  create_table "pricelists", :force => true do |t|
+    t.column "name",         :string,                               :null => false
+    t.column "code",         :string,   :limit => 8,                :null => false
+    t.column "description",  :text
+    t.column "entity_id",    :integer,                              :null => false
+    t.column "company_id",   :integer,                              :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,               :default => 0, :null => false
+  end
+
+  add_index "pricelists", ["created_at"], :name => "index_pricelists_on_created_at"
+  add_index "pricelists", ["created_by"], :name => "index_pricelists_on_created_by"
+  add_index "pricelists", ["entity_id"], :name => "index_pricelists_on_entity_id"
+  add_index "pricelists", ["name", "company_id"], :name => "index_pricelists_on_name_and_company_id", :unique => true
+  add_index "pricelists", ["updated_at"], :name => "index_pricelists_on_updated_at"
+  add_index "pricelists", ["updated_by"], :name => "index_pricelists_on_updated_by"
+
+  create_table "product_categories", :force => true do |t|
+    t.column "name",                :string,                  :null => false
+    t.column "catalog_name",        :string,                  :null => false
+    t.column "catalog_description", :text
+    t.column "description",         :text
+    t.column "parent_id",           :integer
+    t.column "company_id",          :integer,                 :null => false
+    t.column "created_at",          :datetime
+    t.column "created_by",          :integer
+    t.column "updated_at",          :datetime
+    t.column "updated_by",          :integer
+    t.column "lock_version",        :integer,  :default => 0, :null => false
+  end
+
+  add_index "product_categories", ["created_at"], :name => "index_product_categories_on_created_at"
+  add_index "product_categories", ["created_by"], :name => "index_product_categories_on_created_by"
+  add_index "product_categories", ["name", "company_id"], :name => "index_product_categories_on_name_and_company_id", :unique => true
+  add_index "product_categories", ["updated_at"], :name => "index_product_categories_on_updated_at"
+  add_index "product_categories", ["updated_by"], :name => "index_product_categories_on_updated_by"
+
+  create_table "product_categories_products", :force => true do |t|
+    t.column "product_id",          :integer,                 :null => false
+    t.column "product_category_id", :integer,                 :null => false
+    t.column "created_at",          :datetime
+    t.column "created_by",          :integer
+    t.column "updated_at",          :datetime
+    t.column "updated_by",          :integer
+    t.column "lock_version",        :integer,  :default => 0, :null => false
+  end
+
+  add_index "product_categories_products", ["created_at"], :name => "index_product_categories_products_on_created_at"
+  add_index "product_categories_products", ["created_by"], :name => "index_product_categories_products_on_created_by"
+  add_index "product_categories_products", ["product_id", "product_category_id"], :name => "index_product_categories_products_on_product_id_and_product_cat", :unique => true
+  add_index "product_categories_products", ["updated_at"], :name => "index_product_categories_products_on_updated_at"
+  add_index "product_categories_products", ["updated_by"], :name => "index_product_categories_products_on_updated_by"
+
+  create_table "product_taxes", :force => true do |t|
+    t.column "amount",       :decimal,  :precision => 16, :scale => 2, :default => 0.0, :null => false
+    t.column "product_id",   :integer,                                                  :null => false
+    t.column "tax_id",       :integer,                                                  :null => false
+    t.column "company_id",   :integer,                                                  :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,                                 :default => 0,   :null => false
+  end
+
+  add_index "product_taxes", ["created_at"], :name => "index_product_taxes_on_created_at"
+  add_index "product_taxes", ["created_by"], :name => "index_product_taxes_on_created_by"
+  add_index "product_taxes", ["product_id", "tax_id"], :name => "index_product_taxes_on_product_id_and_tax_id", :unique => true
+  add_index "product_taxes", ["updated_at"], :name => "index_product_taxes_on_updated_at"
+  add_index "product_taxes", ["updated_by"], :name => "index_product_taxes_on_updated_by"
+
+  create_table "products", :force => true do |t|
+    t.column "name",                :string,                                :null => false
+    t.column "number",              :integer,                               :null => false
+    t.column "code",                :string,   :limit => 32,                :null => false
+    t.column "ean13",               :string,   :limit => 13
+    t.column "catalog_name",        :string,                                :null => false
+    t.column "catalog_description", :text
+    t.column "description",         :text
+    t.column "account_id",          :integer,                               :null => false
+    t.column "company_id",          :integer,                               :null => false
+    t.column "created_at",          :datetime
+    t.column "created_by",          :integer
+    t.column "updated_at",          :datetime
+    t.column "updated_by",          :integer
+    t.column "lock_version",        :integer,                :default => 0, :null => false
+  end
+
+  add_index "products", ["code", "company_id"], :name => "index_products_on_code_and_company_id", :unique => true
+  add_index "products", ["created_at"], :name => "index_products_on_created_at"
+  add_index "products", ["created_by"], :name => "index_products_on_created_by"
+  add_index "products", ["company_id", "name"], :name => "index_products_on_name_and_company_id", :unique => true
+  add_index "products", ["updated_at"], :name => "index_products_on_updated_at"
+  add_index "products", ["updated_by"], :name => "index_products_on_updated_by"
+
+  create_table "rights", :force => true do |t|
+    t.column "role_id",      :integer,                    :null => false
+    t.column "active",       :boolean,  :default => true, :null => false
+    t.column "procedure_id", :integer,                    :null => false
+    t.column "component_id", :integer,                    :null => false
+    t.column "part_id",      :integer,                    :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,  :default => 0,    :null => false
+  end
+
+  add_index "rights", ["created_at"], :name => "index_rights_on_created_at"
+  add_index "rights", ["created_by"], :name => "index_rights_on_created_by"
+  add_index "rights", ["role_id", "procedure_id"], :name => "index_rights_on_role_id_and_procedure_id", :unique => true
+  add_index "rights", ["updated_at"], :name => "index_rights_on_updated_at"
+  add_index "rights", ["updated_by"], :name => "index_rights_on_updated_by"
+
+  create_table "roles", :force => true do |t|
+    t.column "name",         :string,                      :null => false
+    t.column "admin",        :boolean,  :default => false, :null => false
+    t.column "company_id",   :integer,                     :null => false
+    t.column "created_at",   :datetime
+    t.column "created_by",   :integer
+    t.column "updated_at",   :datetime
+    t.column "updated_by",   :integer
+    t.column "lock_version", :integer,  :default => 0,     :null => false
+  end
+
+  add_index "roles", ["company_id"], :name => "index_roles_on_company_id"
+  add_index "roles", ["created_at"], :name => "index_roles_on_created_at"
+  add_index "roles", ["created_by"], :name => "index_roles_on_created_by"
+  add_index "roles", ["name"], :name => "index_roles_on_name"
+  add_index "roles", ["updated_at"], :name => "index_roles_on_updated_at"
+  add_index "roles", ["updated_by"], :name => "index_roles_on_updated_by"
+
+  create_table "sessions", :force => true do |t|
+    t.column "session_id", :string
+    t.column "data",       :text
+    t.column "updated_at", :datetime
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "tax_versions", :force => true do |t|
+    t.column "name",          :string,                                                    :null => false
+    t.column "is_reductible", :boolean,                                 :default => true, :null => false
+    t.column "amount",        :decimal,  :precision => 16, :scale => 2, :default => 0.0,  :null => false
+    t.column "rate",          :decimal,  :precision => 16, :scale => 2, :default => 0.0,  :null => false
+    t.column "description",   :text
+    t.column "account_id",    :integer,                                                   :null => false
+    t.column "company_id",    :integer,                                                   :null => false
+    t.column "tax_id",        :integer,                                                   :null => false
+    t.column "created_at",    :datetime
+    t.column "created_by",    :integer
+    t.column "updated_at",    :datetime
+    t.column "updated_by",    :integer
+    t.column "lock_version",  :integer,                                 :default => 0,    :null => false
+  end
+
+  add_index "tax_versions", ["created_at"], :name => "index_tax_versions_on_created_at"
+  add_index "tax_versions", ["created_by"], :name => "index_tax_versions_on_created_by"
+  add_index "tax_versions", ["tax_id"], :name => "index_tax_versions_on_tax_id"
+  add_index "tax_versions", ["updated_at"], :name => "index_tax_versions_on_updated_at"
+  add_index "tax_versions", ["updated_by"], :name => "index_tax_versions_on_updated_by"
+
+  create_table "taxes", :force => true do |t|
+    t.column "name",          :string,                                                    :null => false
+    t.column "is_reductible", :boolean,                                 :default => true, :null => false
+    t.column "amount",        :decimal,  :precision => 16, :scale => 2, :default => 0.0,  :null => false
+    t.column "rate",          :decimal,  :precision => 16, :scale => 2, :default => 0.0,  :null => false
+    t.column "description",   :text
+    t.column "account_id",    :integer,                                                   :null => false
+    t.column "company_id",    :integer,                                                   :null => false
+    t.column "created_at",    :datetime
+    t.column "created_by",    :integer
+    t.column "updated_at",    :datetime
+    t.column "updated_by",    :integer
+    t.column "lock_version",  :integer,                                 :default => 0,    :null => false
+  end
+
+  add_index "taxes", ["created_at"], :name => "index_taxes_on_created_at"
+  add_index "taxes", ["created_by"], :name => "index_taxes_on_created_by"
+  add_index "taxes", ["name", "company_id"], :name => "index_taxes_on_name_and_company_id", :unique => true
+  add_index "taxes", ["updated_at"], :name => "index_taxes_on_updated_at"
+  add_index "taxes", ["updated_by"], :name => "index_taxes_on_updated_by"
+
+  create_table "users", :force => true do |t|
+    t.column "name",            :string,   :limit => 32,                    :null => false
+    t.column "hashed_password", :string,                                    :null => false
+    t.column "salt",            :string,                                    :null => false
+    t.column "locked",          :boolean,                :default => false, :null => false
+    t.column "email",           :string
+    t.column "created_at",      :datetime
+    t.column "created_by",      :integer
+    t.column "updated_at",      :datetime
+    t.column "updated_by",      :integer
+    t.column "lock_version",    :integer,                :default => 0,     :null => false
+    t.column "company_id",      :integer,                                   :null => false
+    t.column "language_id",     :integer,                                   :null => false
+    t.column "role_id",         :integer,                                   :null => false
+  end
+
+  add_index "users", ["company_id"], :name => "index_users_on_company_id"
+  add_index "users", ["created_at"], :name => "index_users_on_created_at"
+  add_index "users", ["created_by"], :name => "index_users_on_created_by"
+  add_index "users", ["email"], :name => "index_users_on_email"
+  add_index "users", ["name"], :name => "index_users_on_name", :unique => true
+  add_index "users", ["role_id"], :name => "index_users_on_role_id"
+  add_index "users", ["updated_at"], :name => "index_users_on_updated_at"
+  add_index "users", ["updated_by"], :name => "index_users_on_updated_by"
+
+  add_foreign_key "account_balances", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "account_balances_updated_by_fkey"
+  add_foreign_key "account_balances", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "account_balances_created_by_fkey"
+  add_foreign_key "account_balances", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "account_balances_company_id_fkey"
+  add_foreign_key "account_balances", ["financialyear_id"], "financialyears", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "account_balances_financialyear_id_fkey"
+  add_foreign_key "account_balances", ["account_id"], "accounts", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "account_balances_account_id_fkey"
+
+  add_foreign_key "accountancies", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "accountancies_updated_by_fkey"
+  add_foreign_key "accountancies", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "accountancies_created_by_fkey"
+  add_foreign_key "accountancies", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "accountancies_company_id_fkey"
+  add_foreign_key "accountancies", ["newyear_id"], "journals", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "accountancies_newyear_id_fkey"
+  add_foreign_key "accountancies", ["purchases_id"], "journals", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "accountancies_purchases_id_fkey"
+  add_foreign_key "accountancies", ["sales_id"], "journals", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "accountancies_sales_id_fkey"
+  add_foreign_key "accountancies", ["losses_id"], "accounts", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "accountancies_losses_id_fkey"
+  add_foreign_key "accountancies", ["profits_id"], "accounts", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "accountancies_profits_id_fkey"
+  add_foreign_key "accountancies", ["report_debit_id"], "accounts", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "accountancies_report_debit_id_fkey"
+  add_foreign_key "accountancies", ["report_credit_id"], "accounts", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "accountancies_report_credit_id_fkey"
+  add_foreign_key "accountancies", ["currency_id"], "currencies", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "accountancies_currency_id_fkey"
+  add_foreign_key "accountancies", ["master_nature_id"], "financialyear_natures", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "accountancies_master_nature_id_fkey"
+
+  add_foreign_key "accounts", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "accounts_updated_by_fkey"
+  add_foreign_key "accounts", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "accounts_created_by_fkey"
+  add_foreign_key "accounts", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "accounts_company_id_fkey"
+  add_foreign_key "accounts", ["entity_id"], "entities", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "accounts_entity_id_fkey"
+  add_foreign_key "accounts", ["delay_id"], "delays", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "accounts_delay_id_fkey"
+
+  add_foreign_key "bank_account_statements", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "bank_account_statements_updated_by_fkey"
+  add_foreign_key "bank_account_statements", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "bank_account_statements_created_by_fkey"
+  add_foreign_key "bank_account_statements", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "bank_account_statements_company_id_fkey"
+  add_foreign_key "bank_account_statements", ["bank_account_id"], "bank_accounts", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "bank_account_statements_bank_account_id_fkey"
+
+  add_foreign_key "bank_accounts", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "bank_accounts_updated_by_fkey"
+  add_foreign_key "bank_accounts", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "bank_accounts_created_by_fkey"
+  add_foreign_key "bank_accounts", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "bank_accounts_company_id_fkey"
+  add_foreign_key "bank_accounts", ["account_id"], "accounts", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "bank_accounts_account_id_fkey"
+  add_foreign_key "bank_accounts", ["currency_id"], "currencies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "bank_accounts_currency_id_fkey"
+  add_foreign_key "bank_accounts", ["journal_id"], "journals", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "bank_accounts_journal_id_fkey"
+  add_foreign_key "bank_accounts", ["bank_id"], "banks", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "bank_accounts_bank_id_fkey"
+
+  add_foreign_key "banks", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "banks_updated_by_fkey"
+  add_foreign_key "banks", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "banks_created_by_fkey"
+  add_foreign_key "banks", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "banks_company_id_fkey"
+
+  add_foreign_key "companies", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "companies_updated_by_fkey"
+  add_foreign_key "companies", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "companies_created_by_fkey"
+
+  add_foreign_key "company_departments", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "company_departments_updated_by_fkey"
+  add_foreign_key "company_departments", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "company_departments_created_by_fkey"
+  add_foreign_key "company_departments", ["company_id"], "companies", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "company_departments_company_id_fkey"
+  add_foreign_key "company_departments", ["company_establishment_id"], "company_establishments", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "company_departments_company_establishment_id_fkey"
+  add_foreign_key "company_departments", ["parent_id"], "company_departments", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "company_departments_parent_id_fkey"
+
+  add_foreign_key "company_employees", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "company_employees_updated_by_fkey"
+  add_foreign_key "company_employees", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "company_employees_created_by_fkey"
+  add_foreign_key "company_employees", ["company_id"], "companies", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "company_employees_company_id_fkey"
+  add_foreign_key "company_employees", ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "company_employees_user_id_fkey"
+  add_foreign_key "company_employees", ["company_department_id"], "company_departments", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "company_employees_company_department_id_fkey"
+
+  add_foreign_key "company_establishments", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "company_establishments_updated_by_fkey"
+  add_foreign_key "company_establishments", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "company_establishments_created_by_fkey"
+  add_foreign_key "company_establishments", ["company_id"], "companies", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "company_establishments_company_id_fkey"
+
+  add_foreign_key "currencies", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "currencies_updated_by_fkey"
+  add_foreign_key "currencies", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "currencies_created_by_fkey"
+  add_foreign_key "currencies", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "currencies_company_id_fkey"
+
+  add_foreign_key "currency_rates", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "currency_rates_updated_by_fkey"
+  add_foreign_key "currency_rates", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "currency_rates_created_by_fkey"
+  add_foreign_key "currency_rates", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "currency_rates_company_id_fkey"
+  add_foreign_key "currency_rates", ["currency_id"], "currencies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "currency_rates_currency_id_fkey"
+
+  add_foreign_key "delays", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "delays_updated_by_fkey"
+  add_foreign_key "delays", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "delays_created_by_fkey"
+  add_foreign_key "delays", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "delays_company_id_fkey"
+
+  add_foreign_key "deliveries", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "deliveries_updated_by_fkey"
+  add_foreign_key "deliveries", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "deliveries_created_by_fkey"
+  add_foreign_key "deliveries", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "deliveries_company_id_fkey"
+  add_foreign_key "deliveries", ["invoice_id"], "invoices", ["id"], :name => "deliveries_invoice_id_fkey"
+  add_foreign_key "deliveries", ["estimate_id"], "estimates", ["id"], :name => "deliveries_estimate_id_fkey"
+
+  add_foreign_key "delivery_lines", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "delivery_lines_updated_by_fkey"
+  add_foreign_key "delivery_lines", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "delivery_lines_created_by_fkey"
+  add_foreign_key "delivery_lines", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "delivery_lines_company_id_fkey"
+  add_foreign_key "delivery_lines", ["price_version_id"], "pricelist_item_versions", ["id"], :name => "delivery_lines_price_version_id_fkey"
+  add_foreign_key "delivery_lines", ["price_id"], "pricelist_items", ["id"], :name => "delivery_lines_price_id_fkey"
+  add_foreign_key "delivery_lines", ["pricelist_id"], "pricelists", ["id"], :name => "delivery_lines_pricelist_id_fkey"
+  add_foreign_key "delivery_lines", ["product_id"], "products", ["id"], :name => "delivery_lines_product_id_fkey"
+  add_foreign_key "delivery_lines", ["estimate_line_id"], "estimate_lines", ["id"], :name => "delivery_lines_estimate_line_id_fkey"
+  add_foreign_key "delivery_lines", ["delivery_id"], "deliveries", ["id"], :name => "delivery_lines_delivery_id_fkey"
+
+  add_foreign_key "entities", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entities_updated_by_fkey"
+  add_foreign_key "entities", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entities_created_by_fkey"
+  add_foreign_key "entities", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "entities_company_id_fkey"
+  add_foreign_key "entities", ["language_id"], "languages", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entities_language_id_fkey"
+  add_foreign_key "entities", ["nature_id"], "entity_natures", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entities_nature_id_fkey"
+
+  add_foreign_key "entity_contact_natures", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entity_contact_natures_updated_by_fkey"
+  add_foreign_key "entity_contact_natures", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entity_contact_natures_created_by_fkey"
+  add_foreign_key "entity_contact_natures", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "entity_contact_natures_company_id_fkey"
+
+  add_foreign_key "entity_contact_norm_items", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entity_contact_norm_items_updated_by_fkey"
+  add_foreign_key "entity_contact_norm_items", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entity_contact_norm_items_created_by_fkey"
+  add_foreign_key "entity_contact_norm_items", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "entity_contact_norm_items_company_id_fkey"
+  add_foreign_key "entity_contact_norm_items", ["contact_norm_id"], "entity_contact_norms", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "entity_contact_norm_items_contact_norm_id_fkey"
+
+  add_foreign_key "entity_contact_norms", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entity_contact_norms_updated_by_fkey"
+  add_foreign_key "entity_contact_norms", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entity_contact_norms_created_by_fkey"
+  add_foreign_key "entity_contact_norms", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "entity_contact_norms_company_id_fkey"
+
+  add_foreign_key "entity_contact_versions", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entity_contact_versions_updated_by_fkey"
+  add_foreign_key "entity_contact_versions", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entity_contact_versions_created_by_fkey"
+  add_foreign_key "entity_contact_versions", ["contact_id"], "entities", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "entity_contact_versions_contact_id_fkey"
+
+  add_foreign_key "entity_contacts", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entity_contacts_updated_by_fkey"
+  add_foreign_key "entity_contacts", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entity_contacts_created_by_fkey"
+  add_foreign_key "entity_contacts", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "entity_contacts_company_id_fkey"
+  add_foreign_key "entity_contacts", ["norm_id"], "entity_contact_norms", ["id"], :name => "entity_contacts_norm_id_fkey"
+  add_foreign_key "entity_contacts", ["nature_id"], "entity_contact_natures", ["id"], :name => "entity_contacts_nature_id_fkey"
+  add_foreign_key "entity_contacts", ["entity_id"], "entities", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "entity_contacts_entity_id_fkey"
+
+  add_foreign_key "entity_natures", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entity_natures_updated_by_fkey"
+  add_foreign_key "entity_natures", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entity_natures_created_by_fkey"
+  add_foreign_key "entity_natures", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "entity_natures_company_id_fkey"
+
+  add_foreign_key "entries", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entries_updated_by_fkey"
+  add_foreign_key "entries", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entries_created_by_fkey"
+  add_foreign_key "entries", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "entries_company_id_fkey"
+  add_foreign_key "entries", ["statement_id"], "bank_account_statements", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entries_statement_id_fkey"
+  add_foreign_key "entries", ["intermediate_id"], "bank_account_statements", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entries_intermediate_id_fkey"
+  add_foreign_key "entries", ["currency_id"], "currencies", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entries_currency_id_fkey"
+  add_foreign_key "entries", ["currency_rate_id"], "currency_rates", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entries_currency_rate_id_fkey"
+  add_foreign_key "entries", ["account_id"], "accounts", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entries_account_id_fkey"
+  add_foreign_key "entries", ["record_id"], "journal_records", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "entries_record_id_fkey"
+
+  add_foreign_key "estimate_lines", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "estimate_lines_updated_by_fkey"
+  add_foreign_key "estimate_lines", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "estimate_lines_created_by_fkey"
+  add_foreign_key "estimate_lines", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "estimate_lines_company_id_fkey"
+  add_foreign_key "estimate_lines", ["account_id"], "accounts", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "estimate_lines_account_id_fkey"
+  add_foreign_key "estimate_lines", ["price_version_id"], "pricelist_item_versions", ["id"], :name => "estimate_lines_price_version_id_fkey"
+  add_foreign_key "estimate_lines", ["price_id"], "pricelist_items", ["id"], :name => "estimate_lines_price_id_fkey"
+  add_foreign_key "estimate_lines", ["pricelist_id"], "pricelists", ["id"], :name => "estimate_lines_pricelist_id_fkey"
+  add_foreign_key "estimate_lines", ["product_id"], "products", ["id"], :name => "estimate_lines_product_id_fkey"
+  add_foreign_key "estimate_lines", ["estimate_id"], "estimates", ["id"], :name => "estimate_lines_estimate_id_fkey"
+
+  add_foreign_key "estimate_natures", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "estimate_natures_updated_by_fkey"
+  add_foreign_key "estimate_natures", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "estimate_natures_created_by_fkey"
+  add_foreign_key "estimate_natures", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "estimate_natures_company_id_fkey"
+  add_foreign_key "estimate_natures", ["payment_delay_id"], "delays", ["id"], :name => "estimate_natures_payment_delay_id_fkey"
+  add_foreign_key "estimate_natures", ["expiration_id"], "delays", ["id"], :name => "estimate_natures_expiration_id_fkey"
+
+  add_foreign_key "estimates", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "estimates_updated_by_fkey"
+  add_foreign_key "estimates", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "estimates_created_by_fkey"
+  add_foreign_key "estimates", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "estimates_company_id_fkey"
+  add_foreign_key "estimates", ["delivery_contact_id"], "entity_contacts", ["id"], :name => "estimates_delivery_contact_id_fkey"
+  add_foreign_key "estimates", ["invoice_contact_id"], "entity_contacts", ["id"], :name => "estimates_invoice_contact_id_fkey"
+  add_foreign_key "estimates", ["contact_version_id"], "entity_contact_versions", ["id"], :name => "estimates_contact_version_id_fkey"
+  add_foreign_key "estimates", ["contact_id"], "entity_contacts", ["id"], :name => "estimates_contact_id_fkey"
+  add_foreign_key "estimates", ["client_id"], "entities", ["id"], :name => "estimates_client_id_fkey"
+  add_foreign_key "estimates", ["payment_delay_id"], "delays", ["id"], :name => "estimates_payment_delay_id_fkey"
+  add_foreign_key "estimates", ["expiration_id"], "delays", ["id"], :name => "estimates_expiration_id_fkey"
+  add_foreign_key "estimates", ["nature_id"], "estimate_natures", ["id"], :name => "estimates_nature_id_fkey"
+
+  add_foreign_key "financialyear_natures", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "financialyear_natures_updated_by_fkey"
+  add_foreign_key "financialyear_natures", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "financialyear_natures_created_by_fkey"
+  add_foreign_key "financialyear_natures", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "financialyear_natures_company_id_fkey"
+
+  add_foreign_key "financialyears", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "financialyears_updated_by_fkey"
+  add_foreign_key "financialyears", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "financialyears_created_by_fkey"
+  add_foreign_key "financialyears", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "financialyears_company_id_fkey"
+  add_foreign_key "financialyears", ["nature_id"], "financialyear_natures", ["id"], :name => "financialyears_nature_id_fkey"
+
+  add_foreign_key "invoices", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "invoices_updated_by_fkey"
+  add_foreign_key "invoices", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "invoices_created_by_fkey"
+  add_foreign_key "invoices", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "invoices_company_id_fkey"
+  add_foreign_key "invoices", ["delivery_contact_version_id"], "entity_contact_versions", ["id"], :name => "invoices_delivery_contact_version_id_fkey"
+  add_foreign_key "invoices", ["delivery_contact_id"], "entity_contacts", ["id"], :name => "invoices_delivery_contact_id_fkey"
+  add_foreign_key "invoices", ["contact_version_id"], "entity_contact_versions", ["id"], :name => "invoices_contact_version_id_fkey"
+  add_foreign_key "invoices", ["contact_id"], "entity_contacts", ["id"], :name => "invoices_contact_id_fkey"
+  add_foreign_key "invoices", ["client_id"], "entities", ["id"], :name => "invoices_client_id_fkey"
+  add_foreign_key "invoices", ["payment_delay_id"], "delays", ["id"], :name => "invoices_payment_delay_id_fkey"
+
+  add_foreign_key "journal_natures", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "journal_natures_updated_by_fkey"
+  add_foreign_key "journal_natures", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "journal_natures_created_by_fkey"
+  add_foreign_key "journal_natures", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "journal_natures_company_id_fkey"
+
+  add_foreign_key "journal_periods", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "journal_periods_updated_by_fkey"
+  add_foreign_key "journal_periods", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "journal_periods_created_by_fkey"
+  add_foreign_key "journal_periods", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "journal_periods_company_id_fkey"
+  add_foreign_key "journal_periods", ["financialyear_id"], "financialyears", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "journal_periods_financialyear_id_fkey"
+  add_foreign_key "journal_periods", ["journal_id"], "journals", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "journal_periods_journal_id_fkey"
+
+  add_foreign_key "journal_records", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "journal_records_updated_by_fkey"
+  add_foreign_key "journal_records", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "journal_records_created_by_fkey"
+  add_foreign_key "journal_records", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "journal_records_company_id_fkey"
+  add_foreign_key "journal_records", ["journal_id"], "journals", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "journal_records_journal_id_fkey"
+  add_foreign_key "journal_records", ["period_id"], "journal_periods", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "journal_records_period_id_fkey"
+
+  add_foreign_key "journals", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "journals_updated_by_fkey"
+  add_foreign_key "journals", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "journals_created_by_fkey"
+  add_foreign_key "journals", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "journals_company_id_fkey"
+  add_foreign_key "journals", ["counterpart_id"], "accounts", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "journals_counterpart_id_fkey"
+  add_foreign_key "journals", ["nature_id"], "journal_natures", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "journals_nature_id_fkey"
+
+  add_foreign_key "languages", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "languages_updated_by_fkey"
+  add_foreign_key "languages", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "languages_created_by_fkey"
+
+  add_foreign_key "part_component_procedures", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "part_component_procedures_updated_by_fkey"
+  add_foreign_key "part_component_procedures", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "part_component_procedures_created_by_fkey"
+  add_foreign_key "part_component_procedures", ["parent_id"], "part_component_procedures", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "part_component_procedures_parent_id_fkey"
+  add_foreign_key "part_component_procedures", ["component_id"], "part_components", ["id"], :on_update => :restrict, :on_delete => :cascade, :name => "part_component_procedures_component_id_fkey"
+
+  add_foreign_key "part_components", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "part_components_updated_by_fkey"
+  add_foreign_key "part_components", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "part_components_created_by_fkey"
+  add_foreign_key "part_components", ["part_id"], "parts", ["id"], :on_update => :restrict, :on_delete => :cascade, :name => "part_components_part_id_fkey"
+
+  add_foreign_key "parts", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "parts_updated_by_fkey"
+  add_foreign_key "parts", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "parts_created_by_fkey"
+
+  add_foreign_key "pricelist_item_versions", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "pricelist_item_versions_updated_by_fkey"
+  add_foreign_key "pricelist_item_versions", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "pricelist_item_versions_created_by_fkey"
+  add_foreign_key "pricelist_item_versions", ["item_id"], "pricelist_items", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "pricelist_item_versions_item_id_fkey"
+  add_foreign_key "pricelist_item_versions", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "pricelist_item_versions_company_id_fkey"
+  add_foreign_key "pricelist_item_versions", ["pricelist_id"], "pricelists", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "pricelist_item_versions_pricelist_id_fkey"
+  add_foreign_key "pricelist_item_versions", ["product_id"], "products", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "pricelist_item_versions_product_id_fkey"
+
+  add_foreign_key "pricelist_items", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "pricelist_items_updated_by_fkey"
+  add_foreign_key "pricelist_items", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "pricelist_items_created_by_fkey"
+  add_foreign_key "pricelist_items", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "pricelist_items_company_id_fkey"
+  add_foreign_key "pricelist_items", ["pricelist_id"], "pricelists", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "pricelist_items_pricelist_id_fkey"
+  add_foreign_key "pricelist_items", ["product_id"], "products", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "pricelist_items_product_id_fkey"
+
+  add_foreign_key "pricelists", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "pricelists_updated_by_fkey"
+  add_foreign_key "pricelists", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "pricelists_created_by_fkey"
+  add_foreign_key "pricelists", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "pricelists_company_id_fkey"
+  add_foreign_key "pricelists", ["entity_id"], "entities", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "pricelists_entity_id_fkey"
+
+  add_foreign_key "product_categories", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "product_categories_updated_by_fkey"
+  add_foreign_key "product_categories", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "product_categories_created_by_fkey"
+  add_foreign_key "product_categories", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "product_categories_company_id_fkey"
+  add_foreign_key "product_categories", ["parent_id"], "product_categories", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "product_categories_parent_id_fkey"
+
+  add_foreign_key "product_categories_products", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "product_categories_products_updated_by_fkey"
+  add_foreign_key "product_categories_products", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "product_categories_products_created_by_fkey"
+  add_foreign_key "product_categories_products", ["product_category_id"], "product_categories", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "product_categories_products_product_category_id_fkey"
+  add_foreign_key "product_categories_products", ["product_id"], "products", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "product_categories_products_product_id_fkey"
+
+  add_foreign_key "product_taxes", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "product_taxes_updated_by_fkey"
+  add_foreign_key "product_taxes", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "product_taxes_created_by_fkey"
+  add_foreign_key "product_taxes", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "product_taxes_company_id_fkey"
+  add_foreign_key "product_taxes", ["tax_id"], "taxes", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "product_taxes_tax_id_fkey"
+  add_foreign_key "product_taxes", ["product_id"], "products", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "product_taxes_product_id_fkey"
+
+  add_foreign_key "products", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "products_updated_by_fkey"
+  add_foreign_key "products", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "products_created_by_fkey"
+  add_foreign_key "products", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "products_company_id_fkey"
+  add_foreign_key "products", ["account_id"], "accounts", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "products_account_id_fkey"
+
+  add_foreign_key "rights", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "rights_updated_by_fkey"
+  add_foreign_key "rights", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "rights_created_by_fkey"
+  add_foreign_key "rights", ["part_id"], "parts", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "rights_part_id_fkey"
+  add_foreign_key "rights", ["component_id"], "part_components", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "rights_component_id_fkey"
+  add_foreign_key "rights", ["procedure_id"], "part_component_procedures", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "rights_procedure_id_fkey"
+  add_foreign_key "rights", ["role_id"], "roles", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "rights_role_id_fkey"
+
+  add_foreign_key "roles", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "roles_updated_by_fkey"
+  add_foreign_key "roles", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "roles_created_by_fkey"
+  add_foreign_key "roles", ["company_id"], "companies", ["id"], :on_update => :restrict, :on_delete => :cascade, :name => "roles_company_id_fkey"
+
+  add_foreign_key "tax_versions", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "tax_versions_updated_by_fkey"
+  add_foreign_key "tax_versions", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "tax_versions_created_by_fkey"
+  add_foreign_key "tax_versions", ["tax_id"], "taxes", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "tax_versions_tax_id_fkey"
+  add_foreign_key "tax_versions", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "tax_versions_company_id_fkey"
+  add_foreign_key "tax_versions", ["account_id"], "accounts", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "tax_versions_account_id_fkey"
+
+  add_foreign_key "taxes", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "taxes_updated_by_fkey"
+  add_foreign_key "taxes", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "taxes_created_by_fkey"
+  add_foreign_key "taxes", ["company_id"], "companies", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "taxes_company_id_fkey"
+  add_foreign_key "taxes", ["account_id"], "accounts", ["id"], :on_update => :cascade, :on_delete => :cascade, :name => "taxes_account_id_fkey"
+
+  add_foreign_key "users", ["role_id"], "roles", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "users_role_id_fkey"
+  add_foreign_key "users", ["language_id"], "languages", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "users_language_id_fkey"
+  add_foreign_key "users", ["company_id"], "companies", ["id"], :on_update => :restrict, :on_delete => :cascade, :name => "users_company_id_fkey"
+  add_foreign_key "users", ["updated_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "users_updated_by_fkey"
+  add_foreign_key "users", ["created_by"], "users", ["id"], :on_update => :cascade, :on_delete => :restrict, :name => "users_created_by_fkey"
 
 end

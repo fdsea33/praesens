@@ -10,10 +10,10 @@ module RedHillConsulting::RowVersionMigrations::ActiveRecord::ConnectionAdapters
       create_table_without_row_version_migrations(name, options) do |table_defintion|
         yield table_defintion
         unless ActiveRecord::Schema.defining? || options[:row_version] == false
-          table_defintion.column :created_at,   :datetime, :null => false
-          table_defintion.column :created_by,   :integer,  :references=>:users, :on_delete=>:restrict, :on_update=>:cascade
-          table_defintion.column :updated_at,   :datetime, :null => false
-          table_defintion.column :updated_by,   :integer,  :references=>:users, :on_delete=>:restrict, :on_update=>:cascade
+          table_defintion.column :created_at,   :datetime, :null => true
+          table_defintion.column :created_by,   :integer,  :null => true,  :references=>:users, :on_delete=>:restrict, :on_update=>:cascade
+          table_defintion.column :updated_at,   :datetime, :null => true
+          table_defintion.column :updated_by,   :integer,  :null => true,:references=>:users, :on_delete=>:restrict, :on_update=>:cascade
           table_defintion.column :lock_version, :integer,  :null => false, :default => 0
         end
       end

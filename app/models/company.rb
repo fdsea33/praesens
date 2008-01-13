@@ -8,9 +8,9 @@
 #  code         :string(8)     not null
 #  admin        :boolean       not null
 #  siren        :string(9)     default("000000000"), not null
-#  created_at   :datetime      not null
+#  created_at   :datetime      
 #  created_by   :integer       
-#  updated_at   :datetime      not null
+#  updated_at   :datetime      
 #  updated_by   :integer       
 #  lock_version :integer       default(0), not null
 #
@@ -48,15 +48,15 @@ class Company < ActiveRecord::Base
       self.entity_natures.create! :name=>"Demoiselle", :title=>"Mlle", :physical=>true, :description=>"Humain de sexe féminin non marié"
       self.entity_natures.create! :name=>"SARL", :title=>"S.A.R.L.", :description=>"Société Anonyme à Responsabilité Limitée"
       self.entity_contact_norms.create! :name=>"Norme française", :reference=>"AFNOR XP Z 10-011 (mai 1997)", :preferred=>true
-      self.entity_contact_types.create! :name=>"Domicile", :description=>"Lieu de résidence régulier et privé"
-      self.entity_contact_types.create! :name=>"Travail", :description=>"Lieu d'exécution du métier"
+      self.entity_contact_natures.create! :name=>"Domicile", :description=>"Lieu de résidence régulier et privé"
+      self.entity_contact_natures.create! :name=>"Travail", :description=>"Lieu d'exécution du métier"
       c1 = self.currencies.create! :name=>"Euro", :code=>"EUR", :format=>"%n €"
       self.currencies.create! :name=>"Dollar (USA)", :code=>"USD", :format=>"$%n", :rate=>0.708
       self.currencies.create! :name=>"Livre sterling", :code=>"GBP", :format=>"£%n", :rate=>1.429
-      self.deadlines.create! :name=>"Immédiat", :active=>true
-      self.deadlines.create! :name=>"90 jours", :active=>true, :days=>90
-      self.deadlines.create! :name=>"30 jours fin de mois", :active=>true, :days=>30, :end_of_month=>true
-      self.deadlines.create! :name=>"10 jours fin de mois le 15", :active=>true, :days=>10, :end_of_month=>true, :additional_days=>15
+      self.delays.create! :name=>"Immédiat", :active=>true
+      self.delays.create! :name=>"90 jours", :active=>true, :days=>90
+      self.delays.create! :name=>"30 jours fin de mois", :active=>true, :days=>30, :end_of_month=>true
+      self.delays.create! :name=>"10 jours fin de mois le 15", :active=>true, :days=>10, :end_of_month=>true, :additional_days=>15
       self.accounts.create! :number=>"1", :name=>"Comptes de capitaux", :transferable=>true
       self.accounts.create! :number=>"101", :name=>"Capital"
       self.accounts.create! :number=>"1011", :name=>"Capital souscrit - non appelé"
@@ -112,18 +112,18 @@ class Company < ActiveRecord::Base
       self.banks.create! :name=>"CIC", :code=>"15654"
       self.banks.create! :name=>"Groupama Banque", :code=>"16514"
       self.banks.create! :name=>"Dexia", :code=>"14782"
-      tj1 = self.journal_types.create! :name=>"Ventes"
-      tj2 = self.journal_types.create! :name=>"Achats"
-      tj3 = self.journal_types.create! :name=>"Opérations diverses"
-      tj4 = self.journal_types.create! :name=>"Trésorerie"
-      j1 = self.journals.create! :type_id=>tj1.id, :name=>"Ventes (tous types)", :code=>"VT"
-      j2 = self.journals.create! :type_id=>tj2.id, :name=>"Achats (tous types)", :code=>"AC"
-      self.journals.create! :type_id=>tj3.id, :name=>"O.D.",   :code=>"OD"
-      j4 = self.journals.create! :type_id=>tj3.id, :name=>"À Nouveau",   :code=>"AN"
-      self.journals.create! :type_id=>tj4.id, :name=>"Banque", :code=>"BQ"
-      self.journals.create! :type_id=>tj4.id, :name=>"Caisse", :code=>"CS"
-      fyt = self.financialyear_types.create! :name=>"Exercice fiscal", :code=>"EF", :fiscal=>true
-      self.create_accountancy :name=>"Comptabilité", :currency_id=>c1.id, :newyear_id=>j4.id, :sales_id=>j1.id, :purchases_id=>j2.id, :losses_id=>a129.id, :profits_id=>a120.id, :master_type_id=>fyt.id, :report_credit_id=>a110.id, :report_debit_id=>a119.id
+      tj1 = self.journal_natures.create! :name=>"Ventes"
+      tj2 = self.journal_natures.create! :name=>"Achats"
+      tj3 = self.journal_natures.create! :name=>"Opérations diverses"
+      tj4 = self.journal_natures.create! :name=>"Trésorerie"
+      j1 = self.journals.create! :nature_id=>tj1.id, :name=>"Ventes (tous types)", :code=>"VT"
+      j2 = self.journals.create! :nature_id=>tj2.id, :name=>"Achats (tous types)", :code=>"AC"
+      self.journals.create! :nature_id=>tj3.id, :name=>"O.D.",   :code=>"OD"
+      j4 = self.journals.create! :nature_id=>tj3.id, :name=>"À Nouveau",   :code=>"AN"
+      self.journals.create! :nature_id=>tj4.id, :name=>"Banque", :code=>"BQ"
+      self.journals.create! :nature_id=>tj4.id, :name=>"Caisse", :code=>"CS"
+      fyt = self.financialyear_natures.create! :name=>"Exercice fiscal", :code=>"EF", :fiscal=>true
+      self.create_accountancy :name=>"Comptabilité", :currency_id=>c1.id, :newyear_id=>j4.id, :sales_id=>j1.id, :purchases_id=>j2.id, :losses_id=>a129.id, :profits_id=>a120.id, :master_nature_id=>fyt.id, :report_credit_id=>a110.id, :report_debit_id=>a119.id
     end
   end
   
@@ -141,11 +141,11 @@ class Company < ActiveRecord::Base
   end
   
   def current_financialyear
-    self.accountancy.master_type.current_financialyear
+    self.accountancy.master_nature.current_financialyear
   end
   
   def first_financialyear
-    self.accountancy.master_type.financialyears.find(:first, :order=>"started_on")
+    self.accountancy.master_nature.financialyears.find(:first, :order=>"started_on")
   end
   
   def balance(started_on, stopped_on=nil)

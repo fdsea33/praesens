@@ -13,9 +13,9 @@
 #  credit           :decimal(16, 2 default(0.0), not null
 #  balance          :decimal(16, 2 default(0.0), not null
 #  company_id       :integer       not null
-#  created_at       :datetime      not null
+#  created_at       :datetime      
 #  created_by       :integer       
-#  updated_at       :datetime      not null
+#  updated_at       :datetime      
 #  updated_by       :integer       
 #  lock_version     :integer       default(0), not null
 #
@@ -28,7 +28,7 @@ class JournalPeriod < ActiveRecord::Base
     self.company_id = self.journal.company_id
     self.started_on = self.started_on.beginning_of_month
     self.stopped_on = self.started_on.end_of_month
-    self.financialyear_id  = self.company.accountancy.master_type.current_financialyear.id unless self.company.accountancy.master_type.current_financialyear.nil?
+    self.financialyear_id  = self.company.accountancy.master_nature.current_financialyear.id unless self.company.accountancy.master_nature.current_financialyear.nil?
   end
 
   def validate_on_create

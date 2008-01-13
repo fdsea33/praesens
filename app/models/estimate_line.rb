@@ -1,0 +1,31 @@
+# == Schema Information
+# Schema version: 8
+#
+# Table name: estimate_lines
+#
+#  id                  :integer       not null, primary key
+#  estimate_id         :integer       not null
+#  product_id          :integer       not null
+#  pricelist_id        :integer       not null
+#  price_id            :integer       not null
+#  price_version_id    :integer       not null
+#  number              :integer       not null
+#  quantity            :decimal(16, 2 default(1.0), not null
+#  price               :decimal(16, 2 default(0.0), not null
+#  taxed_price         :decimal(16, 2 default(0.0), not null
+#  code                :string(32)    not null
+#  ean13               :string(13)    
+#  catalog_name        :string(255)   not null
+#  catalog_description :text          
+#  description         :text          
+#  account_id          :integer       not null
+#  company_id          :integer       not null
+#  created_at          :datetime      
+#  created_by          :integer       
+#  updated_at          :datetime      
+#  updated_by          :integer       
+#  lock_version        :integer       default(0), not null
+#
+
+class EstimateLine < ActiveRecord::Base
+end

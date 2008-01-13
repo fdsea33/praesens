@@ -15,9 +15,9 @@
 #  period_id    :integer       not null
 #  journal_id   :integer       not null
 #  company_id   :integer       not null
-#  created_at   :datetime      not null
+#  created_at   :datetime      
 #  created_by   :integer       
-#  updated_at   :datetime      not null
+#  updated_at   :datetime      
 #  updated_by   :integer       
 #  lock_version :integer       default(0), not null
 #
@@ -47,7 +47,7 @@ class JournalRecord < ActiveRecord::Base
   def validate_on_create
     errors.add_to_base("The journal is not opened for the current period".t) if self.period.nil?
 #    errors.add_to_base("The journal is closed for this period".t) if self.period and self.period.closed
-    errors.add_to_base("One financial year must be opened to permit the writing of records".t) if self.company.accountancy.master_type.can_open_financialyear?
+    errors.add_to_base("One financial year must be opened to permit the writing of records".t) if self.company.accountancy.master_nature.can_open_financialyear?
   end
   
   
