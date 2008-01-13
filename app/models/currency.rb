@@ -25,14 +25,14 @@ class Currency < ActiveRecord::Base
   def before_save
     old = Currency.find_by_id self.id
     new = self
-    if not old or (old.format!=new.format or old.rate!=new.rate)
+    if not old or (old.format!=new.format or old.current_rate!=new.current_rate)
       time = Time.now
       last_one = CurrencyRate.find_by_currency_id(self.id, :order=>"started_at DESC")
       if last_one
         last_one.stopped_at = time 
         last_one.save
       end
-      new_one = self.create_in_rates :format=>self.format, :rate=>self.rate, :started_at=>time, :company_id=>self.company_id
+      new_one = self.create_in_rates :format=>self.format, :rate=>self.current_rate, :started_at=>time, :company_id=>self.company_id
     end
   end
   

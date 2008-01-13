@@ -46,8 +46,8 @@ class Entry < ActiveRecord::Base
   def before_validation_on_create
     self.currency_debit=0  if self.currency_debit.nil?
     self.currency_credit=0 if self.currency_credit.nil?
-    unless self.currency_id.nil?
-      self.currency_rate_id = self.currency.current_rate.id if self.currency_rate_id.nil? or (self.currency_rate.currency_id!=self.currency_id)
+    unless self.currency.nil?
+      self.currency_rate = self.currency.current_rate if self.currency_rate.nil? or (self.currency_rate.currency_id!=self.currency_id)
       rate = self.currency_rate.rate
       self.debit  = (self.currency_debit*rate).round(2)
       self.credit = (self.currency_credit*rate).round(2)

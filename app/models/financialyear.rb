@@ -22,29 +22,29 @@
 #
 
 class Financialyear < ActiveRecord::Base
-  validates_constancy_of :started_on, :type_id
+  validates_constancy_of :started_on, :nature_id
   validates_constancy_of :stopped_on, :written_on, :if=>Proc.new { |y| y.closed? }
-  acts_as_list :scope=>:type_id
+  acts_as_list :scope=>:nature_id
 
   def initialize(*params)
     super(*params)
-    if new_record? and !self.type_id.nil? and self.started_on.nil? and self.stopped_on.nil? and written_on.nil? and code.nil?
-      financialyear_type = self.type
-      self.company_id = self.type.company_id
-      month_nb = financialyear_type.month_number
-      last_year = self.company.financialyears.find(:first, :order=>"started_on DESC", :conditions=>{:type_id=>financialyear_type.id})
+    if new_record? and !self.nature_id.nil? and self.started_on.nil? and self.stopped_on.nil? and written_on.nil? and code.nil?
+      financialyear_nature = self.nature
+      self.company_id = self.nature.company_id
+      month_nb = financialyear_nature.month_number
+      last_year = self.company.financialyears.find(:first, :order=>"started_on DESC", :conditions=>{:nature_id=>financialyear_nature.id})
       self.started_on = last_year.nil? ? Date.today : last_year.stopped_on+1
       self.started_on = Date.civil(self.started_on.year, self.started_on.month, 1)
       self.stopped_on = (self.started_on>>month_nb)-1
       self.written_on = self.stopped_on>>(month_nb/2).round
-      self.code = financialyear_type.code+"/"+self.started_on.year.to_s
-      if financialyear_type.month_number==12 and self.started_on.year != self.stopped_on.year
+      self.code = financialyear_nature.code+"/"+self.started_on.year.to_s
+      if financialyear_nature.month_number==12 and self.started_on.year != self.stopped_on.year
         year = self.stopped_on.year
         self.code += "-"+year.to_s[year.size-2, year.size-1]
         self.code += "-1" if self.company.financialyears.find_by_code(self.code)
-      elsif financialyear_type.month_number<12 and last_year and last_year.stopped_on.year!=last_year.started_on.year
+      elsif financialyear_nature.month_number<12 and last_year and last_year.stopped_on.year!=last_year.started_on.year
         self.code = last_year.code.succ
-      elsif financialyear_type.month_number<12
+      elsif financialyear_nature.month_number<12
         self.code += "-A"  
       end
       while self.company.financialyears.find_by_code(self.code)
@@ -55,15 +55,15 @@ class Financialyear < ActiveRecord::Base
 
   def validate
     errors.add_to_base("The limit date to authorize writing on a financial year must be after the stop date") if self.written_on < self.stopped_on
-    errors.add(:written_on, "The limit date to authorize writing on a financial year is too far") if self.written_on > self.stopped_on >> self.type.month_number*2
+    errors.add(:written_on, "The limit date to authorize writing on a financial year is too far") if self.written_on > self.stopped_on >> self.nature.month_number*2
     errors.add(:stopped_on, "The stop date must be a last day of month")  unless self.stopped_on = self.stopped_on.end_of_month
     errors.add(:stopped_on, "The stop date must be after the start date") unless self.started_on < self.stopped_on
   end
   
   def validate_on_create
     errors.add_to_base("A closed financial year can't be created") if self.closed
-    errors.add_to_base("Only one financial year can be opened by type at the same time") unless self.type.can_open_financialyear?
-    errors.add(:started_on, "The start date must be a first day of month") if self.started_on!=self.started_on.beginning_of_month and !self.type.new_type?
+    errors.add_to_base("Only one financial year can be opened by nature at the same time") unless self.nature.can_open_financialyear?
+    errors.add(:started_on, "The start date must be a first day of month") if self.started_on!=self.started_on.beginning_of_month and !self.nature.new_nature?
   end
 
   def validate_on_update
@@ -86,11 +86,11 @@ class Financialyear < ActiveRecord::Base
 
   
   def next_year
-    Financialyear.find :first, :conditions=>["position>? AND type_id=?",self.position, self.type_id], :order=>"position"
+    Financialyear.find :first, :conditions=>["position>? AND nature_id=?",self.position, self.nature_id], :order=>"position"
   end
   
   def previous_year
-    Financialyear.find :first, :conditions=>["position<? AND type_id=?",self.position, self.type_id], :order=>"position DESC"
+    Financialyear.find :first, :conditions=>["position<? AND nature_id=?",self.position, self.nature_id], :order=>"position DESC"
   end
 
   def compute_balance(force_compute=false)
@@ -166,7 +166,7 @@ class Financialyear < ActiveRecord::Base
       self.closed = true
       self.save
       # Création du nouvel exercice
-      newyear = Financialyear.create! :company_id=>self.company_id, :type_id=>self.type_id
+      newyear = Financialyear.create! :company_id=>self.company_id, :nature_id=>self.nature_id
       # A nouveau N+1
       if self.has_something_to_transfer?
         journal = accountancy.newyear

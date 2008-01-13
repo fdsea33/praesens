@@ -17,6 +17,6 @@
 #  lock_version :integer       default(0), not null
 #
 
-class CurrencyRate < ActiveRecord::Base
+class CurrencyVersion < ActiveRecord::Base
   validates_constancy_of :format, :rate, :currency_id, :started_at
 end
