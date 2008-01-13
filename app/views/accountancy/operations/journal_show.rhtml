@@ -1,0 +1,15 @@
+<% for column in ["name","code","closed_on"] -%>
+<div><b><%= Journal.columns_hash[column].human_name %>&nbsp;:</b> <%=h @journal.send(column) %></div>
+<% end -%>
+
+<%=
+print_table :journal_periods do |t|
+  t.datum :started_on
+  t.datum :stopped_on
+  t.datum :debit
+  t.datum :credit
+  t.datum :balance
+end
+-%>
+<%= link_to_procedure :journal -%> &bull;
+<%= link_to_procedure :record_entries, nil, nil,{:action=>:record_entries, :id=>@journal.id} -%>

@@ -1,0 +1,7 @@
+<% form_tag do %>
+<%= error_messages_for 'journal' %>
+<%= text_box :journal, :name -%>
+<%= text_box :journal, :code -%>
+<%= text_box :journal, :counterpart, :select_label=>:label -%>
+<%= submit_tag "Edit".t -%>
+<% end %>

@@ -1,0 +1,907 @@
+about:
+  language: Français
+  author: Sylvain OBEGI
+  comment:  Fichier de traduction en Français pour simple_localization (premier jet, les pays manquent, n'hésitez pas à envoyer des commentaires ou des patchs).
+  website: none
+  email: katios@nolabel.net
+  date: 2007-04-29
+
+active_record_messages:
+  inclusion: n'est pas inclu dans la liste
+  exclusion: est réservé
+  invalid: est invalide
+  confirmation: ne correspond pas à la confirmation
+  accepted: doit être accepté
+  empty: ne peut être vide
+  blank: ne peut être vide
+  too_long: est trop long (le maximum est de %d caractères)
+  too_short: est trop court (le minimum est de %d caractères)
+  wrong_length: est de la mauvaise taille (devrait être de %d caractères)
+  taken: a déjà été utilisé
+  not_a_number: n'est pas un nombre
+
+dates:
+  monthnames: [Janvier, Février, Mars, Avril, Mai, Juin, Juillet, Août, Septembre, Octobre, Novembre, Décembre]
+  daynames: [Dimanche, Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi]
+  abbr_monthnames: [Jan, Fév, Mar, Avr, Mai, Juin, Juil, Aoû, Sep, Oct, Nov, Dec]
+  abbr_daynames: [Dim, Lun, Mar, Mer, Jeu, Ven, Sam]
+  date_formats:
+    parse: '%d/%m/%Y'
+    db0: '%m/%d/%Y'
+    db1: '%d/%m/%Y %H:%M:%S'
+    db: '%d/%m/%Y'
+    default: '%d/%m/%Y'
+    short: '%d %b %y'
+    medium: '%d %B %Y'
+    long: '%A %d %B %Y'
+    month: '%B %Y'
+  time_formats:
+    db1: '%m/%d/%Y %H:%M:%S'
+    db: '%d/%m/%Y %H:%M:%S'
+    default: '%A %d %B %Y à %H:%M:%S'
+    short: '%e %b %H:%M'
+    long: '%e %B %Y à %H:%M'
+
+numbers:
+  separator: ','
+  delimiter: ' '
+  precision: 3
+
+arrays:
+  to_sentence:
+    connector: et
+    skip_last_comma: false
+
+countries:
+  Argentina: Argentine
+  Brazil: Brésil
+  Cuba: Cuba
+  England: Angleterre
+  Espana: Espagne
+  Finland: Finlande
+  France: France
+  Germany: Allemagne
+  Italy: Italie
+  Japan: Japon
+
+
+helpers:
+  error_messages_for:
+    heading:
+      1: '1 erreur a empêché ce %2$s d''être enregistré'
+      n: '%d erreurs ont empêché ce %s d''être enregistré'
+    description: 'Il y a eu des problèmes avec les champs suivants&nbsp;:'
+  number_to_currency:
+    precision: 2
+    unit: ' €'
+    order: [main, separator, fraction, unit]
+  number_to_phone:
+    area_code: false
+    delimiter: '-'
+    extension: 
+    country_code: 
+  date_select:
+    order: [:year, :month, :day]
+  distance_of_time_in_words:
+    less than 5 seconds: moins de 5 secondes
+    less than 10 seconds: moins de 10 secondes
+    less than 20 seconds: moins de 20 secondes
+    less than a minute: moins d''une minute
+    1 minute: 1 minute
+    half a minute: 30 seconds
+    n minutes: %i minutes
+    about 1 hour: environ 1 heure
+    about n hours: environ %i heures
+    1 day: 1 jour
+    n days: %i jours
+    about 1 month: environ 1 mois
+    n months: %i mois
+    about 1 year: environ 1 an
+    over n years: plus de %i ans
+
+# Add your the model translations as descriped in the
+# localized_models_by_lang_file feature to the model section.
+# 
+# Example:
+# 
+# models:
+#   my_model:
+#     name: Localized model name
+#     attributes:
+#       name: Localized name
+#       description: Localized description
+models:
+  account:
+    name: Compte
+    attributes:
+      number: Numéro
+      name: Nom
+      alpha: Code alpha
+      label: Nom complet
+      type: Type
+      usable: Utilisable
+      groupable: Groupable
+      letterable: Lettrable
+      pointable: Pointable
+      is_debit: Débit
+      transferable: Reportable
+      keep_entries: Historiser
+      last_letter: Dernier lettrage
+      deadline_id: Échéance
+      entity_id: Partenaire
+      parent_id: Parent
+      comment: Commentaire
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  accountancy:
+    name: Comptabilité
+    attributes:
+      name: Nom
+      comment: Commentaire
+      currency_id: Monnaie
+      losses_id: Compte de perte
+      profits_id: Compte de profit
+      sales_id: Journal de ventes par défaut
+      purchases_id: Journal de ventes par défaut
+      newyear_id: Journal des à nouveaux
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  bank:
+    name: Banque
+    attributes:
+      entity_id: Partenaire
+      name: Nom
+      code: Code banque
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  bank_account:
+    name: Compte bancaire
+    attributes:
+      name: Nom
+      agency: Agence
+      counter: Code guichet
+      number: N° de compte
+      key: Clé
+      iban: IBAN
+      iban_text: IBAN
+      bic: BIC
+      swift: BIC
+      bank_id: Banque
+      journal_id: Journal
+      currency_id: Monnaie
+      account_id: Compte comptable
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  company:
+    name: Société
+    attributes:
+      name: Nom
+      code: Code
+      admin: Administration
+      siren: SIREN
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  company_department:
+    name: Service de société
+    attributes:
+      name: Nom
+      parent_id: Service père
+      company_establishment_id: Établissement
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  company_employee:
+    name: Salarié de société
+    attributes:
+      company_department_id: Service
+      user_id: Utilisateur
+      title: Titre
+      surname: Nom
+      first_name: Prénom
+      arrived_on: Date d'arrivée
+      role: Fonction
+      phone: Téléphone
+      email: E-mail
+      mobile: Mobile
+      fax: Fax
+      office: Bureau
+      note: Note
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  company_establishment:
+    name: Établissement de société
+    attributes:
+      name: Nom
+      nic: Numéro NIC
+      siret: SIRET
+      address: Adresse
+      note: Note
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  currency:
+    name: Monnaie
+    attributes:
+      name: Nom
+      code: Code
+      format: Format
+      rate: Taux
+      active: Utilisable
+      comment: Commentaire
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  currency_rate:
+    name: Valeur de change
+    attributes:
+      format: Format
+      rate: Taux
+      started_on: Valable du
+      stopped_on: Valable jusqu'au
+      currency_id: Monnaie
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  deadline:
+    name: Délai
+    attributes:
+      name: Nom
+      active: Utilisable
+      months: Nb. mois
+      days: Nb. jours
+      end_of_month: Fin de mois
+      additional_days: Nb. jours supp.
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  entity:
+    name: Partenaire
+    attributes:
+      nature_id: Nature
+      language_id: Langue
+      code: Code
+      surname: Nom
+      first_name: Prénom
+      full_name: Nom complet
+      active: Actif
+      born_on: Né(e) le
+      ean13: Code EAN13
+      surname_soundex2: Soundex2 (Nom)
+      web_site: Site web
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  entity_contact:
+    name: Contact
+    attributes:
+      entity_id: Partenaire
+      contact_type_id: Type
+      contact_norm_id: Norme
+      active: Actif
+      closed_on: Désactivé le
+      line_2: N°appartement ou de boîte à lettres - Étage - Couloir - Escalier ou service - Identité du destinataire
+      line_3: Entrée - Tour - Immeuble - Bâtiment - Résidence - Zone industrielle...
+      line_4_number: N°
+      line_4_street: 'Type et voie (Ex : AVENUE DES FLEURS)'
+      line_5: 'Mention spéciale de distribution et N°(Ex : BP - TSA -...) ou Lieu-dit'
+      line_6_code: Code postal/CEDEX
+      line_6_city: Localité de destination ou Libellé CEDEX
+      phone: Téléphone
+      fax: Fax/Télécopie
+      mobile: Portable
+      email: E-mail
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  entity_contact_norm:
+    name: Norme postale
+    attributes:
+      name: Nom
+      reference: Référence
+      preferred: Par défaut
+      rtl: Sens de lecture
+      align: Alignement
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  entity_contact_norm_item:
+    name: Élément de norme postale
+    attributes:
+      contact_norm_id: Norme
+      title: Titre
+      nature: Nature
+      maxlength: Nb. Caractères
+      content: Contenu
+      left_nature: Nature du préfixe
+      left_value: Contenu du préfixe
+      right_nature: Nature du suffixe
+      right_value: Contenu du suffixe
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  entity_contact_type:
+    name: Type de contact
+    attributes:
+      name: Nom
+      active: Actif
+      description: Description
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  entity_nature:
+    name: Nature de partenaire
+    attributes:
+      name: Nom
+      physical: Personne physique
+      title: Titre/Qualité
+      active: Actif
+      description: Description
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  entry:
+    name: Écriture comptable
+    attributes:
+      record_id: Pièce
+      account_id: Compte
+      name: Libellé
+      currency_debit: Débit O.
+      currency_credit: Crédit O.
+      currency_rate_id: Tx de change
+      currency_id: Monnaie
+      debit: Débit
+      credit: Crédit
+      intermediate_id: Relevé intermédiaire
+      statement_id: Relevé
+      letter: Lettre
+      expired_on: Échue le
+      position: Position
+      comment: Commentaire
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  financialyear:
+    name: Exercice comptable
+    attributes:
+      code: Code
+      type_id: Type
+      closed: Clos
+      started_on: Commencé le
+      stopped_on: Fini le
+      written_on: Fin des écritures le
+      debit: Débit
+      credit: Crédit
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  financialyear_type:
+    name: Type d'exercice comptable
+    attributes:
+      name: Nom
+      code: Code
+      fiscal: Exercice fiscal
+      month_number: Durée (mois)
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  journal:
+    name: Journal
+    attributes:
+      name: Nom
+      type_id: Type
+      code: Code
+      closed_on: Cloturé le
+      counterpart_id: Contre-partie
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  journal_period:
+    name: Période comptable
+    attributes:
+      journal_id: Journal
+      financialyear_id: Exercice
+      started_on: Du
+      stopped_on: Au
+      debit: Débit
+      credit: Crédit
+      balance: Balance
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  journal_record:
+    name: Pièce comptable
+    attributes:
+      created_on: Saisie le
+      printed_on: Datée du
+      number: N° Pièce
+      status: Statut
+      debit: Débit
+      credit: Crédit
+      balance: Balance
+      position: Position
+      journal_id: Journal
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  journal_type:
+    name: Type de journal
+    attributes:
+      name: Nom
+      comment: Commentaires
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  language:
+    name: Langue
+    attributes:
+      code: Code
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  part:
+    name: Partie
+    attributes:
+      name: Nom
+      title: Titre
+      code: Code
+      active: Actif
+      description: Description
+      image_url: Image
+      position: Position
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  part_component:
+    name: Composant de partie
+    attributes:
+      name: Nom
+      title: Titre
+      code: Code
+      description: Description
+      position: Position
+      part_id: Partie
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  part_component_procedure:
+    name: Action de composant de partie
+    attributes:
+      name: Nom
+      title: Titre
+      procedures: Procédures
+      description: Description
+      position: Position
+      part_component_id: Composant
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  role:
+    name: Profil d'accès
+    attributes:
+      name: Nom
+      admin: Administrateur
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  right:
+    name: Droit
+    attributes:
+      active: Actif
+      part_id: Partie
+      part_component_id: Composant
+      part_component_procedure_id: Procédure
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+  user:
+    name: Utilisateur
+    attributes:
+      name: Nom
+      hashed_password: Mot de passe haché
+      language_id: Langue
+      salt: Sel
+      locked: Verrouillé
+      password: Mot de passe
+      password_confirmation: Confirmation
+      email: E-mail
+      role_id: Rôle
+      id: Identifiant
+      created_at: Date de création
+      created_by: Créateur
+      updated_at: Date de mise à jour
+      updated_by: Modificateur
+      lock_version: Version
+
+
+# You can use the app section freely to localize you application with the
+# localized_application feature. The entries defined here are accesable by the
+# global method "l". See the RDoc for details.
+app:
+  nav:
+    general: Général
+    back: Retour à la liste
+    edit: Modifier
+    show: Consulter
+    destroy: Supprimer
+    introduce: '%s&nbsp;: <em>%s</em>'
+  languages:
+    fr: Français
+    en: Anglais
+    es: Espagnol
+    de: Allemand
+    nl: Hollandais
+  titles:
+    actions:
+      editing: 'Édition&nbsp;: %s'
+      creating: 'Création&nbsp;: %s'
+      test: 'Ceci est %s test cest %s avec des entiers %d'
+  authorization:
+    please_login: Veuillez vous connecter
+    page_not_authorized: Vous n'êtes pas autorisé(e) à effectuer cette opération
+    invalid_url: 'Adresse URL invalide&nbsp;: %s'
+    invalid_password: Non d'utilisateur ou mot de passe invalide
+    disconnected: Vous êtes déconnecté
+  parts:
+    title: Præsens
+    public:
+      title: Public
+      description: Gestion des connexions et des menus
+      components:
+        home: 
+          title: Accueils
+          description: Gestion des pages d'accueil
+          procedures:
+            all:
+              title: Accéder aux pages d'accueils
+        authentication: 
+          title: Authentification
+          description: Gestion des connexions des utilisateurs
+          procedures:
+            all:
+              title: Se connecter et se déconnecter
+    administration:
+      title: Administration
+      description: Gestion des sociétés et des différentes parties de l'application
+      components:
+        application: 
+          title: Application
+          description: Gestion des composants (ou contrôleurs) de l'application
+          procedures:
+            select:
+              title: Consulter la liste des modules principaux
+            activate:
+              title: Activer/désactiver des modules
+        company: 
+          title: Sociétés
+          description: Gestion des sociétés
+          procedures:
+            select:
+              title: Consulter les sociétés
+            insert:
+              title: Créer des sociétés
+            update:
+              title: Modifier des sociétés
+            delete:
+              title: Supprimer des sociétés
+    organisation:
+      title: Organisation
+      description: Gestion de la société et de son organisation interne
+      components:
+        department:
+          title: Services
+          description: Gestion des services de la société
+          procedures:
+            select:
+              title: Consulter la liste des services
+            insert:
+              title: Créer un service
+            update:
+              title: Modifier des services
+            delete:
+              title: Supprimer des services
+        employee:
+          title: Employés
+          description: Gestion des employés de la société
+          procedures:
+            select:
+              title: Consulter la liste des employés
+            insert:
+              title: Créer un employé
+            update:
+              title: Modifier des employés
+            delete:
+              title: Supprimer des employés
+        establishment:
+          title: Établissements
+          description: Gestion des établissements de la société
+          procedures:
+            select:
+              title: Consulter la liste des établissements
+            insert:
+              title: Créer un établissement
+            update:
+              title: Modifier des établissements
+            delete:
+              title: Supprimer des établissements
+        role:
+          title: Rôles
+          description: Gestion des rôles des utilisateurs
+          procedures:
+            select:
+              title: Consulter les rôles
+            insert:
+              title: Créer un rôle sans privilèges
+            update:
+              title: Modifier des rôles et définir les privilèges
+            delete:
+              title: Supprimer des rôles
+        company:
+          title: Société
+          description: Gestion de la société
+          procedures:
+            select:
+              title: Consulter la fiche de la société
+            update:
+              title: Modifier la société
+        user:
+          title: Utilisateurs
+          description: Gestion des utilisateurs
+          procedures:
+            select:
+              title: Consulter les utilisateurs
+            insert:
+              title: Créer un utilisateur
+            update:
+              title: Modifier des utilisateurs
+            delete:
+              title: Supprimer des utilisateurs
+    relationship:
+      title: Relations
+      description: Gestion des relations clients et fournisseurs
+      components:
+        entity:
+          title: Partenaires
+          description: Gestion des relations clients et fournisseurs
+          procedures:
+            select:
+              title: Consulter la liste des partenaires
+            insert:
+              title: Créer un partenaire
+            update:
+              title: Modifier un partenaire
+            delete:
+              title: Supprimer un partenaire
+        settings:
+          title: Paramétrage
+          description: Paramétrages des types et des normes
+          procedures:
+            index:
+              title: Accéder au menu de paramétrage
+            nature:
+              title: Gérer les natures de partenaires
+            contact_type:
+              title: Gérer les types de contact
+            contact_norm:
+              title: Gérer les normes postales
+    accountancy:
+      title: Comptabilité
+      description: Gestion de la comptabilité de la société
+      components:
+        accounts:
+          title: Plan comptable
+          description: Gestion de l'intégralité du plan comptable
+          procedures:
+            select:
+              title: Consulter la liste des comptes
+            insert:
+              title: Créer un compte
+            update:
+              title: Modifier le détail d'un compte
+            delete:
+              title: Supprimer un compte
+            check:
+              title: Pointer
+            letter:
+              title: Lettrer
+        operations:
+          title: Opérations
+          description: Saisie d'écritures, ouvertures et clôtures de journaux et d'exercices, impressions de balance, grand livre...
+          procedures:
+            record_entries:
+              title: Saisie des écritures
+            journal:
+              title: Gestion des journaux
+            journal_close:
+              title: Clôture d'un journal
+            journal_open:
+              title: Ouverture d'un journal
+            journal_edit:
+              title: Modifier un journal
+            journal_new:
+              title: Créer un journal
+            financialyear:
+              title: Gestion des exercices
+            financialyear_close:
+              title: Clôture d'exercice
+            financialyear_open:
+              title: Ouverture d'exercice
+            financialyear_edit:
+              title: Modifier un exercice
+        settings:
+          title: Paramétrage
+          description: Gestion des types de journaux et d'exercices, création des journaux, des banques et comptes bancaires
+          procedures:
+            index:
+              title: Accéder au paramétrage
+            bank_account:
+              title: Gérer les comptes bancaires
+            bank:
+              title: Gérer les banques
+            journal:
+              title: Gérer les journaux
+            journal_type:
+              title: Gérer les types de journaux
+            financialyear_type:
+              title: Gérer les types d'exercices comptables
+            currency:
+              title: Gérer les monnaies
+            deadline:
+              title: Gérer les délais
+    sales:
+      title: Ventes
+      description: Gestion des ventes et la facturation
+  'Are you sure?': Etes-vous sûr(e) ?
+  'Back': Retour
+  'Balance from x to y': 'Balance du %s au %s'
+  'Balance of the year x': 'Balance définitive de l''exercice %s'
+  'Book from x to y': 'Grand livre du %s au %s'
+  'Book of the year x': 'Grand livre définitif de l''exercice %s'
+  'Break #': 'Sous total de niveau %s'
+  'Cancel': Annuler
+  'Class x': 'Classe %s'
+  'Create': Créer
+  'Creating x': 'Création : %s'
+  'Description': Description
+  'Destroy': Supprimer
+  'Edit': Modifier
+  'Editing x': 'Edition : %s'
+  'Exit': Quitter
+  'Journal j of the year x': '%s de l''exercice %s'
+  'Journal j from x to y': '%s du %s au %s'
+  'Level x': 'Niveau %s'
+  'List': Liste
+  'Listing x': 'Liste : %s'
+  'Lock access': Verrouiller l'accès
+  'Manage rights': Gérer les droits
+  'Next page': Page suivante
+  'No records': Pas d''enregistrements
+  'Period from %s to %s': 'Période : %s à %s'
+  'Previous page': Page précédente
+  'Recording entries on x': 'Saisie d''écritures sur le journal&nbsp;: %s'
+  'Rights': Droits
+  'Select journal for entries': Sélectionnez un journal pour la saisie d'écritures
+  'Show': Voir le détail
+  'Temporary balance of the year x': 'Balance provisoire de l''exercice %s'
+  'Temporary book of the year x': 'Grand livre provisoire de l''exercice %s'
+  'Temporary journal j of the year x': '%s de l''exercice %s (Temporaire)'
+  'Title': Titre
+  'Unlock access': Déverrouiller l'accès

@@ -1,0 +1,21 @@
+<%= error_messages_for 'entity_contact' %>
+
+<%=select_box EntityContact, "contact_type_id", @current_company.entity_contact_types.collect {|p| [ p.name, p.id ] } %>
+<%=select_box EntityContact, "contact_norm_id", @current_company.entity_contact_norms.collect {|p| [ p.name, p.id ] } %>
+<%=text_box EntityContact, "line_2", {:position=>:bottom}%>
+<%=text_box EntityContact, "line_3", {:position=>:bottom}%>
+<table><tr><td>
+<%=text_box EntityContact, "line_4_number", {:position=>:bottom}%>
+</td><td>
+<%=text_box EntityContact, "line_4_street", {:position=>:bottom}%>
+</td></tr></table>
+<%=text_box EntityContact, "line_5", {:position=>:bottom}%>
+<table><tr><td>
+<%=text_box EntityContact, "line_6_code", {:position=>:bottom}%>
+</td><td>
+<%=text_box EntityContact, "line_6_city", {:position=>:bottom}%>
+</td></tr></table>
+<%=text_box EntityContact, "phone"%>
+<%=text_box EntityContact, "fax"%>
+<%=text_box EntityContact, "mobile"%>
+<%=text_box EntityContact, "email"%>

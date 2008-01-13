@@ -1,0 +1,8 @@
+<h1>Editing entity_nature</h1>
+
+<% form_tag :id => @entity_nature do %>
+  <%= render :partial => 'nature_form' %>
+  <%= submit_tag "Edit".t %>
+<% end %>
+
+<%= link_to 'Back'.t, :action => 'nature_list' %>

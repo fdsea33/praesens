@@ -1,0 +1,11 @@
+<% if right -%>
+<tr class="tree level2">
+  <td><%= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"*depth %>
+  <%= check_box "right[]", "active" , {}, "true", "false" %>
+  <label><%= right.title %></label>
+  </td>
+</tr>
+<%  if right.children.size > 0 -%>
+<%= render :partial => 'right', :collecion=>right.children, :locals=>{:depth=>depth+1} -%>
+<%  end -%>
+<%end-%>

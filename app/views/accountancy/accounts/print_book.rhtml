@@ -1,0 +1,25 @@
+<%form_tag do-%>
+<table class="read"><tr><td>
+<fieldset>
+  <legend><%="Period".t-%></legend>
+  <div id="with-dates">
+    <div><%=radio_button_tag("book[period]", "dates",true)-%> <%="From".t -%> <%= text_field("book","started_on", {:size=>16, :maxlength=>16, :value=>@current_company.current_financialyear.started_on})-%> <%="To".t -%> <%= text_field("book","stopped_on", {:size=>16, :maxlength=>16, :value=>Date.today})-%></div>
+    <div></div>
+  </div>
+  <div id="with-year">
+  <%=radio_button_tag("book[period]", "year")-%> <%="By financial year".t-%>
+    <%= select "book", "financialyear_id", @current_company.financialyears.collect {|p| [ p.code, p.id ] }-%>
+  </div>
+</fieldset>
+<fieldset>
+  <legend><%="Accounts".t-%></legend>
+  <div><%="From".t -%> <%= text_field("book","from_account",{:size=>16, :maxlength=>16, :value=>"1"})-%> <%="To".t -%> <%= text_field("book","to_account",{:size=>16, :maxlength=>16, :value=>"9999999999999999"})-%></div>
+</fieldset>
+<fieldset>
+  <legend><%="Page".t-%></legend>
+  <div><%=check_box("book","break_page",{:checked=>true})-%> <%= "Put a page break after every accounts".t-%></div>
+  <div><%=check_box("book","print_empty_accounts")-%> <%= "Print empty accounts".t-%></div>
+</fieldset>
+</td></tr></table>
+<%=submit_tag "Create document".t -%>
+<%end-%>

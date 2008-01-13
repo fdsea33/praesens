@@ -1,0 +1,16 @@
+# == Schema Information
+# Schema version: 3
+#
+# Table name: tasks
+#
+#  id           :integer       not null, primary key
+#  name         :string(255)   not null
+#  description  :string(255)   not null
+#  component_id :integer       not null
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+two:
+  id: 2

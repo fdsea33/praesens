@@ -1,0 +1,17 @@
+<%= link_to_procedure :journal_new -%> &bull; 
+<%= link_to_procedure :journal_type, :settings -%> &bull; 
+<%= link_to "Print general journal".t, :action=>:print_general_journal-%>
+<%=
+print_table :journals do |t|
+  t.datum :name
+  t.datum :code
+  t.datum :name, :through=>:type
+  t.datum :closed_on
+  t.datum :label, :through=>:counterpart
+  t.action :action=>:journal_show,  :image=>:show
+  t.action :action=>:journal_print, :image=>:print
+  t.action :action=>:journal_edit,  :image=>:edit
+  t.action :action=>:journal_close, :image=>:destroy
+end
+-%>
+

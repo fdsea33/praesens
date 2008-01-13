@@ -1,0 +1,27 @@
+<% if auth :nature -%>
+<div>
+  <h3>Natures de partenaires</h3>
+  <ul>
+    <li><%= link_to "List entity natures".t, {:action=>"nature_list"} %></li>
+    <li><%= link_to "New entity nature".t, {:action=>"nature_new"} %></li>
+  </ul>
+</div>
+<% end -%>
+<% if auth :contact_norm -%>
+<div>
+  <h3>contact_norms de partenaires</h3>
+  <ul>
+    <li><%= link_to "List entity contact_norms".t, {:action=>"contact_norm_list"} %></li>
+    <li><%= link_to "New entity contact_norm".t, {:action=>"contact_norm_new"} %></li>
+  </ul>
+</div>
+<% end -%>
+<% if auth :contact_type -%>
+<div>
+  <h3>contact_types de partenaires</h3>
+  <ul>
+    <li><%= link_to "List entity contact_types".t, {:action=>"contact_type_list"} %></li>
+    <li><%= link_to "New entity contact_type".t, {:action=>"contact_type_new"} %></li>
+  </ul>
+</div>
+<% end -%>

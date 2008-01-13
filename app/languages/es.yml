@@ -1,0 +1,466 @@
+about:
+  language: Français
+  author: Sylvain OBEGI
+  comment:  Fichier de traduction en Français pour simple_localization (premier jet, les pays manquent, n'hésitez pas à envoyer des commentaires ou des patchs).
+  website: none
+  email: katios@nolabel.net
+  date: 2007-04-29
+
+active_record_messages:
+  inclusion: n'est pas inclu dans la liste
+  exclusion: est réservé
+  invalid: est invalide
+  confirmation: ne correspond pas à la confirmation
+  accepted: doit être accepté
+  empty: ne peut être vide
+  blank: ne peut être vide
+  too_long: est trop long (le maximum est de %d caractères)
+  too_short: est trop court (le minimum est de %d caractères)
+  wrong_length: est de la mauvaise taille (devrait être de %d caractères)
+  taken: a déjà été utilisé
+  not_a_number: n'est pas un nombre
+
+dates:
+  monthnames: [Janvier, Février, Mars, Avril, Mai, Juin, Juillet, Août, Septembre, Octobre, Novembre, Décembre]
+  daynames: [Dimanche, Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi]
+  abbr_monthnames: [Jan, Fév, Mar, Avr, Mai, Juin, Juil, Aoû, Sep, Oct, Nov, Dec]
+  abbr_daynames: [Dim, Lun, Mar, Mer, Jeu, Ven, Sam]
+  date_formats:
+    parse: '%d/%m/%Y'
+    db0: '%m/%d/%Y'
+    db1: '%d/%m/%Y %H:%M:%S'
+    db: '%d/%m/%Y'
+    default: '%d-%m-%Y'
+    short: '%d %b %y'
+    medium: '%d %B %Y'
+    long: '%A %d %B %Y'
+  time_formats:
+    db1: '%m/%d/%Y %H:%M:%S'
+    db: '%d/%m/%Y %H:%M:%S'
+    default: '%A %d %B %Y à %H:%M:%S'
+    short: '%e %b %H:%M'
+    long: '%e %B %Y à %H:%M'
+
+numbers:
+  separator: ','
+  delimiter: ' '
+  precision: 3
+
+arrays:
+  to_sentence:
+    connector: et
+    skip_last_comma: false
+
+countries:
+  Argentina: Argentine
+  Brazil: Brésil
+  Cuba: Cuba
+  England: Angleterre
+  Espana: Espagne
+  Finland: Finlande
+  France: France
+  Germany: Allemagne
+  Italy: Italie
+  Japan: Japon
+
+
+helpers:
+  error_messages_for:
+    heading:
+      1: '1 erreur a empêché ce %2$s d''être enregistré'
+      n: '%d erreurs ont empêché ce %s d''être enregistré'
+    description: 'Il y a eu des problèmes avec les champs suivants&nbsp;:'
+  number_to_currency:
+    precision: 2
+    unit: '€'
+    order: [unit, main, separator, fraction]
+  number_to_phone:
+    area_code: false
+    delimiter: '-'
+    extension: 
+    country_code: 
+  date_select:
+    order: [:year, :month, :day]
+  distance_of_time_in_words:
+    less than 5 seconds: moins de 5 secondes
+    less than 10 seconds: moins de 10 secondes
+    less than 20 seconds: moins de 20 secondes
+    less than a minute: moins d''une minute
+    1 minute: 1 minute
+    half a minute: 30 seconds
+    n minutes: %i minutes
+    about 1 hour: environ 1 heure
+    about n hours: environ %i heures
+    1 day: 1 jour
+    n days: %i jours
+    about 1 month: environ 1 mois
+    n months: %i mois
+    about 1 year: environ 1 an
+    over n years: plus de %i ans
+
+# Add your the model translations as descriped in the
+# localized_models_by_lang_file feature to the model section.
+# 
+# Example:
+# 
+# models:
+#   my_model:
+#     name: Localized model name
+#     attributes:
+#       name: Localized name
+#       description: Localized description
+models:
+  company:
+    name: Société
+    attributes:
+      name: Nom
+      code: Code
+      admin: Administration
+      siren: SIREN
+      id: Identifiant
+      created_at: Date de création
+      updated_at: Date de mise à jour
+      lock_version: Version
+  company_department:
+    name: Service de société
+    attributes:
+      name: Nom
+      parent_id: Service père
+      company_establishment_id: Établissement
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      updated_at: Date de mise à jour
+      lock_version: Version
+  company_employee:
+    name: Salarié de société
+    attributes:
+      company_department_id: Service
+      user_id: Utilisateur
+      title: Titre
+      surname: Nom
+      first_name: Prénom
+      arrived_on: Date d'arrivée
+      role: Fonction
+      phone: Téléphone
+      email: E-mail
+      mobile: Mobile
+      fax: Fax
+      office: Bureau
+      note: Note
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      updated_at: Date de mise à jour
+      lock_version: Version
+  company_establishment:
+    name: Établissement de société
+    attributes:
+      name: Nom
+      nic: Numéro NIC
+      siret: SIRET
+      address: Adresse
+      note: Note
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      updated_at: Date de mise à jour
+      lock_version: Version
+  entity:
+    name: Partenaire
+    attributes:
+      entity_nature_id: Nature
+      language_id: Langue
+      code: Code
+      surname: Nom
+      first_name: Prénom
+      full_name: Nom complet
+      active: Actif
+      born_on: Né(e) le
+      ean13: Code EAN13
+      surname_soundex2: Soundex2 (Nom)
+      web_site: Site web
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      updated_at: Date de mise à jour
+      lock_version: Version
+  entity_nature:
+    name: Nature de partenaire
+    attributes:
+      name: Nom
+      physical: Personne physique
+      title: Titre/Qualité
+      active: Actif
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      updated_at: Date de mise à jour
+      lock_version: Version
+  language:
+    name: Langue
+    attributes:
+      code: Code
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      updated_at: Date de mise à jour
+      lock_version: Version
+  part:
+    name: Partie
+    attributes:
+      name: Nom
+      title: Titre
+      code: Code
+      active: Actif
+      description: Description
+      image_url: Image
+      position: Position
+      id: Identifiant
+      created_at: Date de création
+      updated_at: Date de mise à jour
+      lock_version: Version
+  part_component:
+    name: Composant de partie
+    attributes:
+      name: Nom
+      title: Titre
+      code: Code
+      description: Description
+      position: Position
+      id: Identifiant
+      created_at: Date de création
+      updated_at: Date de mise à jour
+      lock_version: Version
+  part_component_procedure:
+    name: Action de composant de partie
+    attributes:
+      name: Nom
+      title: Titre
+      procedures: Procédures
+      description: Description
+      position: Position
+      id: Identifiant
+      created_at: Date de création
+      updated_at: Date de mise à jour
+      lock_version: Version
+  role:
+    name: Profil d'accès
+    attributes:
+      name: Nom
+      admin: Administrateur
+      company_id: Société
+      id: Identifiant
+      created_at: Date de création
+      updated_at: Date de mise à jour
+      lock_version: Version
+  user:
+    name: Utilisateur
+    attributes:
+      name: Nom
+      hashed_password: Mot de passe haché
+      language_id: Langue
+      salt: Sel
+      locked: Verrouillé
+      password: Mot de passe
+      password_confirmation: Confirmation
+      email: E-mail
+      role_id: Rôle
+      id: Identifiant
+      created_at: Date de création
+      updated_at: Date de mise à jour
+      lock_version: Version
+
+
+# You can use the app section freely to localize you application with the
+# localized_application feature. The entries defined here are accesable by the
+# global method "l". See the RDoc for details.
+app:
+  nav:
+    general: Général
+    back: Retour à la liste
+    edit: Modifier
+    show: Consulter
+    destroy: Supprimer
+    introduce: '%s&nbsp;: <em>%s</em>'
+  languages:
+    fr: Français
+    en: Anglais
+    es: Espagnol
+    de: Allemand
+    nl: Hollandais
+  titles:
+    actions:
+      editing: 'Édition&nbsp;: %s'
+      creating: 'Création&nbsp;: %s'
+      test: 'Ceci est %s test cest %s avec des entiers %d'
+  authorization:
+    please_login: Veuillez vous connecter
+    page_not_authorized: Vous n'êtes pas autorisé(e) à effectuer cette opération
+    invalid_url: 'Adresse URL invalide&nbsp;: %s'
+    invalid_password: Non d'utilisateur ou mot de passe invalide
+    disconnected: Vous êtes déconnecté
+  parts:
+    title: Præsens
+    public:
+      title: Public
+      description: Gestion des connexions et des menus
+      components:
+        home: 
+          title: Accueils
+          description: Gestion des pages d'accueil
+          procedures:
+            all:
+              title: Accéder aux pages d'accueils
+        authentication: 
+          title: Authentification
+          description: Gestion des connexions des utilisateurs
+          procedures:
+            all:
+              title: Se connecter et se déconnecter
+    administration:
+      title: Administration
+      description: Gestion des sociétés et des différentes parties de l'application
+      components:
+        application: 
+          title: Application
+          description: Gestion des composants (ou contrôleurs) de l'application
+          procedures:
+            select:
+              title: Consulter la liste des modules principaux
+            activate:
+              title: Activer/désactiver des modules
+        company: 
+          title: Sociétés
+          description: Gestion des sociétés
+          procedures:
+            select:
+              title: Consulter les sociétés
+            insert:
+              title: Créer des sociétés
+            update:
+              title: Modifier des sociétés
+            delete:
+              title: Supprimer des sociétés
+    organisation:
+      title: Organisation
+      description: Gestion de la société et de son organisation interne
+      components:
+        department:
+          title: Services
+          description: Gestion des services de la société
+          procedures:
+            select:
+              title: Consulter la liste des services
+            insert:
+              title: Créer un service
+            update:
+              title: Modifier des services
+            delete:
+              title: Supprimer des services
+        employee:
+          title: Employés
+          description: Gestion des employés de la société
+          procedures:
+            select:
+              title: Consulter la liste des employés
+            insert:
+              title: Créer un employé
+            update:
+              title: Modifier des employés
+            delete:
+              title: Supprimer des employés
+        establishment:
+          title: Établissements
+          description: Gestion des établissements de la société
+          procedures:
+            select:
+              title: Consulter la liste des établissements
+            insert:
+              title: Créer un établissement
+            update:
+              title: Modifier des établissements
+            delete:
+              title: Supprimer des établissements
+        role:
+          title: Rôles
+          description: Gestion des rôles des utilisateurs
+          procedures:
+            select:
+              title: Consulter les rôles
+            insert:
+              title: Créer un rôle sans privilèges
+            update:
+              title: Modifier des rôles et définir les privilèges
+            delete:
+              title: Supprimer des rôles
+        company:
+          title: Société
+          description: Gestion de la société
+          procedures:
+            select:
+              title: Consulter la fiche de la société
+            update:
+              title: Modifier la société
+        user:
+          title: Utilisateurs
+          description: Gestion des utilisateurs
+          procedures:
+            select:
+              title: Consulter les utilisateurs
+            insert:
+              title: Créer un utilisateur
+            update:
+              title: Modifier des utilisateurs
+            delete:
+              title: Supprimer des utilisateurs
+    relationship:
+      title: Relations
+      description: Gestion des relations clients et fournisseurs
+      components:
+        entity:
+          title: Partenaires
+          description: Gestion des relations clients et fournisseurs
+          procedures:
+            select:
+              title: Consulter la liste des partenaires
+            insert:
+              title: Créer un partenaire
+            update:
+              title: Modifier un partenaire
+            delete:
+              title: Supprimer un partenaire
+        settings:
+          title: Paramétrage
+          description: Paramétrages des types et des normes
+          procedures:
+            index:
+              title: Accéder au menu de paramétrage
+            nature:
+              title: Gérer les natures de partenaires
+            contact_type:
+              title: Gérer les types de contact
+            contact_norm:
+              title: Gérer les normes postales
+    accountancy:
+      title: Comptabilité
+      description: Gestion de la comptabilité de la société
+    sales:
+      title: Ventes
+      description: Gestion des ventes et la facturation
+  'Are you sure?': Etes-vous sûr(e) ?
+  'Back': Retour à la liste
+  'Create': Créer
+  'Description': Description
+  'Destroy': Supprimer
+  'Edit': Modifier
+  'Exit': Quitter
+  'Manage privileges': Gérer les privilèges 
+  'Next page': Page suivante
+  'Previous page': Page précédente
+  'Privileges': Privilèges
+  'Show': Voir le détail
+  'Title': Titre
+
+
+

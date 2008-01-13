@@ -1,0 +1,22 @@
+<%form_tag do-%>
+<table class="read"><tr><td>
+<fieldset>
+  <legend><%="Accounts".t-%></legend>
+  <div id="without-interval">
+    <div><%=radio_button_tag("accounts_list[interval]","all",true)-%> <%="All the accounts".t -%></div>
+  </div>
+  <div id="with-interval">
+    <%=radio_button_tag("accounts_list[interval]", "selection")-%> <%="From".t -%> <%= text_field("accounts_list","from_account",{:size=>16, :maxlength=>16, :value=>"1"})-%> <%="To".t -%> <%= text_field("accounts_list","to_account",{:size=>16, :maxlength=>16, :value=>"9999999999999999"})-%>
+  </div>
+  <div id="depth">
+    <%="Depth".t-%> <%= select "accounts_list", "depth", @levels-%>
+  </div>
+</fieldset>
+<fieldset>
+  <legend><%="Page".t-%></legend>
+  <div><%=check_box("accounts_list","class_title",{:checked=>false})-%> <%= "Put a title for every listed classes".t-%></div>
+  <div><%=check_box("accounts_list","break_page",{:checked=>false})-%> <%= "Put a page break after every classes".t-%></div>
+</fieldset>
+</td></tr></table>
+<%=submit_tag "Create document".t -%>
+<%end-%>

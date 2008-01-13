@@ -1,0 +1,26 @@
+# == Schema Information
+# Schema version: 8
+#
+# Table name: users
+#
+#  id              :integer       not null, primary key
+#  name            :string(32)    not null
+#  hashed_password :string(255)   not null
+#  salt            :string(255)   not null
+#  locked          :boolean       not null
+#  email           :string(255)   
+#  created_at      :datetime      not null
+#  created_by      :integer       
+#  updated_at      :datetime      not null
+#  updated_by      :integer       
+#  lock_version    :integer       default(0), not null
+#  company_id      :integer       not null
+#  language_id     :integer       not null
+#  role_id         :integer       not null
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+two:
+  id: 2

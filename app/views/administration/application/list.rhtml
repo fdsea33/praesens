@@ -1,0 +1,30 @@
+<h1>Listing parts</h1>
+
+<table class="list">
+  <tr>
+    <th><%= Part.columns_hash["image_url"].human_name %></th>
+    <th><%= "Title".t %></th>
+    <th><%= Part.columns_hash["code"].human_name %></th>
+    <th><%= Part.columns_hash["active"].human_name %></th>
+    <th><%= "Description".t %></th>
+    <%= action_columns_header 1 -%>
+  </tr>
+  
+<% for part in @parts %>
+  <tr>
+    <td align="center"><%= image_tag part.image_url %></td>
+    <td><%=h part.title %></td>
+    <td><%=h part.code %></td>
+    <td><%=h part.active %></td>
+    <td><%=h part.description %></td>
+    <%= action_columns part, [:show]-%>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @part_pages.current.previous } if @part_pages.current.previous %>
+<%= link_to 'Next page', { :page => @part_pages.current.next } if @part_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New part', :action => 'new' %>

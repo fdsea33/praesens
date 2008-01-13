@@ -1,0 +1,26 @@
+<%= error_messages_for 'part' %>
+
+<!--[form:part]-->
+
+<table class='formtable'><tbody>
+<p><label for="part_active">Active</label><br/>
+<select id="part_active" name="part[active]"><option value=''>&nbsp;</option><option value='f'>False</option><option value='t' selected='selected'>True</option></select></p>
+<p><label for="part_code">Code</label><br/>
+<%= text_field 'part', 'code'  %></p>
+<p><label for="part_created_at">Created at</label><br/>
+<%= datetime_select 'part', 'created_at'  %></p>
+<p><label for="part_description">Description</label><br/>
+<%= text_area 'part', 'description'  %></p>
+<p><label for="part_image_url">Image url</label><br/>
+<%= text_field 'part', 'image_url'  %></p>
+<p><label for="part_lock_version">Lock version</label><br/>
+<%= text_field 'part', 'lock_version'  %></p>
+<p><label for="part_name">Name</label><br/>
+<%= text_field 'part', 'name'  %></p>
+<p><label for="part_title">Title</label><br/>
+<%= text_field 'part', 'title'  %></p>
+<p><label for="part_updated_at">Updated at</label><br/>
+<%= datetime_select 'part', 'updated_at'  %></p>
+</tbody></table>
+<!--[eoform:part]-->
+

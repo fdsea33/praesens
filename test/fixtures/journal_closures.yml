@@ -1,0 +1,22 @@
+# == Schema Information
+# Schema version: 7
+#
+# Table name: journal_closures
+#
+#  id           :integer       not null, primary key
+#  journal_id   :integer       not null
+#  closed_on    :date          not null
+#  position     :integer       not null
+#  company_id   :integer       not null
+#  created_at   :datetime      not null
+#  created_by   :integer       
+#  updated_at   :datetime      not null
+#  updated_by   :integer       
+#  lock_version :integer       default(0), not null
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+two:
+  id: 2

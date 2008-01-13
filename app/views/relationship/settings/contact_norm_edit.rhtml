@@ -1,0 +1,8 @@
+<h1>Editing entity_contact_norm</h1>
+
+<% form_tag :id => @entity_contact_norm do %>
+  <%= render :partial => 'contact_norm_form' %>
+  <%= submit_tag "Edit".t %>
+<% end %>
+
+<%= link_to 'Back'.t, :action => 'contact_norm_list' %>

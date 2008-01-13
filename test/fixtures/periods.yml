@@ -1,0 +1,26 @@
+# == Schema Information
+# Schema version: 7
+#
+# Table name: periods
+#
+#  id               :integer       not null, primary key
+#  journal_id       :integer       not null
+#  financialyear_id :integer       not null
+#  opened_on        :date          not null
+#  closed_on        :date          
+#  debit            :decimal(16, 2 default(0.0), not null
+#  credit           :decimal(16, 2 default(0.0), not null
+#  balance          :decimal(16, 2 default(0.0), not null
+#  company_id       :integer       not null
+#  created_at       :datetime      not null
+#  created_by       :integer       
+#  updated_at       :datetime      not null
+#  updated_by       :integer       
+#  lock_version     :integer       default(0), not null
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+two:
+  id: 2

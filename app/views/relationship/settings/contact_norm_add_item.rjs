@@ -1,0 +1,1 @@
+page.replace_html("norm-item-list", :partial=>"contact_norm_item_list", :object=> @entity_contact_norm)

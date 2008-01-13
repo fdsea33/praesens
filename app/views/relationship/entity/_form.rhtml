@@ -1,0 +1,23 @@
+<%= error_messages_for 'entity' %>
+
+<!--[form:entity]-->
+<table class="form"><tr><td>
+<%= select_box Entity, "nature_id", EntityNature.find_all_by_company_id_and_active(@current_company_id,true).collect {|p| [ p.name, p.id ] } -%>
+</td><td>
+<%= text_box Entity, "surname" -%>
+</td><td>
+<%= text_box Entity, "first_name" -%>
+</td><td>
+</td></tr><tr><td>
+<%= text_box Entity, "active" -%>
+</td><td>
+<%= text_box Entity, "born_on" -%>
+</td><td>
+<%= select_box Entity, "language_id", Language.find(:all).collect {|p| [ p.name, p.id ] } -%>
+</td></tr><tr><td>
+<%= text_box Entity, "ean13" -%>
+</td><td colspan="2">
+<%= text_box Entity, "web_site" -%>
+</td></tr></table>
+<!--[eoform:entity]-->
+

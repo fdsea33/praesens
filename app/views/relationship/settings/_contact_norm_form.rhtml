@@ -1,0 +1,10 @@
+<%= error_messages_for 'entity_contact_norm' %>
+
+<!--[form:entity_contact_norm]-->
+<%= text_box EntityContactNorm, "name"%>
+<%= text_box EntityContactNorm, "reference"%>
+<%= text_box EntityContactNorm, "preferred"%>
+<%= select_box EntityContactNorm, "rtl", [["Right to left".t, true],["Left to right".t, false]]%>
+<%= select_box EntityContactNorm, "align", [["On the right".t, "right"], ["On the left".t, "left"], ["Justified".t, "justify"], ["Centered".t, "center"]]%>
+<!--[eoform:entity_contact_norm]-->
+

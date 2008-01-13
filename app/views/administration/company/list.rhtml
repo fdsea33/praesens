@@ -1,0 +1,26 @@
+<h2 class="component-title">Sociétés</h2>
+
+<table class="list">
+  <tr>
+		<th>Nom</th>
+		<th>Code</th>
+		<th>Admin</th>
+		<%= action_columns_header %>
+  </tr>
+  
+<% for company in @companies %>
+  <tr>
+	  <td><%=h company.name %></td>
+    <td><%=h company.code %></td>
+    <td><%= company.admin ? "X" : "0" %></td>
+		<%= action_columns company -%>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Précédente', { :page => @company_pages.current.previous } if @company_pages.current.previous %>
+<%= link_to 'Suivante', { :page => @company_pages.current.next } if @company_pages.current.next %> 
+
+<br />
+
+<%= link_to 'Nouvelle société...', :action => 'new' %>

@@ -1,0 +1,7 @@
+<% form_tag :action => 'update', :id => @account do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Edit' %>
+<% end %>
+
+<%= link_to 'Show', :action => 'show', :id => @account %> |
+<%= link_to_procedure :select-%>

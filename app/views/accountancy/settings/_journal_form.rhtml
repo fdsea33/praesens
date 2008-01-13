@@ -1,0 +1,4 @@
+<%= error_messages_for Journal.to_s.underscore %>
+<%= text_box Journal, :name%>
+<%= text_box Journal, :abbreviation%>
+<%= text_box Journal, :type, :select_label=>:name%>

@@ -1,0 +1,33 @@
+<% for column in Role.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @role.send(column.name) %>
+</p>
+<% end %>
+<%= link_to 'Edit'.t, :action => 'edit', :id => @role %> &bull;
+
+<% unless @role.admin %>
+<table class="list tree">
+  <tr>
+    <th><%='Rights'.t %></th>
+  </tr>
+  <% for part in Part.find(:all, :conditions=>"code!='ADMIN'", :order=>:position) -%>
+<tr class="tree level0">
+  <td><%= part.title %></td>
+</tr>
+    <% for component in PartComponent.find_all_by_part_id(part.id, :order=>:position) -%>
+<tr class="tree level1">
+  <td><%= "nav.introduce".t h(component.title), h(component.description) %></td>
+</tr>
+      <% for @privilege in @privileges -%>
+        <% if @privilege.part_component_id==component.id and @privilege.active %>
+<tr class="tree level2">
+  <td><label><%= @privilege.title %></label></td>
+</tr>
+        <% end -%>
+      <% end -%>
+    <% end -%>
+  <% end -%>
+</table>
+<%= link_to 'Manage rights'.t, :action => 'manage_rights', :id => @role %> &bull;
+<% end-%>
+<%= link_to 'Back'.t, :action => 'list' %> &bull;

@@ -1,0 +1,8 @@
+<% for part in @banner_parts -%>
+	<h2 class="part-title"><%=part.title%></h2>
+	<ul>
+	<% for component in @current_user.components part -%>
+		<li><%= link_to component.title, {:controller=>"/"+part.name+"/"+component.name }%></li>
+	<% end -%>
+	</ul>
+<% end -%>

@@ -1,0 +1,9 @@
+<h1><%=Company.localized_model_name%></h1>
+
+<% form_tag do %>
+  <%= text_box Company, "name"-%>
+  <%= text_box Company, "siren"-%>
+  <%= submit_tag 'Edit'.t %> <%= link_to 'Show'.t, :action => 'index' %>
+<% end %>
+
+

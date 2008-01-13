@@ -1,0 +1,29 @@
+<table class="list" id="norm-item-list"><%= render :partial=>"contact_norm_item_list" %></table>
+
+<% form_tag :action=>:contact_norm_add_item do-%>
+<fieldset>
+  <legend><%= "Add an item".t%></legend>
+
+<%= error_messages_for("entity_contact_norm_item") -%>
+
+  <%= text_box EntityContactNormItem, "title"-%><hr/>
+  <table><tr><td>
+  <%= select_box EntityContactNormItem, "left_nature", EntityContactNormItem::LEFT_NATURE -%>
+  </td><td>
+  <%= text_box EntityContactNormItem, "left_value"-%>
+  </td></tr></table>
+  <hr/>
+  <table><tr><td>
+  <%= select_box EntityContactNormItem, "nature", EntityContactNormItem::NATURE-%>
+  </td><td>
+  <%= text_box EntityContactNormItem, "maxlength"-%>
+  </td></tr></table>
+  <%= text_box EntityContactNormItem, "content"-%><hr/>
+  <table><tr><td>
+  <%= select_box EntityContactNormItem, "right_nature", EntityContactNormItem::RIGHT_NATURE -%>
+  </td><td>
+  <%= text_box EntityContactNormItem, "right_value"-%>
+  </td></tr></table>
+  <%= submit_tag 'Add item'.t-%>
+</fieldset>
+<% end-%>

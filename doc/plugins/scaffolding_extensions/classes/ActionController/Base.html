@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: ActionController::Base</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">ActionController::Base</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions_rb.html">
+                vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Two variables can be set that affect scaffolding, either as class variables
+(which specifies the default for all classes) or instance variables (which
+specifies the values for that class only).
+</p>
+<ul>
+<li><a href="Base.html#M000005">scaffold_template_dir</a>: the location of the
+scaffold templates (default:
+&quot;#{File.dirname(<em>FILE</em>)}/../scaffolds&quot; # the
+plugin&#8217;s default scaffold directory)
+
+</li>
+<li><a href="Base.html#M000006">default_scaffold_methods</a>: the default
+methods added by the scaffold function (default: [:manage, :show, :destroy,
+:edit, :new, :search, :merge, :browse] # all methods)
+
+</li>
+</ul>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000006">default_scaffold_methods</a>&nbsp;&nbsp;
+      <a href="#M000014">multiple_select_ids</a>&nbsp;&nbsp;
+      <a href="#M000008">normalize_scaffold_options</a>&nbsp;&nbsp;
+      <a href="#M000013">render_scaffold_template</a>&nbsp;&nbsp;
+      <a href="#M000009">scaffold_auto_complete_for</a>&nbsp;&nbsp;
+      <a href="#M000007">scaffold_path</a>&nbsp;&nbsp;
+      <a href="#M000012">scaffold_path</a>&nbsp;&nbsp;
+      <a href="#M000015">scaffold_search_add_condition</a>&nbsp;&nbsp;
+      <a href="#M000005">scaffold_template_dir</a>&nbsp;&nbsp;
+      <a href="#M000010">setup_scaffold_auto_complete_for</a>&nbsp;&nbsp;
+      <a href="#M000011">setup_scaffold_auto_completes</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="#M000006" class="method-signature">
+          <span class="method-name">default_scaffold_methods</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+The methods that should be added by the scaffolding function by default
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000006-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 643</span>
+643:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default_scaffold_methods</span>
+644:         <span class="ruby-ivar">@default_scaffold_methods</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@@default_scaffold_methods</span>
+645:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="#M000008" class="method-signature">
+          <span class="method-name">normalize_scaffold_options</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Normalizes scaffold options, allowing submission of symbols or arrays
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 657</span>
+657:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">normalize_scaffold_options</span>(<span class="ruby-identifier">options</span>)
+658:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">options</span>
+659:           <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">options</span>
+660:           <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Symbol</span> <span class="ruby-keyword kw">then</span> [<span class="ruby-identifier">options</span>]
+661:           <span class="ruby-keyword kw">else</span> []
+662:         <span class="ruby-keyword kw">end</span>
+663:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="#M000009" class="method-signature">
+          <span class="method-name">scaffold_auto_complete_for</span><span class="method-args">(object, options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Create controller instance method for returning results to the scaffold
+autocompletor for the given model.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 667</span>
+667:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_auto_complete_for</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">options</span> = {})
+668:         <span class="ruby-identifier">define_method</span>(<span class="ruby-node">&quot;scaffold_auto_complete_for_#{object}&quot;</span>) <span class="ruby-keyword kw">do</span>
+669:           <span class="ruby-ivar">@items</span> = <span class="ruby-identifier">object</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">camelize</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">scaffold_auto_complete_find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>], <span class="ruby-identifier">options</span>)
+670:           <span class="ruby-identifier">render</span> <span class="ruby-identifier">:inline</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;&lt;%= scaffold_auto_complete_result(@items) %&gt;&quot;</span>
+671:         <span class="ruby-keyword kw">end</span>
+672:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="#M000007" class="method-signature">
+          <span class="method-name">scaffold_path</span><span class="method-args">(template_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns path to the given scaffold rhtml file
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000007-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 648</span>
+648:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_path</span>(<span class="ruby-identifier">template_name</span>)
+649:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">scaffold_template_dir</span>, <span class="ruby-identifier">template_name</span><span class="ruby-operator">+</span><span class="ruby-value str">'.rhtml'</span>)
+650:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="#M000005" class="method-signature">
+          <span class="method-name">scaffold_template_dir</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+The location of the scaffold templates
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000005-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 638</span>
+638:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_template_dir</span>
+639:         <span class="ruby-ivar">@scaffold_template_dir</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@@scaffold_template_dir</span>
+640:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="#M000010" class="method-signature">
+          <span class="method-name">setup_scaffold_auto_complete_for</span><span class="method-args">(model_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Setup scaffold auto complete for the model if it is requested by model and
+it hasn&#8217;t already been setup.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000010-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 676</span>
+676:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup_scaffold_auto_complete_for</span>(<span class="ruby-identifier">model_id</span>)
+677:         <span class="ruby-identifier">scaffold_auto_complete_for</span>(<span class="ruby-identifier">model_id</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">model_id</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">camelize</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">scaffold_use_auto_complete</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">respond_to?</span>(<span class="ruby-node">&quot;scaffold_auto_complete_for_#{model_id}&quot;</span>)
+678:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+          <a href="#M000011" class="method-signature">
+          <span class="method-name">setup_scaffold_auto_completes</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Setup <a href="Base.html#M000009">scaffold_auto_complete_for</a> for the
+given controller for all models implementing scaffold autocompleting. If
+scaffolding is used in multiple controllers, <a
+href="Base.html#M000009">scaffold_auto_complete_for</a> methods for all
+models will be added to all controllers.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000011-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000011-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 684</span>
+684:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup_scaffold_auto_completes</span>
+685:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@scaffold_auto_completes_are_setup</span>
+686:         <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">all_models</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">model</span><span class="ruby-operator">|</span> <span class="ruby-identifier">setup_scaffold_auto_complete_for</span>(<span class="ruby-identifier">model</span>.<span class="ruby-identifier">to_sym</span>)}
+687:         <span class="ruby-ivar">@scaffold_auto_completes_are_setup</span> = <span class="ruby-keyword kw">true</span>
+688:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+          <a href="#M000012" class="method-signature">
+          <span class="method-name">scaffold_path</span><span class="method-args">(template_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns path to the given scaffold rhtml file
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000012-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 692</span>
+692:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_path</span>(<span class="ruby-identifier">template_name</span>)
+693:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">scaffold_path</span>(<span class="ruby-identifier">template_name</span>)
+694:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Private Instance methods</h3>
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+          <a href="#M000014" class="method-signature">
+          <span class="method-name">multiple_select_ids</span><span class="method-args">(arr)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Converts all items in the array to integers and discards non-zero values
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000014-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 767</span>
+767:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">multiple_select_ids</span>(<span class="ruby-identifier">arr</span>) <span class="ruby-comment cmt"># :doc:</span>
+768:       <span class="ruby-identifier">arr</span> = [<span class="ruby-identifier">arr</span>] <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">arr</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
+769:       <span class="ruby-identifier">arr</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_i</span>}.<span class="ruby-identifier">delete_if</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>}
+770:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+          <a href="#M000013" class="method-signature">
+          <span class="method-name">render_scaffold_template</span><span class="method-args">(action, options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders manually created page if it exists, otherwise renders a scaffold
+form. If a layout is specified (either in the controller or as an option),
+use that layout, otherwise uses the scaffolded layout.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000013-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 750</span>
+750:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_scaffold_template</span>(<span class="ruby-identifier">action</span>, <span class="ruby-identifier">options</span> = {}) <span class="ruby-comment cmt"># :doc:</span>
+751:       <span class="ruby-identifier">options</span> = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">template_exists?</span>(<span class="ruby-node">&quot;#{self.class.controller_path}/#{action}&quot;</span>)
+752:         {<span class="ruby-identifier">:action=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">action</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
+753:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">:inline</span>)
+754:         <span class="ruby-identifier">options</span>
+755:       <span class="ruby-keyword kw">else</span>
+756:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">active_layout</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">:layout</span>)
+757:           {<span class="ruby-identifier">:file=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">scaffold_path</span>(<span class="ruby-identifier">action</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'_'</span>)[<span class="ruby-value">0</span>]), <span class="ruby-identifier">:layout=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">active_layout</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
+758:         <span class="ruby-keyword kw">else</span>
+759:           <span class="ruby-ivar">@content_for_layout</span> = <span class="ruby-identifier">render_to_string</span>({<span class="ruby-identifier">:file=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">scaffold_path</span>(<span class="ruby-identifier">action</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'_'</span>)[<span class="ruby-value">0</span>])}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>))
+760:           {<span class="ruby-identifier">:file=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">scaffold_path</span>(<span class="ruby-value str">&quot;layout&quot;</span>)}
+761:         <span class="ruby-keyword kw">end</span>
+762:       <span class="ruby-keyword kw">end</span>
+763:       <span class="ruby-identifier">render</span>(<span class="ruby-identifier">options</span>)
+764:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="#M000015" class="method-signature">
+          <span class="method-name">scaffold_search_add_condition</span><span class="method-args">(conditions, record, field)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Adds conditions for the scaffolded search query. Uses a search for string
+attributes, IS TRUE|FALSE for boolean attributes, and = for other
+attributes.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000015-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000015-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 774</span>
+774:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_search_add_condition</span>(<span class="ruby-identifier">conditions</span>, <span class="ruby-identifier">record</span>, <span class="ruby-identifier">field</span>) <span class="ruby-comment cmt"># :doc:</span>
+775:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">column</span> = <span class="ruby-identifier">record</span>.<span class="ruby-identifier">column_for_attribute</span>(<span class="ruby-identifier">field</span>)
+776:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">column</span>.<span class="ruby-identifier">klass</span> <span class="ruby-operator">==</span> <span class="ruby-constant">String</span>
+777:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">record</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">field</span>).<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+778:           <span class="ruby-identifier">conditions</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{record.class.table_name}.#{field} #{record.class.scaffold_auto_complete_search_operator} ?&quot;</span>
+779:           <span class="ruby-identifier">conditions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;%#{record.send(field)}%&quot;</span>
+780:         <span class="ruby-keyword kw">end</span>
+781:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">column</span>.<span class="ruby-identifier">klass</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Object</span>
+782:         <span class="ruby-identifier">conditions</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{record.class.table_name}.#{field} IS #{record.send(field) ? 'TRUE' : 'FALSE'}&quot;</span>
+783:       <span class="ruby-keyword kw">else</span>
+784:         <span class="ruby-identifier">conditions</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{record.class.table_name}.#{field} = ?&quot;</span>
+785:         <span class="ruby-identifier">conditions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">record</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">field</span>)
+786:       <span class="ruby-keyword kw">end</span>
+787:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

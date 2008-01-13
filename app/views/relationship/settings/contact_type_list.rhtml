@@ -1,0 +1,26 @@
+<h1>Listing entity_contact_types</h1>
+
+<table class="list">
+  <tr>
+    <th><%= EntityContactType.columns_hash["name"].human_name %></th>
+    <th><%= EntityContactType.columns_hash["active"].human_name %></th>
+    <th><%= EntityContactType.columns_hash["description"].human_name %></th>
+    <%= action_columns_header 2 %>
+  </tr>
+  
+<% for entity_contact_type in @entity_contact_types %>
+  <tr>
+    <td><%=h entity_contact_type.name %></td>
+    <td><%= value_image entity_contact_type.active %></td>
+    <td><%=h entity_contact_type.description %></td>
+    <%= action_columns entity_contact_type, [{:action=>:contact_type_edit, :image=>:edit}, {:action=>:contact_type_destroy, :image=>:destroy, :method=>:post, :confirm=>'Are you sure?'}] %>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page'.t, { :page => @entity_contact_type_pages.current.previous } if @entity_contact_type_pages.current.previous %>
+<%= link_to 'Next page'.t, { :page => @entity_contact_type_pages.current.next } if @entity_contact_type_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New entity_contact_type'.t, :action => 'contact_type_new' %>

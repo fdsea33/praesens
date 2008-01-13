@@ -1,0 +1,8 @@
+<%= error_messages_for 'company_department' %>
+
+<!--[form:company_department]-->
+<%= text_box   CompanyDepartment, "name" %>
+<%= select_box CompanyDepartment, "parent_id", CompanyDepartment.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => true } %>
+<%= select_box CompanyDepartment, "company_establishment_id", CompanyEstablishment.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => true } %>
+<!--[eoform:company_department]-->
+

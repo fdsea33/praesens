@@ -1,0 +1,66 @@
+<h1><%= @company.name %> (<%= @company.code %>) </h1>
+<%= link_to_procedure :update
+ #operation nil, {:action=>:edit} 
+ %>
+<div>
+  <b><%=Company.columns_hash["name"].human_name%></b> <%=@company.name%>
+</div>
+<div>
+  <b><%=Company.columns_hash["code"].human_name%></b> <%=@company.code%>
+</div>
+<div>
+  <b><%=Company.columns_hash["siren"].human_name%></b> <%=@company.siren%>
+</div>
+<table style="width:100%" ><tr>
+<td>
+<table class="list">
+  <tr>
+    <th><%= User.localized_model_name %></th>
+  </tr>
+  <% for user in @company.users %>
+    <tr>
+      <td><%= link_to user.name, {:controller=>"/organisation/user", :action=>"show", :id=>user } %></td>
+    </tr>
+  <% end -%>
+</table>
+</td>
+
+
+<td>
+<table class="list">
+  <tr>
+    <th colspan="2"><%= CompanyEstablishment.localized_model_name %></th>
+  </tr>
+  <tr>
+    <th><%= CompanyEstablishment.columns_hash["name"].human_name %></th>
+    <th><%= CompanyEstablishment.columns_hash["siret"].human_name %></th>
+  </tr>
+  <% for establishment in @company.establishments %>
+    <tr>
+      <td><%= link_to establishment.name, {:controller=>"/organisation/establishment", :action=>"show", :id=>establishment } %></td>
+      <td><%= link_to establishment.siret, {:controller=>"/organisation/establishment", :action=>"show", :id=>establishment } %></td>
+    </tr>
+  <% end -%>
+</table>
+</td>
+
+<td>
+<table class="list">
+  <tr>
+    <th colspan="2"><%= CompanyDepartment.localized_model_name %></th>
+  </tr>
+  <tr>
+    <th><%= CompanyDepartment.columns_hash["name"].human_name %></th>
+    <th><%= CompanyDepartment.columns_hash["parent_id"].human_name %></th>
+  </tr>
+  <% for department in @company.departments %>
+    <tr>
+      <td><%= link_to department.name, {:controller=>"/organisation/department", :action=>"show", :id=>department } %></td>
+      <td><%= link_to department.parent.name, {:controller=>"/organisation/department", :action=>"show", :id=>department.parent_id } if department.parent%></td>
+    </tr>
+  <% end -%>
+</table>
+</td>
+
+
+</tr></table>

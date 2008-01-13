@@ -1,0 +1,36 @@
+<h1>Listing company_employees</h1>
+
+<table class="list">
+  <tr>
+    <th><%= CompanyEmployee.columns_hash["surname"].human_name %></th>
+    <th><%= CompanyEmployee.columns_hash["first_name"].human_name %></th>
+    <th><%= CompanyEmployee.columns_hash["role"].human_name %></th>
+    <th><%= CompanyEmployee.columns_hash["company_department_id"].human_name %></th>
+    <th><%= CompanyEmployee.columns_hash["user_id"].human_name %></th>
+    <th><%= CompanyEmployee.columns_hash["email"].human_name %></th>
+    <th><%= CompanyEmployee.columns_hash["arrived_on"].human_name %></th>
+    <th class="action" colspan="3">&lt;&lt; Actions &gt;&gt;</th>
+  </tr>
+  
+<% for company_employee in @company_employees %>
+  <tr>
+    <td><%=h company_employee.surname %></td>
+    <td><%=h company_employee.first_name %></td>
+    <td><%=h company_employee.role %></td>
+    <td><%= link_to company_employee.company_department.name, {:controller=>"/organisation/department", :action=>"show", :id=>company_employee.company_department} %></td>
+    <td><%= link_to company_employee.user.name, {:controller=>"/organisation/user", :action=>"show", :id=>company_employee.user} %></td>
+    <td><%= link_to company_employee.email, "mailto:"+company_employee.email %></td>
+    <td><%= company_employee.arrived_on %></td>
+    <td class="action"><%= link_to 'Show'.t, :action => 'show', :id => company_employee %></td>
+    <td class="action"><%= link_to 'Edit'.t, :action => 'edit', :id => company_employee %></td>
+    <td class="action"><%= link_to 'Destroy'.t, { :action => 'destroy', :id => company_employee }, :confirm => 'Are you sure?', :method => :post %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page'.t, { :page => @company_employee_pages.current.previous } if @company_employee_pages.current.previous %>
+<%= link_to 'Next page'.t, { :page => @company_employee_pages.current.next } if @company_employee_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New company_employee', :action => 'new' %>

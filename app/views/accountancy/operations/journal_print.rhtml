@@ -1,0 +1,16 @@
+<%form_tag do-%>
+<table class="read"><tr><td>
+<fieldset>
+  <legend><%="Period".t-%></legend>
+  <div id="with-dates">
+    <div><%=radio_button_tag("journal[period]", "dates",true)-%> <%="From".t -%> <%= text_field("journal","started_on", {:size=>16, :maxlength=>16, :value=>@current_company.current_financialyear.started_on})-%> <%="To".t -%> <%= text_field("journal","stopped_on", {:size=>16, :maxlength=>16, :value=>Date.today})-%></div>
+    <div></div>
+  </div>
+  <div id="with-year">
+  <%=radio_button_tag("journal[period]", "year")-%> <%="By financial year".t-%>
+    <%= select "journal", "financialyear_id", @current_company.financialyears.collect {|p| [ p.code, p.id ] }-%>
+  </div>
+</fieldset>
+</td></tr></table>
+<%=submit_tag "Create document".t -%>
+<%end-%>

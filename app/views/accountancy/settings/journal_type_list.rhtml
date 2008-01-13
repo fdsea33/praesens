@@ -1,0 +1,10 @@
+<%=
+print_table :journal_types do |t|
+  t.datum :name
+  t.datum :comment
+  t.action :action=>:journal_type_edit, :image=>:edit
+  t.action :action=>:journal_type_destroy, :image=>:destroy, :method=>:post, :confirm=>'Are you sure?'
+end
+-%>
+
+<%= link_to 'New journal type'.t, :action => 'journal_type_new' %>

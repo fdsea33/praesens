@@ -1,0 +1,26 @@
+<h1>Listing entity_contact_norms</h1>
+
+<table class="list">
+  <tr>
+    <th><%= EntityContactNorm.columns_hash["name"].human_name %></th>
+    <th><%= EntityContactNorm.columns_hash["reference"].human_name %></th>
+    <th><%= EntityContactNorm.columns_hash["preferred"].human_name %></th>
+    <%= action_columns_header %>
+  </tr>
+  
+<% for entity_contact_norm in @entity_contact_norms %>
+  <tr>
+    <td><%=h entity_contact_norm.name %></td>
+    <td><%=h entity_contact_norm.reference %></td>
+    <td><%= value_image entity_contact_norm.preferred %></td>
+    <%= action_columns entity_contact_norm, [{:action=>:contact_norm_manage_items, :image=>:manage_items}, {:action=>:contact_norm_edit, :image=>:edit}, {:action=>:contact_norm_destroy, :image=>:destroy, :method=>:post, :confirm=>'Are you sure?'}] %>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page'.t, { :page => @entity_contact_norm_pages.current.previous } if @entity_contact_norm_pages.current.previous %>
+<%= link_to 'Next page'.t, { :page => @entity_contact_norm_pages.current.next } if @entity_contact_norm_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New entity_contact_norm'.t, :action => 'contact_norm_new' %>

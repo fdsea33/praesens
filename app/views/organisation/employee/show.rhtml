@@ -1,0 +1,6 @@
+<% for column in CompanyEmployee.content_columns %>
+<b><%= column.human_name %>:</b> <%=h @company_employee.send(column.name) %><br />
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @company_employee %> |
+<%= link_to 'Back', :action => 'list' %>

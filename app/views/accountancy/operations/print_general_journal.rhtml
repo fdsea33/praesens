@@ -1,0 +1,23 @@
+<%form_tag do-%>
+<table class="read"><tr><td>
+<fieldset>
+  <legend><%="Period".t-%></legend>
+  <div id="with-dates">
+    <div><%=radio_button_tag("journal[period]", "dates",true)-%> <%="From".t -%> <%= select "journal", "from_month", @months-%> <%="To".t -%> <%= select "journal", "to_month", @months-%> </div>
+  </div>
+  <div id="with-year">
+  <%=radio_button_tag("journal[period]", "year")-%> <%="By financial year".t-%>
+    <%= select "journal", "financialyear_id", @current_company.financialyears.collect {|p| [ p.code, p.id ] }-%>
+  </div>
+  <div id="detail">
+    <%=check_box("journal","detail")-%> <%="Detail month by month".t-%>
+  </div>
+</fieldset>
+</td><td>
+<fieldset>
+  <legend><%="Journals".t-%></legend>
+  <%for journal in @journals-%><div><%=check_box("journal","journal_#{journal.code}",{:checked=>true})-%> <%= journal.name -%></div><%end-%>
+</fieldset>
+</td></tr></table>
+<%=submit_tag "Create document".t -%>
+<%end-%>

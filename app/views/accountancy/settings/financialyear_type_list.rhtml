@@ -1,0 +1,12 @@
+<%=
+print_table :financialyear_types do |t|
+  t.datum :name
+  t.datum :code
+  t.datum :fiscal
+  t.datum :month_number
+  t.action :action=>:financialyear_type_edit, :image=>:edit
+  t.action :action=>:financialyear_type_destroy, :image=>:destroy, :method=>:post, :confirm=>'Are you sure?'
+end
+-%>
+
+<%= link_to 'New financialyear type'.t, :action => 'financialyear_type_new' %>

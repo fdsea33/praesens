@@ -1,0 +1,20 @@
+<%= error_messages_for 'account' %>
+
+<!--[form:account]-->
+<%= text_box :account, :number -%>
+<%= text_box :account, :name -%>
+<%= text_box :account, :alpha -%>
+<%= text_box :account, :usable -%>
+<%= text_box :account, :groupable -%>
+<%= text_box :account, :letterable -%>
+<%= text_box :account, "pointable" -%>
+<%= text_box :account, "is_debit" -%>
+<%= text_box :account, "last_letter" -%>
+<%= text_box :account, "entity", :select_label=>"full_name"-%>
+<!--<%= select_box Account, "entity_id", @current_company.entities.collect {|r| [ r.full_name, r.id ] }, {:include_blank=>true}-%>-->
+<%= text_box :account, "parent", :select_label=>"number" -%>
+<!--<%= select_box Account, "parent_id", @current_company.accounts(:order=>:number).collect {|r| [ h(r.number+". "+r.name), r.id ] }, {:include_blank=>true}-%>-->
+<%= select_box Account, "deadline_id", @current_company.deadlines.collect {|r| [ r.name, r.id ] }, {:include_blank=>true}-%>
+<%= text_box :account, "comment" -%>
+<!--[eoform:account]-->
+

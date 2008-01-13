@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Præsens</title>
+  <%= stylesheet_link_tag :defaults-%>
+  <%= javascript_include_tag :defaults-%>
+<%= 
+# active_scaffold_includes 
+-%>
+</head>
+<body id="home">
+  <table id="columns">
+    <tr>
+      <td id="side" valign="top">
+        <div id="logo">&nbsp;</div>
+      <% if not session[:user_id].nil?-%>
+<% if not @part.nil?-%><div class="menu menu-blue"><h3><%= @part.title-%></h3><ul><% for component in @current_user.components @part-%><li><%= link_to component.title, {:controller=>"/"+@part.name+"/"+component.name } -%></li><% end -%></ul></div><% end -%>
+<% if not @component.nil?-%><div class="menu menu-green"><h3><%= @component.title-%></h3><ul><% for procedure in @current_user.procedures(@component, false)-%><li><%= link_to procedure.title, {:controller=>"/"+procedure.controller_path, :action=>procedure.default } -%></li><% end -%></ul></div><% end -%>
+      <% end -%>
+      </td>
+      <td valign="top">
+  <table id="banner">
+    <tr>
+      <% if not session[:user_id].nil?-%>
+      <td id="parts">
+<%= link_to image_tag("home.png", :border => 0, :alt=>"home", :style=>"-moz-border-radius-topleft: 8px;"), {:controller=>"/public/home" }, {:class=>@home_class}-%>
+<% for part in @banner_parts-%>
+<%= link_to image_tag(part.image_url, :border => 0, :alt=>part.title), {:controller=>"/"+part.name }, {:class=>"part-link#{' active_part' if part==@part}"} -%>
+<%end-%>
+<%= link_to image_tag("exit.png", :border => 0, :alt=>"exit", :style=>"-moz-border-radius-topright: 8px;"), {:controller=>"/public/authentication",:action=>"logout" }, {:class=>"part-link"}-%>
+      </td>
+      <td>
+        
+      </td>
+      <td id="infos">
+        <table width="100%">
+<!--          <tr><td class="aright">Utilisateur&nbsp;:</td><td><%= @current_user.name-%></td></tr>-->
+          <tr><td id="loader" rowspan="2" style="display:none;"><img id="load" src="/images/ajax-loader.gif"/></td>
+          <td><%= @current_company.name-%></td></tr>
+          <tr><td><%= Time.now.to_date.to_formatted_s :medium-%></td></tr>
+        </table>
+      </td>
+<% end -%>
+    </tr>
+  </table>
+      
+        <table id="tabbox">
+<% if not @action_path.nil? -%><tr><td id="action_path"><%=@title-%></td><td id="action_path" style="text-align:right; color:#C83;"><%=@action_path-%></td></tr><% end -%>
+<tr><td id="main" valign="top" colspan="2">
+<% if flash[:error] -%><div id="error"><%= flash[:error]-%></div><% end -%>
+<% if flash[:warning] -%><div id="warning"><%= flash[:error]-%></div><% end -%>
+<% if flash[:notice] -%><div id="notice"><%= flash[:notice]-%></div><% end -%>
+<%= yield -%></td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <div id="footer"><a href="http://www.fdsea33.fr">Præsens</a> - Copyright 2007<%= "-"+Time.now.year.to_s if Time.now.year!=2007-%> - <%= request.remote_ip.to_s-%> - <a href="http://www.mozilla-europe.org/fr/products/firefox/">Firefox</a></div>
+</body>
+</html>

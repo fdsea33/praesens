@@ -1,0 +1,15 @@
+<h1><em class="title"><%= @entity.code%></em> &bull; <em class="title"><%= @entity.full_name %></em> <%= value_image @entity.active %></h1>
+<%= link_to 'Edit'.t, :action => 'edit', :id => @entity %> |
+<%= link_to 'Back'.t, :action => 'list' %>
+<table class="list">
+<tr><th colspan="2">Contacts</th><%= action_columns_header%></tr>
+<%for contact in @entity.contacts -%><tr><td><%= contact.formatted_address%></td>
+<td><table class="discret">
+<tr><td class="form-label-h"><%=EntityContact.columns_hash["phone"].human_name%></td><td><%=contact.phone%></td></tr>
+<tr><td class="form-label-h"><%=EntityContact.columns_hash["fax"].human_name%></td><td><%=contact.fax%></td></tr>
+<tr><td class="form-label-h"><%=EntityContact.columns_hash["mobile"].human_name%></td><td><%=contact.mobile%></td></tr>
+<tr><td class="form-label-h"><%=EntityContact.columns_hash["email"].human_name%></td><td><%=contact.email%></td></tr>
+</table></td>
+<%= action_columns contact%></tr><%end-%>
+</table>
+<%= link_to "Add contact".t, :action=>:entity_contact_new, :id=>@entity %>

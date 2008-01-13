@@ -1,0 +1,4 @@
+<% form_tag do -%>
+  <%= select "entries", "journal_id", @journals.collect{|j| [j.name, j.id]}-%>
+  <%= submit_tag "Next".t-%>
+<%end-%>

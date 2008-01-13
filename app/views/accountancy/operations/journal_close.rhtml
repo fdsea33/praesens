@@ -1,0 +1,5 @@
+<% form_tag do %>
+<%= error_messages_for 'journal' %>
+<%= text_box :journal, :closed_on -%>
+<%= submit_tag "Close the journal".t -%>
+<% end %>

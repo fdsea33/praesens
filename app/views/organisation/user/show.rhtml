@@ -1,0 +1,12 @@
+<% for column in User.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @user.send(column.name) %>
+</p>
+<% end %>
+<p>
+  <b><%= User.columns_hash["language_id"].human_name %>:</b> <img src="/images/country/<%= @user.language.code %>.png"/>&nbsp;<%= @user.language.title %>
+</p>
+
+
+<%= link_to 'Edit', :action => 'edit', :id => @user %> |
+<%= link_to 'Back', :action => 'list' %>

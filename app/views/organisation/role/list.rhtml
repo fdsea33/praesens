@@ -1,0 +1,12 @@
+<h1>Profils d'accès</h1>
+
+<%=
+print_table :roles do |t|
+  t.datum :name
+  t.datum :admin
+  t.action :action=>:manage_rights, :condition=>:not__admin
+  t.action :default
+end
+-%>
+
+<%= link_to 'New role'.t, :action => 'new' %>

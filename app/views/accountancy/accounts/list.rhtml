@@ -1,0 +1,18 @@
+<%= render :partial=>"search"-%>
+<%= link_to "Print balance".t, :action=>:print_balance-%> &bull;
+<%= link_to "Print accounts book".t, :action=>:print_book-%> &bull;
+<%= link_to "Print accounts list".t, :action=>:print_accounts_list-%>
+<%=
+print_table :account.to_s.pluralize.to_sym do |t|
+  t.datum :number
+  t.datum :name
+  t.datum :alpha
+  t.action :action=>:letter, :image=>:letter, :condition=>:letterable
+  t.action :action=>:check, :image=>:check, :condition=>:pointable
+  t.action :action=>:new_subaccount, :image=>:new
+  t.action :default
+end
+-%>
+<!--
+<%= link_to_procedure :insert -%>
+-->

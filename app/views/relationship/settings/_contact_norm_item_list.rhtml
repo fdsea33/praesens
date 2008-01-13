@@ -1,0 +1,2 @@
+<tr><th>Préfixe</th><th>Items</th><th>Suffixe</th> <%= action_columns_header %></tr>
+<%= render :partial=>"contact_norm_item", :collection=>@entity_contact_norm.items(:order=>:position) -%>

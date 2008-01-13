@@ -1,0 +1,42 @@
+<table class="list">
+<tr>
+<%for year in @years-%>
+<th colspan="5">
+<strong><%=year[0].name-%></strong>
+</th>
+<%end-%>
+</tr>
+<tr>
+<%for year in @years-%>
+<th><%=Financialyear.columns_hash["code"].human_name-%></th>
+<th><%=Financialyear.columns_hash["started_on"].human_name-%></th>
+<th><%=Financialyear.columns_hash["stopped_on"].human_name-%></th>
+<th>&bull;</th>
+<th>&bull;</th>
+<%end-%>
+</tr>
+<%for i in 0..@max_fyears-1 -%>
+<tr>
+<%for year in @years-%>
+<% if year[1] and i<=year[1].size-1 -%>
+<td style="text-align: center;" <%='class="year-closed"' if year[1][i].closed -%>><%=year[1][i].code-%></td>
+<td style="text-align: center;" <%='class="year-closed"' if year[1][i].closed -%>><%=year[1][i].started_on.to_formatted_s :medium-%></td>
+<td style="text-align: center;" <%='class="year-closed"' if year[1][i].closed -%>><%=year[1][i].stopped_on.to_formatted_s :medium-%></td>
+<%if year[1][i].closed -%>
+<td colspan="2" class="year-closed-action"/>
+<%else-%>
+<td class="action-special"><%= operation(year[1][i], {:action=>:financialyear_edit, :image=>:edit})-%></td>
+<td class="action-special"><%= operation(year[1][i], {:action=>:financialyear_close, :image=>:destroy})-%></td>
+<%end-%>
+<%else-%><td/><td/><td/><td/><td/><%end-%>
+<%end-%>
+</tr>
+<%end-%>
+<tr>
+<%for year in @years-%>
+<%if year[0].can_open_financialyear? -%>
+<td colspan="5" class="navigation"><%=link_to("Open a new year".t, {:action=>:financialyear_open, :id=>year[0].id}) -%></td>
+<%else-%><td colspan="5" class="navigation"/><%end-%>
+</tr>
+<%end-%>
+</table>

@@ -1,0 +1,30 @@
+<h1>Listing company_departments</h1>
+
+<table class="list">
+  <tr>
+    <th><%= CompanyDepartment.columns_hash["name"].human_name %></th>
+    <th><%= CompanyDepartment.columns_hash["parent_id"].human_name %></th>
+    <th><%= CompanyDepartment.columns_hash["company_establishment_id"].human_name %></th>
+    <%= action_columns_header %>
+  </tr>
+  
+<% for company_department in @company_departments %>
+  <tr>
+    <td><%=h company_department.name %></td>
+    <% if company_department.parent.nil? %>
+      <td>&bull;</td>
+    <% else -%>
+      <td><%= link_to company_department.parent.name, {:action=>"show", :id=>company_department.parent} %></td>
+    <% end -%>
+    <td><%= link_to company_department.company_establishment.name, {:controller=>"/organisation/establishment", :action=>"show", :id=>company_department.company_establishment} %></td>
+    <%= action_columns company_department %>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page'.t, { :page => @company_department_pages.current.previous } if @company_department_pages.current.previous %>
+<%= link_to 'Next page'.t, { :page => @company_department_pages.current.next } if @company_department_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New company_department', :action => 'new' %>

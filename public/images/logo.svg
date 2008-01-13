@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1000"
+   height="200"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.43"
+   version="1.0"
+   sodipodi:docbase="/home/brice/Informatique/Developpement/praesens/public/images"
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="/home/brice/Informatique/Developpement/praesens/public/images/logo.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient2194">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop2196" />
+      <stop
+         id="stop2202"
+         offset="0.84615386"
+         style="stop-color:#967339;stop-opacity:1;" />
+      <stop
+         style="stop-color:#d0a051;stop-opacity:1;"
+         offset="1"
+         id="stop2198" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient2182">
+      <stop
+         style="stop-color:#c4aa00;stop-opacity:1;"
+         offset="0"
+         id="stop2184" />
+      <stop
+         id="stop2192"
+         offset="0"
+         style="stop-color:#c2a927;stop-opacity:1;" />
+      <stop
+         id="stop2190"
+         offset="0.80341882"
+         style="stop-color:#c1a01e;stop-opacity:1;" />
+      <stop
+         style="stop-color:#db8d00;stop-opacity:1;"
+         offset="1"
+         id="stop2186" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="375"
+     inkscape:cy="204.31018"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:window-width="1280"
+     inkscape:window-height="920"
+     inkscape:window-x="0"
+     inkscape:window-y="32" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:301.42706299px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;opacity:0.3;fill:#b4a77e;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Dominican"
+       x="-11.454229"
+       y="158.24918"
+       id="text3085"
+       sodipodi:linespacing="125%"
+       transform="scale(0.84701,1.180624)"><tspan
+         sodipodi:role="line"
+         id="tspan1319"
+         x="-11.454229"
+         y="158.24918">præsens</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:51.10451508px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;opacity:0.6;fill:#7f724a;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Dominican"
+       x="-8.3203592"
+       y="265.87851"
+       id="text3966"
+       sodipodi:linespacing="125%"
+       transform="scale(0.909774,1.099174)"><tspan
+         sodipodi:role="line"
+         id="tspan3970"
+         x="-8.3203592"
+         y="265.87851">In Præsens we trust</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:49.03908157px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;opacity:0.6;fill:#7f724a;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Dominican"
+       x="-10.827878"
+       y="-17.859777"
+       id="text4845"
+       sodipodi:linespacing="125%"
+       transform="scale(0.873005,1.145468)"><tspan
+         sodipodi:role="line"
+         id="tspan4849"
+         x="-10.827878"
+         y="-17.859777">Præsens is our future</tspan></text>
+  </g>
+</svg>

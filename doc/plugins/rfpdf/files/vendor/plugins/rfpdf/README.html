@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>vendor/plugins/rfpdf/README
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Thu Oct 04 12:08:02 CEST 2007</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1><a href="../../../../classes/RFPDF.html">RFPDF</a> Template Plugin</h1>
+<p>
+A template plugin allowing the inclusion of ERB-enabled <a
+href="../../../../classes/RFPDF.html">RFPDF</a> template files.
+</p>
+<h2>Example .rb method Usage</h2>
+<p>
+In the controller, something like:
+</p>
+<pre>
+  def mypdf
+                pdf = FPDF.new()
+
+                #
+                # Chinese
+                #
+                pdf.extend(PDF_Chinese)
+                pdf.AddPage
+                pdf.AddBig5Font
+                pdf.SetFont('Big5','',18)
+                pdf.Write(5, '²{®É®ð·Å 18 C Àã«× 83 %')
+                icBig5 = Iconv.new('Big5', 'UTF-8')
+                pdf.Write(15, icBig5.iconv(&quot;宋体 should be working&quot;))
+                send_data pdf.Output, :filename =&gt; &quot;something.pdf&quot;, :type =&gt; &quot;application/pdf&quot;
+  end
+</pre>
+<h2>Example .rfdf Usage</h2>
+<p>
+In the controller, something like:
+</p>
+<pre>
+  def mypdf
+          @options_for_rfpdf ||= {}
+          @options_for_rfpdf[:file_name] = &quot;nice_looking.pdf&quot;
+  end
+</pre>
+<p>
+In the layout (make sure this is the only item in the layout): &lt;%=
+@content_for_layout %&gt;
+</p>
+<p>
+In the view (mypdf.rfpdf):
+</p>
+<p>
+&lt;%
+</p>
+<pre>
+        pdf = FPDF.new()
+        #
+        # Chinese
+        #
+        pdf.extend(PDF_Chinese)
+        pdf.AddPage
+        pdf.AddBig5Font
+        pdf.SetFont('Big5','',18)
+        pdf.Write(5, '²{®É®ð·Å 18 C Àã«× 83 %')
+        icBig5 = Iconv.new('Big5', 'UTF-8')
+        pdf.Write(15, icBig5.iconv(&quot;宋体 should be working&quot;))
+
+        #
+        # Japanese
+        #
+        pdf.extend(PDF_Japanese)
+        pdf.AddSJISFont();
+        pdf.AddPage();
+        pdf.SetFont('SJIS','',18);
+        pdf.Write(5,'9ÉñåéÇÃåˆäJÉeÉXÉgÇåoÇƒPHP 3.0ÇÕ1998îN6åéÇ…åˆéÆÇ…ÉäÉäÅ[ÉXÇ≥ÇÍÇ‹ÇµÇΩÅB');
+        icSJIS = Iconv.new('SJIS', 'UTF-8')
+        pdf.Write(15, icSJIS.iconv(&quot;これはテキストである should be working&quot;))
+
+        #
+        # Korean
+        #
+        pdf.extend(PDF_Korean)
+        pdf.AddUHCFont();
+        pdf.AddPage();
+        pdf.SetFont('UHC','',18);
+        pdf.Write(5,'PHP 3.0Àº 1998³â 6¿ù¿¡ °ø½ÄÀûÀ¸·Î ¸±¸®ÁîµÇ¾ú´Ù. °ø°³ÀûÀÎ Å×½ºÆ® ÀÌÈÄ¾à 9°³¿ù¸¸ÀÌ¾ú´Ù.');
+        icUHC = Iconv.new('UHC', 'UTF-8')
+        pdf.Write(15, icUHC.iconv(&quot;이것은 원본 이다&quot;))
+
+        #
+        # English
+        #
+        pdf.AddPage();
+        pdf.SetFont('Arial', '', 10)
+        pdf.Write(5, &quot;should be working&quot;)
+</pre>
+<p>
+%&gt; &lt;%= pdf.Output() %&gt;
+</p>
+<h2>Configuring</h2>
+<p>
+You can configure Rfpdf by using an @options_for_rfpdf hash in your
+controllers.
+</p>
+<p>
+Here are a few options:
+</p>
+<p>
+:filename (default: action_name.pdf)
+</p>
+<pre>
+  Filename of PDF to generate
+</pre>
+<p>
+Note: If you&#8217;re using the same settings for @options_for_rfpdf often,
+you might want to put your assignment in a before_filter (perhaps
+overriding :filename, etc in your actions).
+</p>
+<h2>Problems</h2>
+<p>
+Layouts and partials are currently not supported; just need to wrap the PDF
+generation differently.
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

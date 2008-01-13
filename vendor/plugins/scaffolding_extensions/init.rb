@@ -1,0 +1,1 @@
+require 'scaffolding_extensions'

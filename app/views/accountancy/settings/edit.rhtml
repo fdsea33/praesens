@@ -1,0 +1,6 @@
+<% form_tag do %>
+  <%= render :partial => @model.to_s.underscore+'_form' %>
+  <%= submit_tag "Edit".t %>
+<% end %>
+
+<%= link_to 'Back'.t, :action => @model.to_s.underscore+'_list' %>

@@ -1,0 +1,1 @@
+<ul><% for component in @current_user.components(@part) -%><li><%= link_to component.title, {:controller=>"/"+@part.name+"/"+component.name }%>&nbsp;: <%=h component.description %></li><% end -%></ul>

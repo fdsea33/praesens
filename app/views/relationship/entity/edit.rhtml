@@ -1,0 +1,10 @@
+<% form_tag :action => 'update', :id => @entity do %>
+<fieldset>
+<legend>Editing entity</legend>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Edit'.t %>
+</fieldset>
+<% end %>
+
+<%= link_to 'Show'.t, :action => 'show', :id => @entity %> |
+<%= link_to 'Back'.t, :action => 'list' %>

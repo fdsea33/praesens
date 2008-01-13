@@ -1,0 +1,45 @@
+<% if auth :bank -%>
+<div>
+  <h3><%=Bank.localized_model_name-%></h3>
+  <ul>
+    <li><%= link_to "List banks".t, {:action=>"bank_list"} %></li>
+    <li><%= link_to "New bank".t, {:action=>"bank_new"} %></li>
+  </ul>
+</div>
+<% end -%>
+<% if auth :bank_account -%>
+<div>
+  <h3><%=BankAccount.localized_model_name-%></h3>
+  <ul>
+    <li><%= link_to "List bank_accounts".t, {:action=>"bank_account_list"} %></li>
+    <li><%= link_to "New bank_account".t, {:action=>"bank_account_new"} %></li>
+  </ul>
+</div>
+<% end -%>
+<% if auth :journal -%>
+<div>
+  <h3><%=Journal.localized_model_name-%></h3>
+  <ul>
+    <li><%= link_to "List journals".t, {:action=>"journal_list"} %></li>
+    <li><%= link_to "New journal".t, {:action=>"journal_new"} %></li>
+  </ul>
+</div>
+<% end -%>
+<% if auth :journal_type -%>
+<div>
+  <h3><%=JournalType.localized_model_name-%></h3>
+  <ul>
+    <li><%= link_to "List journal_types".t, {:action=>"journal_type_list"} %></li>
+    <li><%= link_to "New journal_type".t, {:action=>"journal_type_new"} %></li>
+  </ul>
+</div>
+<% end -%>
+<% if auth :financialyear_type -%>
+<div>
+  <h3><%=FinancialyearType.localized_model_name-%></h3>
+  <ul>
+    <li><%= link_to "List financialyear_types".t, {:action=>"financialyear_type_list"} %></li>
+    <li><%= link_to "New financialyear_type".t, {:action=>"financialyear_type_new"} %></li>
+  </ul>
+</div>
+<% end -%>

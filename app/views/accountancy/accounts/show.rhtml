@@ -1,0 +1,59 @@
+<table class="form"><tr style="text-align:center; background: #fe9;"><td><%=link_to(@prev_account.label, {:id=>@prev_account.id, :year=>@financialyear}) if @prev_account-%></td><td>&laquo;</td><th style="background:#eed38f;"><%=@account.label-%></th><td>&raquo;</td><td><%=link_to(@next_account.label, {:id=>@next_account.id, :year=>@financialyear}) if @next_account-%></td></tr></table>
+
+<!--<% for column in Account.content_columns %>
+<div><b><%= column.human_name %>:</b> <%=h @account.send(column.name) %></div><% end -%>
+-->
+<table class="read" style="border-collapse:collapse;"><tr><td>
+<fieldset class="general">
+  <legend><%="General".t-%></legend>
+  <div><%= read_box @account, :number-%></div>
+  <div><%= read_box @account, :name-%></div>
+  <div><%= read_box @account, :alpha-%></div>
+  <div><%= read_box @account, :comment-%></div>
+</fieldset>
+<%if @account.parent-%>
+<fieldset class="detail">
+  <legend><%="Parent".t-%></legend>
+  <div><%= read_box @account, :number, :through=>:parent-%></div>
+  <div><%= read_box @account, :name, :through=>:parent-%></div>
+</fieldset>
+<%end-%>
+</td><td>
+<fieldset class="detail">
+  <legend><%="Properties".t-%></legend>
+  <table>
+  <tr><td><%= read_box @account, :usable-%></td><td><%= read_box @account, :letterable-%></td></tr>
+  <tr><td><%= read_box @account, :groupable-%></td><td><%= read_box @account, :pointable-%></td></tr>
+  <tr><td><%= read_box @account, :keep_entries-%></td><td><%= read_box @account, :is_debit-%></td></tr>
+  <tr><td><%= read_box @account, :transferable-%></td><td></td></tr>
+  </table>
+</fieldset>
+<%if @account.deadline-%>
+<fieldset class="detail">
+  <legend><%="Deadline".t-%></legend>
+  <div><%= read_box @account.deadline, :name-%></div>
+</fieldset>
+<%end-%>
+</td></tr></table>
+
+<%if @financialyear-%>
+<fieldset class="detail">
+  <legend><%="Entries".t-%></legend>
+
+<table class="form"><tr style="text-align:center; background: #FE9;"><%if @prev_year-%><td><%=link_to(@prev_year.code, {:year=>@prev_year.id})-%></td><td>&laquo;</td><%end-%><td style="background:#eed38f;"><%='<strong>'+@financialyear.code+"</strong> - "+@financialyear.started_on.to_formatted_s(:medium)+" &rArr; "+@financialyear.stopped_on.to_formatted_s(:medium)-%></td><%if @next_year-%><td>&raquo;</td><td><%=link_to(@next_year.code, {:year=>@next_year.id})-%></td><%end-%></tr></table>
+<%= 
+print_table :entries do |t|
+  t.datum :created_on, :through=>:record
+  t.datum :name
+  t.datum :letter if @account.letterable
+  t.datum :debit
+  t.datum :credit
+  t.datum :name, :through=>[:record, :journal], :url=>{:controller=>"/accountancy/operations", :action=>:journal_show}
+  t.datum :code, :through=>[:record, :period, :financialyear], :url=>{:controller=>"/accountancy/operations", :action=>:financialyear_list, :id=>:none}
+end-%>
+</fieldset>
+<%end-%>
+<%= link_to_procedure :update,nil,nil,{:id => @account.id} %> &bull; 
+<%= link_to_procedure :letter,nil,nil,{:id => @account.id} if @account.letterable -%> &bull; 
+<%= link_to_procedure :check,nil,nil,{:id => @account.id} if @account.pointable %> &bull; 
+<%= link_to 'Back'.t, :action => 'list' %>

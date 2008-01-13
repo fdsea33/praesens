@@ -1,0 +1,30 @@
+<h1>Listing entity_natures</h1>
+
+<table class="list">
+  <tr>
+    <th><%= EntityNature.columns_hash["name"].human_name %></th>
+    <th><%= EntityNature.columns_hash["title"].human_name %></th>
+    <th><%= EntityNature.columns_hash["physical"].human_name %></th>
+    <th><%= EntityNature.columns_hash["active"].human_name %></th>
+    <th><%= EntityNature.columns_hash["description"].human_name %></th>
+    <%= action_columns_header 2 %>
+  </tr>
+  
+<% for entity_nature in @entity_natures %>
+  <tr>
+    <td><%=h entity_nature.name %></td>
+    <td><%=h entity_nature.title %></td>
+    <td><%= value_image entity_nature.physical %></td>
+    <td><%= value_image entity_nature.active %></td>
+    <td><%=h entity_nature.description %></td>
+    <%= action_columns entity_nature, [{:action=>:nature_edit, :image=>:edit}, {:action=>:nature_destroy, :image=>:destroy, :method=>:post, :confirm=>'Are you sure?'}] %>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page'.t, { :page => @entity_nature_pages.current.previous } if @entity_nature_pages.current.previous %>
+<%= link_to 'Next page'.t, { :page => @entity_nature_pages.current.next } if @entity_nature_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New entity_nature'.t, :action => 'nature_new' %>

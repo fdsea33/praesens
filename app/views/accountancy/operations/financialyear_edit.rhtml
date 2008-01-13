@@ -1,0 +1,6 @@
+<% form_tag do %>
+<%= error_messages_for 'financialyear'-%>
+<%= text_box :financialyear, :code -%>
+<%= submit_tag 'Edit'.t %>
+<% end %>
+<%= link_to_procedure :financialyear -%>

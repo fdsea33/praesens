@@ -1,0 +1,16 @@
+<%=
+print_table :bank_accounts do |t|
+  t.datum :name
+  t.datum :iban_text
+  t.datum :bic
+  t.datum :agency
+  t.datum :name, :through=>:bank, :url=>{:action=>:bank_edit}
+  t.datum :name, :through=>:journal
+  t.datum :name, :through=>:currency, :url=>{:action=>:currency_edit}
+  t.datum :label, :through=>:account
+  t.action :action=>:bank_account_edit, :image=>:edit
+  t.action :action=>:bank_account_destroy, :image=>:destroy, :method=>:post, :confirm=>'Are you sure?'
+end
+-%>
+
+<%= link_to 'New bank account'.t, :action => 'bank_account_new' %>

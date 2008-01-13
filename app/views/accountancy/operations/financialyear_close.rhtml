@@ -1,0 +1,11 @@
+<%form_tag do-%>
+<%= error_messages_for 'financialyear' %>
+<%= text_box :accountancy, :profits, :select_label=>:label -%>
+<%= text_box :accountancy, :losses, :select_label=>:label -%>
+<%= text_box :accountancy, :report_credit, :select_label=>:label -%>
+<%= text_box :accountancy, :report_debit, :select_label=>:label -%>
+<%= text_box :accountancy, :newyear, :select_label=>:name -%>
+<%= text_box :financialyear, :stopped_on -%>
+<%= submit_tag "Close the financial year".t -%> 
+<%= link_to "Cancel".t, :action=>:financialyear_list -%>
+<%end-%>

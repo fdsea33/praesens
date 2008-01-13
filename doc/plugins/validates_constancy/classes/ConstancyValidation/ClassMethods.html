@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: ConstancyValidation::ClassMethods</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">ConstancyValidation::ClassMethods</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/vendor/plugins/validates_constancy/lib/validates_constancy/constancy_validation_rb.html">
+                vendor/plugins/validates_constancy/lib/validates_constancy/constancy_validation.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+The following validation is defined in the class scope of the model that
+you&#8217;re interested in validating. It offers a declarative way of
+specifying when the model is valid and when it is not.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000001">validates_constancy_of</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="#M000001" class="method-signature">
+          <span class="method-name">validates_constancy_of</span><span class="method-args">(*attribute_names)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Encapsulates the pattern of wanting to protect one or more model attributes
+from being changed after the model object is created. Example:
+</p>
+<pre>
+  class Person &lt; ActiveRecord::Base
+
+    # Prevent changes to Person#user_name and Person#member_since.
+    validates_constancy_of :user_name, :member_since
+
+  end
+</pre>
+<p>
+This check is performed only on update.
+</p>
+<p>
+Configuration options:
+</p>
+<dl>
+<dt><tt>:message</tt></dt><dd>A custom error message (default is: &quot;can&#8217;t be changed&quot;)
+
+</dd>
+<dt><tt>:if</tt></dt><dd>Specifies a method, Proc or string to call to determine if the validation
+should occur (e.g., <tt>:if =&gt; :allow_validation</tt>, or <tt>:if =&gt;
+Proc.new { |user| user.signup_step &gt; 2 }</tt>). The method, Proc or
+string should return or evaluate to <tt>true</tt> or <tt>false</tt>.
+
+</dd>
+</dl>
+<p>
+Warning: With associations, validate the constancy of a foreign key, not
+the instance variable itself: <tt><a
+href="ClassMethods.html#M000001">validates_constancy_of</a>
+:invoice_id</tt> instead of <tt><a
+href="ClassMethods.html#M000001">validates_constancy_of</a> :invoice</tt>.
+</p>
+<p>
+Also note the warning under <em>Inheritable callback queues</em> in <a
+href="http://api.rubyonrails.org/classes/ActiveRecord/Callbacks.html">api.rubyonrails.org/classes/ActiveRecord/Callbacks.html</a>.
+&quot;In order for inheritance to work for the callback queues, you must
+specify the callbacks before specifying the associations. Otherwise, you
+might trigger the loading of a child before the parent has registered the
+callbacks and they won&#8217;t be inherited.&quot; Validates Constancy uses
+these callback queues, so you&#8217;ll want to specify associations
+<b>after</b> <tt><a
+href="ClassMethods.html#M000001">validates_constancy_of</a></tt> statements
+in your model classes.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000001-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000001-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/validates_constancy/lib/validates_constancy/constancy_validation.rb, line 46</span>
+46:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validates_constancy_of</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">attribute_names</span>)
+47:       <span class="ruby-identifier">options</span> = {<span class="ruby-identifier">:message</span> =<span class="ruby-operator">&gt;</span>
+48:                  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Errors</span>.<span class="ruby-identifier">default_error_messages</span>[<span class="ruby-identifier">:constancy</span>]}
+49:       <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">attribute_names</span>.<span class="ruby-identifier">pop</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attribute_names</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Hash</span>)
+50:       
+51:       (<span class="ruby-ivar">@constant_attribute_names</span> <span class="ruby-operator">||=</span> []).<span class="ruby-identifier">concat</span> <span class="ruby-identifier">attribute_names</span>.<span class="ruby-identifier">collect!</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:to_s</span>)
+52:       
+53:       <span class="ruby-constant">ConstancyValidation</span><span class="ruby-operator">::</span><span class="ruby-constant">OriginalAttributesCapture</span>.<span class="ruby-identifier">extend</span> <span class="ruby-keyword kw">self</span>
+54:       
+55:       <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge!</span> <span class="ruby-identifier">:on</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:update</span>
+56:       <span class="ruby-identifier">validates_each</span>(<span class="ruby-identifier">attribute_names</span>, <span class="ruby-identifier">options</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">record</span>, <span class="ruby-identifier">attribute_name</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+57:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span>
+58:                <span class="ruby-identifier">record</span>.<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-identifier">:@original_attributes</span>)[<span class="ruby-identifier">attribute_name</span>]
+59:           <span class="ruby-identifier">record</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span> <span class="ruby-identifier">attribute_name</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:message</span>]
+60:         <span class="ruby-keyword kw">end</span>
+61:       <span class="ruby-keyword kw">end</span>
+62:       
+63:       <span class="ruby-keyword kw">self</span>
+64:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<%= error_messages_for 'company_employee' -%>
+
+<!--[form:company_employee]-->
+<%= text_box CompanyEmployee, "title" -%>
+<%= text_box CompanyEmployee, "surname" -%>
+<%= text_box CompanyEmployee, "first_name" -%>
+<%= text_box CompanyEmployee, "arrived_on" -%>
+<table class="form"><tr><td>
+<%= select_box CompanyEmployee, "company_department_id", CompanyDepartment.find_all_by_company_id(@current_company_id).collect {|p| [ p.name, p.id ] } -%>
+<%= select_box CompanyEmployee, "user_id", User.find_all_by_company_id(@current_company_id).collect {|p| [ p.name, p.id ] }, {:include_blank=>true} -%>
+<%= text_box CompanyEmployee, "phone" -%>
+<%= text_box CompanyEmployee, "mobile" -%>
+</td><td>
+<%= text_box CompanyEmployee, "role" -%>
+<%= text_box CompanyEmployee, "email" -%>
+<%= text_box CompanyEmployee, "fax" -%>
+<%= text_box CompanyEmployee, "office" -%>
+</td></tr></table>
+<%= text_box CompanyEmployee, "note" -%>
+<!--[eoform:company_employee]-->
+

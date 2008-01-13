@@ -1,0 +1,81 @@
+<table class="list">
+<tr>
+<th><%= JournalRecord.columns_hash["number"].human_name-%></th>
+<th><%= JournalRecord.columns_hash["created_on"].human_name-%></th>
+<th><%= JournalRecord.columns_hash["printed_on"].human_name-%></th>
+<th><%= Entry.columns_hash["name"].human_name-%></th>
+<th><%= Entry.columns_hash["account_id"].human_name-%></th>
+<th><%= Entry.columns_hash["debit"].human_name-%></th>
+<th><%= Entry.columns_hash["credit"].human_name-%></th>
+<th><%= Entry.columns_hash["expired_on"].human_name-%></th>
+<th><%= Entry.columns_hash["comment"].human_name-%></th>
+</tr>
+<%for @record in @journal_records-%>
+<% @closed = @record.period.financialyear.closed-%>
+<tr class="record-<%=@record.balance==0 ? 'eq':'neq'-%><%=' closed' if @closed-%>">
+<td><%=h @record.number-%></td>
+<td><%=h @record.created_on-%></td>
+<td><%=h @record.printed_on-%></td>
+<td><%=h @record.status-%></td>
+<td/>
+<td class="number"><%=h number_to_currency(@record.debit)-%></td>
+<td class="number"><%=h number_to_currency(@record.credit)-%></td>
+<td/>
+<td/>
+</tr>
+<%for @record_entry in @record.entries-%>
+<tr class="entry-<%=@record.balance==0 ? 'eq':'neq'-%><%=' closed' if @closed-%>">
+<td/>
+<td/>
+<td/>
+<td><%=h @record_entry.name-%></td>
+<td><%=link_to h(@record_entry.account.number), :controller=>"/accountancy/accounts", :action=>:show, :id=>@record_entry.account_id -%></td>
+<td class="number"><%=h number_to_currency @record_entry.debit-%></td>
+<td class="number"><%=h number_to_currency @record_entry.credit-%></td>
+<td><%=h @record_entry.expired_on-%></td>
+<td><%=h @record_entry.comment-%></td>
+</tr>
+<%end-%>
+<%end-%>
+</table>
+
+
+
+
+<%form_tag :action=>:create_entry do-%>
+<fieldset>
+<legend>Nouvelle écriture</legend>
+<%=error_messages_for 'journal_record'-%>
+<%=error_messages_for 'entry'-%>
+<table class="entry">
+<tr>
+<th><%=JournalRecord.columns_hash["number"].human_name-%></th>
+<th><%=JournalRecord.columns_hash["printed_on"].human_name-%></th>
+<th><%=Entry.columns_hash["name"].human_name-%></th>
+<th><%=Entry.columns_hash["account_id"].human_name-%></th>
+<th><%=Entry.columns_hash["debit"].human_name-%></th>
+<th><%=Entry.columns_hash["credit"].human_name-%></th>
+<th><%=Entry.columns_hash["currency_id"].human_name-%></th>
+<th><%=Entry.columns_hash["expired_on"].human_name-%></th>
+<th><%=Entry.columns_hash["comment"].human_name-%></th>
+<th/>
+</tr>
+<tr>
+<td><%=text_field :journal_record, :number, :size=>10-%></td>
+<td><%=text_field :journal_record, :printed_on, :size=>10-%></td>
+<td style="width:100%;"><%=text_field :entry, :name, :size=>32, :maxlength=>255, :style=>"width:100%;"-%></td>
+<!--<td><%=text_field :account, :number, :size=>19-%></td>-->
+<td><%=belongs_to_auto_completer :entry, :account, :label, {}, {:size=>32}, {:indicator=>"loader"}-%></td>
+<td><%=text_field :entry, :currency_debit, :size=>10-%></td>
+<td><%=text_field :entry, :currency_credit, :size=>10-%></td>
+<td><%=select :entry, :currency_id, @current_company.allowed_currencies.collect {|p| [ p.code, p.id ] }-%></td>
+<td><%=text_field :entry, :expired_on, :size=>10-%></td>
+<td><%=text_field :entry, :comment, :size=>16-%></td>
+</tr>
+</table>
+<%=submit_tag "Valider (Touche Entrée)", :style=>"display:none;" -%>
+</fieldset>
+<%end-%>
+
+<%= link_to_procedure :journal, nil, nil,{:action=>:journal_show, :id=>@journal.id} -%> 
+ &bull; <%= link_to "Test data", :action=>:create_test_data -%>

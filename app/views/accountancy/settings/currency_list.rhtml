@@ -1,0 +1,15 @@
+<%=
+print_table :currency.to_s.pluralize.to_sym do |t|
+  t.datum :name
+  t.datum :code
+  t.datum :format
+  t.datum :rate
+  t.datum :active
+  t.datum :comment
+  t.action :use=>:active, :actions=>{"true"=>:currency_deactivate, "false"=>:currency_activate}, :prefix=>"currency_", :method=>:post
+  t.action :action=>(:currency.to_s+'_edit').to_sym, :image=>:edit
+  t.action :action=>(:currency.to_s+'_destroy').to_sym, :image=>:destroy, :method=>:post, :confirm=>'Are you sure?'
+end
+-%>
+
+<%= link_to ('New '+:currency.to_s.humanize).t, :action => (:currency.to_s+'_new').to_sym %>

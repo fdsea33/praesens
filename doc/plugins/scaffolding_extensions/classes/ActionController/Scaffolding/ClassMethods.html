@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: ActionController::Scaffolding::ClassMethods</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">ActionController::Scaffolding::ClassMethods</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions_rb.html">
+                vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000004">parse_scaffold_all_models_options</a>&nbsp;&nbsp;
+      <a href="#M000001">scaffold</a>&nbsp;&nbsp;
+      <a href="#M000003">scaffold_all_models</a>&nbsp;&nbsp;
+      <a href="#M000002">scaffold_habtm</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="#M000004" class="method-signature">
+          <span class="method-name">parse_scaffold_all_models_options</span><span class="method-args">(*models)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Parse the arguments for <a
+href="ClassMethods.html#M000003">scaffold_all_models</a>. Seperated so that
+it can also be used in testing.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000004-source">
+<pre>
+      <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 1225</span>
+1225:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_scaffold_all_models_options</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">models</span>)
+1226:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">models</span>.<span class="ruby-identifier">pop</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">models</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">models</span>[<span class="ruby-value">-1</span>]
+1227:         <span class="ruby-identifier">generate</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:generate</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>
+1228:         <span class="ruby-identifier">except</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:except</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>
+1229:         <span class="ruby-identifier">only</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:only</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>
+1230:         <span class="ruby-identifier">except</span>.<span class="ruby-identifier">collect!</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:to_s</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">except</span>
+1231:         <span class="ruby-identifier">only</span>.<span class="ruby-identifier">collect!</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:to_s</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">only</span>
+1232:         <span class="ruby-identifier">models</span> = <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">all_models</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">models</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+1233:         <span class="ruby-identifier">models</span>.<span class="ruby-identifier">delete_if</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">model</span><span class="ruby-operator">|</span> <span class="ruby-identifier">except</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">model</span>)} <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">except</span>
+1234:         <span class="ruby-identifier">models</span>.<span class="ruby-identifier">delete_if</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">model</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">only</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">model</span>)} <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">only</span>
+1235:         <span class="ruby-identifier">models</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">model</span><span class="ruby-operator">|</span>
+1236:           <span class="ruby-identifier">scaffold_options</span> = {<span class="ruby-identifier">:suffix=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:scaffold_all_models=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:generate=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">generate</span>, <span class="ruby-identifier">:habtm=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">model</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">camelize</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">scaffold_habtm_reflections</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span><span class="ruby-identifier">r</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">singularize</span>}}
+1237:           <span class="ruby-identifier">scaffold_options</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">model</span>.<span class="ruby-identifier">to_sym</span>]) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">model</span>.<span class="ruby-identifier">to_sym</span>)
+1238:           <span class="ruby-identifier">scaffold_model</span> = <span class="ruby-identifier">scaffold_options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:model_id</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">model</span>.<span class="ruby-identifier">to_sym</span>
+1239:           [<span class="ruby-identifier">scaffold_model</span>, <span class="ruby-identifier">scaffold_options</span>]
+1240:         <span class="ruby-keyword kw">end</span>
+1241:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="#M000001" class="method-signature">
+          <span class="method-name">scaffold</span><span class="method-args">(model_id, options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Expands on the default Rails scaffold function. Takes the following
+additional options:
+</p>
+<ul>
+<li>:except: symbol or array of method symbols not to add
+
+</li>
+<li>:only: symbol or array of method symbols to use instead of the default
+
+</li>
+<li>:habtm: symbol or array of symbols of habtm associated classes, habtm
+scaffolds will be created for each one
+
+</li>
+<li>:setup_auto_completes: if set to false, don&#8217;t create scaffold auto
+complete actions for all models
+
+</li>
+<li>:generate: instead of evaluating the code produced, it outputs the code
+functioning as a poor man&#8217;s generator
+
+</li>
+</ul>
+<p>
+The following method symbols are used to control the methods that get added
+by the scaffold function:
+</p>
+<ul>
+<li>:manage: Page that has links to all the other methods. Also used as the
+index page unless :suffix=&gt;true
+
+</li>
+<li>:show: Shows a select box with all objects, allowing the user to chose one,
+which then shows the attribute name and value for scaffolded fields
+
+</li>
+<li>:destroy: Shows a select box with all objects, allowing the user to chose
+one to delete
+
+</li>
+<li>:edit: Shows a select box with all objects, allowing the user to chose one
+to edit. Also shows associations specified in the model&#8217;s
+scaffold_associations, allowing you easy access to manage associated
+models, add new objects for has_many associations, and edit the
+has_and_belongs_to_many associations.
+
+</li>
+<li>:new: Form for creating new objects
+
+</li>
+<li>:search: Simple search form using the same attributes as the new/edit form.
+The results page has links to show, edit, or destroy the object
+
+</li>
+<li>:merge: Brings up two select boxes each populated with all objects,
+allowing the user to pick one to merge into the other
+
+</li>
+<li>:browse: Browse all model objects, similar to the default Rails list
+scaffold
+
+</li>
+</ul>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000001-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000001-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 824</span>
+824:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold</span>(<span class="ruby-identifier">model_id</span>, <span class="ruby-identifier">options</span> = {})
+825:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">assert_valid_keys</span>(<span class="ruby-identifier">:class_name</span>, <span class="ruby-identifier">:suffix</span>, <span class="ruby-identifier">:except</span>, <span class="ruby-identifier">:only</span>, <span class="ruby-identifier">:habtm</span>,
+826:           <span class="ruby-identifier">:setup_auto_completes</span>, <span class="ruby-identifier">:scaffold_all_models</span>, <span class="ruby-identifier">:generate</span>)
+827:         
+828:         <span class="ruby-identifier">code</span> = <span class="ruby-value str">''</span>
+829:         <span class="ruby-identifier">singular_name</span> = <span class="ruby-identifier">model_id</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">underscore</span>
+830:         <span class="ruby-identifier">class_name</span>    = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">singular_name</span>.<span class="ruby-identifier">camelize</span>
+831:         <span class="ruby-identifier">singular_class</span> = <span class="ruby-identifier">class_name</span>.<span class="ruby-identifier">constantize</span>
+832:         <span class="ruby-identifier">plural_name</span>   = <span class="ruby-identifier">singular_name</span>.<span class="ruby-identifier">pluralize</span>
+833:         <span class="ruby-identifier">suffix</span>        = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:suffix</span>] <span class="ruby-operator">?</span> <span class="ruby-node">&quot;_#{singular_name}&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;&quot;</span>
+834:         <span class="ruby-identifier">add_methods</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:only</span>] <span class="ruby-operator">?</span> <span class="ruby-identifier">normalize_scaffold_options</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:only</span>]) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">default_scaffold_methods</span>
+835:         <span class="ruby-identifier">add_methods</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">normalize_scaffold_options</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:except</span>]) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:except</span>]
+836:         <span class="ruby-identifier">normalize_scaffold_options</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:habtm</span>]).<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">habtm_association</span><span class="ruby-operator">|</span> <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">scaffold_habtm</span>(<span class="ruby-identifier">model_id</span>, <span class="ruby-identifier">habtm_association</span>, (<span class="ruby-identifier">singular_class</span>.<span class="ruby-identifier">scaffold_habtm_with_ajax</span> <span class="ruby-value">? </span>{<span class="ruby-identifier">:ajax=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:suffix=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">suffix</span>} <span class="ruby-operator">:</span> {}).<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">:generate=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">options</span>[<span class="ruby-identifier">:generate</span>])).<span class="ruby-identifier">to_s</span>}
+837:         <span class="ruby-identifier">setup_scaffold_auto_completes</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:setup_auto_completes</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span>
+838:         
+839:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">add_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">:manage</span>)
+840:           <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;def _manage\#{suffix}\n@scaffold_all_models ||= \#{options[:scaffold_all_models] ? 'true' : 'false'}\nrender\#{suffix}_scaffold \&quot;manage\#{suffix}\&quot;\nend\n\#{scaffold_method(\&quot;manage\#{suffix}\&quot;)}\n\n&quot;</span>
+841:           
+842:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:suffix</span>]
+843:             <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;def index\nmanage\nend\n\n&quot;</span>
+844:           <span class="ruby-keyword kw">end</span>
+845:         <span class="ruby-keyword kw">end</span>
+846:         
+847:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">add_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">:show</span>) <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">add_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">:destroy</span>) <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">add_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">:edit</span>)
+848:           <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;def list\#{suffix}\nunless \#{singular_class.scaffold_use_auto_complete}\n@\#{plural_name} ||= \#{class_name}.find(:all, :order=&gt;\#{class_name}.scaffold_select_order, :include=&gt;\#{class_name}.scaffold_include)\nend\nrender\#{suffix}_scaffold \&quot;list\#{suffix}\&quot;\nend\nprivate :list\#{suffix}\n\n&quot;</span>
+849:         <span class="ruby-keyword kw">end</span>
+850:         
+851:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">add_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">:show</span>)
+852:           <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;def _show\#{suffix}\nif params[:id]\n@\#{singular_name} ||= \#{class_name}.find(params[:id].to_i)\n@scaffold_associations_readonly = true\nrender\#{suffix}_scaffold\nelse\n@scaffold_action = 'show'\nlist\#{suffix}\nend\nend\n\#{scaffold_method(\&quot;show\#{suffix}\&quot;)}\n\n&quot;</span>
+853:         <span class="ruby-keyword kw">end</span>
+854:         
+855:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">add_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">:destroy</span>)
+856:           <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;def _destroy\#{suffix}\nif params[:id]\n\#{class_name}.find(params[:id].to_i).destroy\nflash[:notice] = \&quot;\#{singular_name.humanize} was successfully destroyed\&quot;\nscaffold_destroy_redirect('\#{suffix}')\nelse\n@scaffold_action = 'destroy'\nlist\#{suffix}\nend\nend\n\#{scaffold_method(\&quot;destroy\#{suffix}\&quot;)}\n\n&quot;</span>
+857:         <span class="ruby-keyword kw">end</span>
+858:         
+859:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">add_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">:edit</span>)
+860:           <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;def _edit\#{suffix}\nif params[:id]\n@\#{singular_name} ||= \#{class_name}.find(params[:id].to_i)\nrender\#{suffix}_scaffold\nelse\n@scaffold_action = 'edit'\nlist\#{suffix}\nend\nend\n\#{scaffold_method(\&quot;edit\#{suffix}\&quot;)}\n\ndef _update\#{suffix}\n@\#{singular_name} ||= \#{class_name}.find(params[:id])\n@\#{singular_name}.update_scaffold_attributes(\#{class_name}.scaffold_edit_fields_replacing_associations, params[:\#{singular_name}])\n\nif @\#{singular_name}.save\nflash[:notice] = \&quot;\#{singular_name.humanize} was successfully updated\&quot;\nscaffold_edit_redirect('\#{suffix}')\nelse\nrender\#{suffix}_scaffold('edit')\nend\nend\n\#{scaffold_method(\&quot;update\#{suffix}\&quot;)}\n\n&quot;</span>
+861:           
+862:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">singular_class</span>.<span class="ruby-identifier">scaffold_load_associations_with_ajax</span>
+863:             <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;def _associations\#{suffix}\n@\#{singular_name} ||= \#{class_name}.find(params[:id].to_i)\nrender\#{suffix}_scaffold('associations', :inline=&gt;\&quot;&lt;%= habtm_ajax_associations if @scaffold_class.scaffold_habtm_with_ajax %&gt;\\n&lt;%= association_links %&gt;\\n\&quot;, :layout=&gt;false)\nend\n\#{scaffold_method(\&quot;associations\#{suffix}\&quot;)}\n\n&quot;</span>
+864:           <span class="ruby-keyword kw">end</span>
+865:         <span class="ruby-keyword kw">end</span>
+866:         
+867:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">add_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">:new</span>)
+868:           <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;def _new\#{suffix}\n@\#{singular_name} ||= \#{class_name}.new(params[:\#{singular_name}])\nrender\#{suffix}_scaffold\nend\n\#{scaffold_method(\&quot;new\#{suffix}\&quot;)}\n\ndef _create\#{suffix}\n@\#{singular_name} ||= \#{class_name}.new\n@\#{singular_name}.update_scaffold_attributes(\#{class_name}.scaffold_new_fields_replacing_associations, params[:\#{singular_name}])\nif @\#{singular_name}.save\nflash[:notice] = \&quot;\#{singular_name.humanize} was successfully created\&quot;\nparams[:id] = @\#{singular_name}.id\nscaffold_new_redirect('\#{suffix}')\nelse\nrender\#{suffix}_scaffold('new')\nend\nend\n\#{scaffold_method(\&quot;create\#{suffix}\&quot;)}\n\n&quot;</span>
+869:         <span class="ruby-keyword kw">end</span>
+870:         
+871:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">add_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">:search</span>)
+872:           <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;def _search\#{suffix}\nunless @\#{singular_name}\n@\#{singular_name} ||= \#{class_name}.new\n\#{class_name}.column_names.each{|key| @\#{singular_name}[key] = nil }\nend\nrender\#{suffix}_scaffold('search\#{suffix}')\nend\n\#{scaffold_method(\&quot;search\#{suffix}\&quot;)}\n\ndef _results\#{suffix}\nrecord = \#{class_name}.new\nrecord.update_scaffold_attributes(\#{class_name}.scaffold_search_fields_replacing_associations, params[:\#{singular_name}])\nconditions = [[]]\n\nlimit, offset = nil, nil\nif \#{singular_class.search_pagination_enabled?}\n@scaffold_search_results_form_params = {\&quot;\#{singular_name}\&quot;=&gt;{}, :notnull=&gt;[], :null=&gt;[]}\n@scaffold_search_results_page = params[:page].to_i &gt; 1 ? params[:page].to_i : 1\n@scaffold_search_results_page -= 1 if params[:page_previous]\n@scaffold_search_results_page += 1 if params[:page_next]\nlimit = \#{singular_class.scaffold_search_results_limit + 1}\noffset = @scaffold_search_results_page &gt; 1 ? (limit-1)*(@scaffold_search_results_page - 1) : nil\nend\n\nif params[:\#{singular_name}]\n\#{class_name}.scaffold_search_fields_replacing_associations.each do |field|\nnext if (params[:null] &amp;&amp; params[:null].include?(field)) || (params[:notnull] &amp;&amp; params[:notnull].include?(field)) || !params[:\#{singular_name}][field] || params[:\#{singular_name}][field].length == 0\nscaffold_search_add_condition(conditions, record, field)\n@scaffold_search_results_form_params[\&quot;\#{singular_name}\&quot;][field] = params[:\#{singular_name}][field] if \#{singular_class.search_pagination_enabled?}\nend\nend\n\n\#{class_name}.scaffold_search_fields_replacing_associations.each do |field|\nif params[:null] &amp;&amp; params[:null].include?(field)\nconditions[0] &lt;&lt; \&quot;\#{singular_class.table_name}.\\\#{field} IS NULL\&quot;\n@scaffold_search_results_form_params[:null] &lt;&lt; field if \#{singular_class.search_pagination_enabled?}\nend\nif params[:notnull] &amp;&amp; params[:notnull].include?(field)\nconditions[0] &lt;&lt; \&quot;\#{singular_class.table_name}.\\\#{field} IS NOT NULL\&quot;\n@scaffold_search_results_form_params[:notnull] &lt;&lt; field if \#{singular_class.search_pagination_enabled?}\nend\nend\n\nconditions[0] = conditions[0].join(' AND ')\nconditions = nil if conditions[0].length == 0\n@\#{plural_name} = \#{class_name}.find(:all, :conditions=&gt;conditions, :include=&gt;\#{class_name}.scaffold_search_include, :order=&gt;\#{class_name}.scaffold_search_select_order, :limit=&gt;limit, :offset=&gt;offset)\n@scaffold_search_results_page_next = true if \#{singular_class.search_pagination_enabled?} &amp;&amp; @\#{plural_name}.length == \#{singular_class.scaffold_search_results_limit+1} &amp;&amp; @\#{plural_name}.pop\n@scaffold_fields_method = :scaffold_search_fields\nrender\#{suffix}_scaffold('listtable\#{suffix}')\nend\n\#{scaffold_method(\&quot;results\#{suffix}\&quot;)}\n\n&quot;</span>
+873:         <span class="ruby-keyword kw">end</span>
+874:       
+875:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">add_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">:merge</span>)
+876:           <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;def _merge\#{suffix}\nunless \#{singular_class.scaffold_use_auto_complete}\n@\#{plural_name} ||= \#{class_name}.find(:all, :order=&gt;\#{class_name}.scaffold_select_order, :include=&gt;\#{class_name}.scaffold_include)\nend\nrender\#{suffix}_scaffold('merge\#{suffix}')\nend\n\#{scaffold_method(\&quot;merge\#{suffix}\&quot;)}\n\ndef _merge_update\#{suffix}\nflash[:notice] = if \#{class_name}.merge_records(params[:from].to_i, params[:to].to_i)\n\&quot;\#{plural_name.humanize} were successfully merged\&quot;\nelse \&quot;Error merging \#{plural_name.humanize.downcase}\&quot;\nend\nscaffold_merge_redirect('\#{suffix}')\nend\n\#{scaffold_method(\&quot;merge_update\#{suffix}\&quot;)}\n\n&quot;</span>
+877:         <span class="ruby-keyword kw">end</span>
+878:         
+879:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">add_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">:browse</span>)
+880:           <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;def _browse\#{suffix}\n@page ||= params[:page].to_i &gt; 1 ? params[:page].to_i : 1\n@\#{plural_name} ||= \#{class_name}.find(:all, :order=&gt;\#{class_name}.scaffold_browse_select_order, :include=&gt;\#{class_name}.scaffold_browse_include, :limit =&gt; \#{singular_class.scaffold_browse_records_per_page+1}, :offset=&gt;((@page-1)*\#{singular_class.scaffold_browse_records_per_page}))\n@next_page ||= true if @\#{plural_name}.length == \#{singular_class.scaffold_search_results_limit+1} &amp;&amp; @\#{plural_name}.pop\n@scaffold_fields_method = :scaffold_browse_fields\nrender\#{suffix}_scaffold('listtable\#{suffix}')\nend\n\#{scaffold_method(\&quot;browse\#{suffix}\&quot;)}\n\n&quot;</span>
+881:         <span class="ruby-keyword kw">end</span>
+882:         
+883:         <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;add_template_helper(ScaffoldHelper)\n\nprivate\ndef render\#{suffix}_scaffold(action=nil, options={})\naction ||= caller_method_name(caller)\naction = action[1..-1] if action[0...1] == '_'\n@scaffold_class ||= \#{class_name}\n@scaffold_singular_name ||= \&quot;\#{singular_name}\&quot;\n@scaffold_plural_name ||= \&quot;\#{plural_name}\&quot;\n@scaffold_methods ||= \#{add_methods.inspect}\n@scaffold_suffix ||= \&quot;\#{suffix}\&quot;\n@scaffold_singular_object ||= @\#{singular_name}\n@scaffold_plural_object ||= @\#{plural_name}\nadd_instance_variables_to_assigns\nrender_scaffold_template(action, options)\nend\n&quot;</span>
+884:         
+885:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:generate</span>] <span class="ruby-operator">?</span> <span class="ruby-identifier">code</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">module_eval</span>(<span class="ruby-identifier">code</span>, <span class="ruby-keyword kw">__FILE__</span>)
+886:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="#M000003" class="method-signature">
+          <span class="method-name">scaffold_all_models</span><span class="method-args">(*models)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Scaffolds all models in the Rails app, with all associations when called
+with no arguments.
+</p>
+<p>
+There are two ways to call it with arguments:
+</p>
+<ul>
+<li>Multiple string or symbol arguments specify models to be scaffolded. No
+other models will be scaffolded (deprecated)
+
+</li>
+<li>One hash with the following symbols as keys:
+
+<ul>
+<li>:except =&gt; Array # Don&#8216;t scaffold these models
+
+</li>
+<li>:only =&gt; Array # Only scaffold these models
+
+</li>
+<li>:generate =&gt; true/false # Emit code generated instead of evaluating it
+
+</li>
+<li>* (Everything else) =&gt; Hash
+
+<ul>
+<li>Key is a symbol with the class name underscored.
+
+</li>
+<li>Value is a hash of scaffold options.
+
+</li>
+<li>To use a different singular name, use
+:model_id=&gt;&#8217;singular_name&#8217; inside the value hash
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000003-source">
+<pre>
+      <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 1209</span>
+1209:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_all_models</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">models</span>)
+1210:         <span class="ruby-identifier">models</span> = <span class="ruby-identifier">parse_scaffold_all_models_options</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">models</span>)
+1211:         <span class="ruby-identifier">model_names</span> = []
+1212:         <span class="ruby-identifier">scaffold_results</span> = <span class="ruby-identifier">models</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">model</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span> <span class="ruby-identifier">model_names</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">model</span>.<span class="ruby-identifier">to_s</span>; <span class="ruby-identifier">scaffold</span>(<span class="ruby-identifier">model</span>, <span class="ruby-identifier">options</span>)}.<span class="ruby-identifier">compact</span>
+1213:         <span class="ruby-identifier">code</span> = <span class="ruby-value str">&quot;def index\n@models = \#{model_names.inspect}\nrender_scaffold_template(\&quot;index\&quot;)\nend\n&quot;</span>
+1214:         <span class="ruby-identifier">scaffold_results</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">scaffold_results</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">code</span>).<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n\n&quot;</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">module_eval</span>(<span class="ruby-identifier">code</span>, <span class="ruby-keyword kw">__FILE__</span>)
+1215:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="#M000002" class="method-signature">
+          <span class="method-name">scaffold_habtm</span><span class="method-args">(singular, many, options = true)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Scaffolds a habtm association for two classes using two select boxes, or a
+select box for removing associations and an autocompleting text box for
+adding associations. By default, scaffolds the association both ways.
+</p>
+<p>
+The new way of calling this is with symbols naming the model and the
+association, and an optional hash of options. The old method of having an
+optional true/false flag still works.
+</p>
+<p>
+Possibly options:
+</p>
+<ul>
+<li>:both_ways - scaffold the association both ways
+
+</li>
+<li>:suffix - only needed for redirects for non-Ajax browsers using the ajax
+form, used by scaffold
+
+</li>
+<li>:generate - return code generated instead of evaluating it
+
+</li>
+</ul>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000002-source">
+<pre>
+      <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 1109</span>
+1109:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_habtm</span>(<span class="ruby-identifier">singular</span>, <span class="ruby-identifier">many</span>, <span class="ruby-identifier">options</span> = <span class="ruby-keyword kw">true</span>)
+1110:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>) <span class="ruby-operator">:</span> {<span class="ruby-identifier">:both_ways=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">options</span>}
+1111:         <span class="ruby-identifier">singular_class</span> = <span class="ruby-identifier">singular</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">camelize</span>.<span class="ruby-identifier">constantize</span>
+1112:         <span class="ruby-identifier">singular_name</span> = <span class="ruby-identifier">singular_class</span>.<span class="ruby-identifier">name</span>
+1113:         <span class="ruby-identifier">reflection</span> = <span class="ruby-identifier">singular_class</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-identifier">many</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">pluralize</span>.<span class="ruby-identifier">underscore</span>.<span class="ruby-identifier">to_sym</span>)
+1114:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">macro</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">:has_and_belongs_to_many</span>
+1115:         <span class="ruby-identifier">many_class</span> = (<span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">many</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">camelize</span>).<span class="ruby-identifier">constantize</span>
+1116:         <span class="ruby-identifier">many_class_name</span> = <span class="ruby-identifier">many_class</span>.<span class="ruby-identifier">name</span>
+1117:         <span class="ruby-identifier">many_name</span> = <span class="ruby-identifier">many</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">pluralize</span>.<span class="ruby-identifier">underscore</span>
+1118:         <span class="ruby-identifier">setup_scaffold_auto_complete_for</span>(<span class="ruby-identifier">many_class_name</span>.<span class="ruby-identifier">underscore</span>.<span class="ruby-identifier">to_sym</span>)
+1119:         <span class="ruby-identifier">foreign_key</span> = <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:foreign_key</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">singular_class</span>.<span class="ruby-identifier">table_name</span>.<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">foreign_key</span>
+1120:         <span class="ruby-identifier">association_foreign_key</span> = <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:association_foreign_key</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">many_class</span>.<span class="ruby-identifier">table_name</span>.<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">foreign_key</span>
+1121:         <span class="ruby-identifier">join_table</span> = <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:join_table</span>] <span class="ruby-operator">||</span> ( <span class="ruby-identifier">singular_class</span>.<span class="ruby-identifier">table_name</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">many_class</span>.<span class="ruby-identifier">table_name</span> <span class="ruby-value">? </span><span class="ruby-value str">'#{singular_class.table_name}_#{many_class.table_name}'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'#{many_class.table_name}_#{singular_class.table_name}'</span>)
+1122:         <span class="ruby-identifier">code</span> = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:ajax</span>]
+1123:           <span class="ruby-identifier">suffix</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:suffix</span>]
+1124:           <span class="ruby-value str">&quot;def add_\#{many}_to_\#{singular}\n@record = \#{singular_name}.find(params[:id].to_i)\n@associated_record = \#{many_class_name}.find(params[:\#{singular}_\#{many}_id].to_i)\n\#{singular_name}.connection.execute(\&quot;INSERT INTO \#{join_table} (\#{foreign_key}, \#{association_foreign_key}) VALUES (\\\#{@record.id}, \\\#{@associated_record.id})\&quot;)\nif request.xhr?\nrender :update do |page|\npage.insert_html(:top, '\#{singular}_associated_records_list', :inline=&gt;\&quot;&lt;%= scaffold_habtm_association_line_item(@record, '\#{singular}', @associated_record, '\#{many}') %&gt;\&quot;)\npage.remove(\&quot;\#{singular}_\#{many}_id_\\\#{@associated_record.id}\&quot;) unless \#{reflection.klass.scaffold_use_auto_complete}\npage[\&quot;\#{singular}_\#{many}_id\&quot;].\#{reflection.klass.scaffold_use_auto_complete ? \&quot;value = ''\&quot; : \&quot;selectedIndex = 0\&quot;}\nend\nelse redirect_to(:action=&gt;\&quot;edit\#{suffix}\&quot;, :id=&gt;@record.id)\nend\nend\n\ndef remove_\#{many}_from_\#{singular}\n@record = \#{singular_name}.find(params[:id].to_i)\n@associated_record = \#{many_class_name}.find(params[:\#{singular}_\#{many}_id].to_i)\n@record.\#{many_name}.delete(@associated_record)\nif request.xhr?\nrender(:update) do |page|\npage.remove(\&quot;\#{singular}_\\\#{@record.id}_\#{many}_\\\#{@associated_record.id}\&quot;)\npage.insert_html(:bottom, '\#{singular}_\#{many}_id', \&quot;&lt;option value='\\\#{@associated_record.id}' id='\#{singular}_\#{many}_id_\\\#{@associated_record.id}'&gt;\\\#{@associated_record.scaffold_name}&lt;/option&gt;\&quot;) unless \#{reflection.klass.scaffold_use_auto_complete}\nend\nelse redirect_to(:action=&gt;\&quot;edit\#{suffix}\&quot;, :id=&gt;@record.id)\nend\nend\n\n&quot;</span>
+1125:         <span class="ruby-keyword kw">else</span>
+1126:           <span class="ruby-identifier">suffix</span> = <span class="ruby-node">&quot;_#{singular_name.underscore}_#{many_name}&quot;</span> 
+1127:           <span class="ruby-value str">&quot;def edit\#{suffix}\n@singular_name = \&quot;\#{singular_name}\&quot;\n@many_name = \&quot;\#{many_name.gsub('_',' ')}\&quot;\n@singular_object = \#{singular_name}.find(params[:id])\n@many_class = \#{many_class_name}\n@items_to_remove = \#{many_class_name}.find(:all, :conditions=&gt;[\&quot;\#{many_class.primary_key} IN (SELECT \#{association_foreign_key} FROM \#{join_table} WHERE \#{join_table}.\#{foreign_key} = ?)\&quot;, params[:id].to_i], :order=&gt;\#{many_class_name}.scaffold_select_order).collect{|item| [item.scaffold_name, item.id]}\nunless \#{many_class.scaffold_use_auto_complete}\n@items_to_add = \#{many_class_name}.find(:all, :conditions=&gt;[\&quot;\#{many_class.primary_key} NOT IN (SELECT \#{association_foreign_key} FROM \#{join_table} WHERE \#{join_table}.\#{foreign_key} = ?)\&quot;, params[:id].to_i], :order=&gt;\#{many_class_name}.scaffold_select_order).collect{|item| [item.scaffold_name, item.id]}\nend\n@scaffold_update_page = \&quot;update\#{suffix}\&quot;\nrender_scaffold_template(\&quot;habtm\#{suffix}\&quot;)\nend\n\ndef update\#{suffix}\nflash[:notice], success = begin\nsingular_item = \#{singular_name}.find(params[:id])\nif params[:add] &amp;&amp; !params[:add].empty?\n\#{singular_name}.transaction do\nmultiple_select_ids(params[:add]).each do |associated_record_id|\n\#{singular_name}.connection.execute(\&quot;INSERT INTO \#{join_table} (\#{foreign_key}, \#{association_foreign_key}) VALUES (\\\#{singular_item.id}, \\\#{associated_record_id})\&quot;)\nend\nend\nend\nsingular_item.\#{many_name}.delete(\#{many_class_name}.find(multiple_select_ids(params[:remove]))) if params[:remove] &amp;&amp; !params[:remove].empty?\n[\&quot;Updated \#{singular_name.underscore.humanize.downcase}'s \#{many_name.humanize.downcase} successfully\&quot;, true]\nrescue ::ActiveRecord::StatementInvalid\n[\&quot;Error updating \#{singular_name.underscore.humanize.downcase}'s \#{many_name.humanize.downcase}\&quot;, false]\nend\nscaffold_habtm_redirect('\#{suffix}', success)\nend\n\n&quot;</span>
+1128:         <span class="ruby-keyword kw">end</span>
+1129:         <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">scaffold_habtm</span>(<span class="ruby-identifier">many_class_name</span>, <span class="ruby-identifier">singular_name</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">:both_ways=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">false</span>)).<span class="ruby-identifier">to_s</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:both_ways</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>]
+1130:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:generate</span>] <span class="ruby-operator">?</span> <span class="ruby-identifier">code</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">module_eval</span>(<span class="ruby-identifier">code</span>, <span class="ruby-keyword kw">__FILE__</span>)
+1131:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

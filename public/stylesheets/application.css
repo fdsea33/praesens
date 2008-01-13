@@ -1,0 +1,317 @@
+p, td, label, div, input, textarea, select, option, li, legend {
+	font-size:  11px;
+  font-family: Arial, sans-serif;
+//	margin : 0px;
+//	padding:0px;
+}
+
+h1 {	font-size: 14px;}
+h2, a.part-title {font-size: 12px; font-weight : bold;}
+h3, #action_path {
+  font-size              : 13px; 
+  font-weight            : bold; 
+  /*
+  background-image       : url(/images/general/gradient_h3.png); 
+  background-position    : center; 
+  background-repeat      : repeat-x; 
+  */
+}
+
+ul { padding-left: 0.8em; margin-left : 0.8em}
+a:link    {color: #36D; text-decoration: none;}
+a:visited {color: #36D; text-decoration: none;}
+a[href]:hover  {color: #36D; text-decoration: underline;}
+a[href]:active {color: #36D; text-decoration: none;}
+
+fieldset {
+	border                 : 1px solid #A66;
+  background-color       : #EEC;
+  margin-bottom          : 2px;
+  padding                : 4px;
+}
+
+legend {
+	color                  : #13A; //#A66;//white;
+  padding                : 1px 4px 1px 4px;
+  margin-left            : 4px;
+}
+
+
+div.auto_complete {
+              width: 350px;
+              background: #fff;
+            }
+            div.auto_complete ul {
+              border:1px solid #888;
+              margin:0;
+              padding:0;
+              width:100%;
+              list-style-type:none !important;
+            }
+            div.auto_complete ul li {
+              margin:0;
+              padding:3px;
+              list-style-type:none !important;
+            }
+            div.auto_complete ul li.selected { 
+              background-color: #ffb; 
+            }
+            div.auto_complete ul strong.highlight { 
+              color: #800; 
+              margin:0;
+              padding:0;
+            }
+
+em.title {
+  color: #7A7;
+  font-size : 110%;
+  font-style:normal;
+  font-variant:small-caps;
+  padding : 0.2em;
+}
+
+hr {
+  border: none;
+  border-bottom : 2px solid #A66;
+}
+
+table tr.record-eq  td, 
+table tr.record-neq td { }
+table tr.record-eq  td { color : #030; background-color: #CEC;}
+table tr.entry-eq   td { color : #080; background-color: #DFD;}
+table tr.record-neq td { color : #500; background-color: #FDD;}
+table tr.entry-neq  td { color : #B00; background-color: #FEE;}
+table.entry th {font-weight : normal; color : #A66;}
+
+td.year-closed, tr.closed td {background-image : url(/images/general/closed.png) !important; background-position: middle; color : red;}
+td.year-closed-action {background-color : #CA9;}
+
+td.number {text-align:right;}
+
+table.form{ width:100%; border-collapse : collapse;}
+table.form tr td { padding-left : 0.5px;}
+table.form tr th { padding : 1px;}
+table.read tr td {vertical-align : top;}
+td.read-label-h, td.read-label-h label.read {width:10em;}
+td.read-label-h label.read{
+  padding-top:   1px;
+  text-align:    right;
+  padding:  0px 2px 0px 0px; //2px 0.2em 2px 0.2em;
+  display:       block;
+  color                  : #A66
+}
+
+
+td.form-label-h, td.form-label-h label.form-std { width:         10em;}
+td.form-label-h label{
+  padding-top:   1px;
+  float:         left;
+  text-align:    right;
+//  margin-right:  0.5em;
+  padding:  2px 0.2em 2px 0.2em;
+  display:       block;
+  background-color: #FE9;
+//  border-top: 1px solid white;
+//  border-bottom: 1px solid #ddce84;
+//  border-left: 10px solid #FFD;
+}
+
+td.form-label-v label{
+  text-align:    left;
+  background-color: #FE9;
+  padding:  2px 0.2em 2px 0.2em;
+}
+
+label.form-std { color:         #700;}
+b { color: #A66; width: 15em; text-align: right; float: left; margin-right:  0.5em;}
+div label, div input {	margin-bottom: 2px;}
+input[type="password"], input[type="text"], textarea, select, input[type="checkbox"] {	border:        1px solid #B99;}
+input[type="text"] { padding :1px;}
+input[type="submit"] {
+	border:        2px solid #B99;
+	border-top-color : #FE9;
+	border-left-color : #FE9;
+	background-color : #EED38F;
+	color : #944;
+	margin                 : 1px;
+}
+
+.invalid {
+  border:        1px solid red !important;
+  background-color : #FDC !important;
+  color: #900;
+}
+
+input.required { border:1px solid blue; background-color : #DEF;}
+
+
+/* BEGIN Main parts */
+
+#parts a img{ 
+  padding                : 5px; 
+  margin                 : 0px 0px 1px 0px;
+  background             : #E0C780 url(/images/general/part.png) repeat-x bottom;
+  
+  border-top             : 1px solid #DBB; 
+  border-left            : 1px solid #DBB;
+  border-right           : 1px solid #A66;
+
+  /*
+  border-top             : 1px solid transparent; 
+  border-left            : 1px solid transparent;
+  border-right           : 1px solid transparent;
+  border-color           : #a66;
+  */
+}
+#parts a img:hover{margin-bottom:1px; background-color : #F7DF99;}
+#parts a.active_part img{margin-bottom: 0px;  padding-top: 6px;  background: #EED38F;}
+
+
+#action_path {background-color: #EED38F;color: black; padding:4px; padding-left : 0.3em; padding-right : 0.3em; border-bottom : 1px dotted #EC8;}
+#authentication { background-color : threedface;}
+#banner { color: #A66; text-align: left; height: 4em;	width:100%;	border-collapse: collapse;}
+#columns {width: 100%; border-collapse:collapse;}
+#footer {padding: 1px; color: threedshadow; text-align: center;}
+#home {	margin : 0px;	padding : 0px;  background-color: threedface; border-top:1px solid buttonhighlight}
+#infos { vertical-align: top;	text-align: center;	width:160px;}
+#infos table{text-align: center;color: #FED; background-color : #a66; margin : -1px 5px 2px 0px; -moz-border-radius-bottomleft: 8px; -moz-border-radius-bottomright: 8px;}
+#load {}
+#login {text-align: right; vertical-align:  center;}
+#logo, #side  { width: 15em; }
+#logo, #parts { height: 5em; }
+#logo {margin-bottom:-3px; vertical-align: center; background: url(/images/praesens.png) no-repeat center;}
+#main {padding: 3px; background: #ffd;}
+#parts {vertical-align:bottom; padding: 0px; margin:0px;   z-index : 1;}
+#tabbox {  background: white;	width: 100%; border: 1px solid #A66; border-collapse: collapse; margin: 0 2px 0 1px;
+  border-top             : 1px solid #DBB; 
+  border-left            : 1px solid #DBB;
+  border-right           : 1px solid #A66;
+  z-index : 1000;
+}
+
+
+
+
+
+li {
+	list-style: square;
+	color: #A66;
+}
+
+
+td.aright {
+	text-align: right;
+//	color: #D5AA80;
+}
+
+
+#notice {
+  text-align : center;
+	border: 2px solid #494;
+	background-color : #DFD;
+	padding: 0.5em;
+	margin-bottom: 1em;
+	color: #494;
+}
+
+#warning {
+	border: 2px solid #874;
+	background-color : #DC5;
+	padding: 1em;
+	margin-bottom: 1em;
+	color: #874;
+}
+
+#error {
+	border                 : 4px solid #F54;
+	background-color       : #FDC;
+	padding                : 0.5em;
+	font-weight            : bold;
+	margin                 : 1em;
+	color                  : #F54;
+	background-image       : url(/images/flash/error.png);
+	background-position    : left;
+  background-repeat      : no-repeat;
+  min-height             : 64px;
+  padding-left           : 80px
+}
+
+
+/* END Main parts*/
+
+div.menu    {background-color : white; margin: 2px 2px 4px 2px; border: 1px solid threeddarkshadow;}
+div.menu h3 {color : white; background-color : threeddarkshadow; margin: 0px; padding: 1px 1px 2px 0.3em;}
+div.menu ul {padding : 0px 0px 0px 0px; margin: 0px;}
+div.menu ul li       {background-color : menu; list-style-position:inside; padding : 2px 3px 2px 3px; border-top: 1px solid threedshadow;}
+div.menu ul li:hover {background-color : threedlightshadow;}
+div.menu-blue              { border: 1px solid #36D;}
+div.menu-blue h3           { color : #fff; background-color : #36d;}
+div.menu-blue ul li        { background-color :#F0F7FF;  border-top: 1px solid #CDF; }
+div.menu-blue ul li:hover  { background-color :#DEF; }
+div.menu-green             { border: 1px solid #3B5;}
+div.menu-green h3          { color : #fff; background-color : #3b5;}
+div.menu-green ul li       { background-color :#E6FFED;  border-top: 1px solid #BEB; }
+div.menu-green ul li:hover { background-color :#D7FADF; }
+div.menu-info              { border: 1px solid #a66;}
+div.menu-info h3           { color : #fff; background-color : #a66;}
+div.menu-info ul li        { list-style-type:none; background-color :#a66;  border-top: 1px solid #a66; text-align : center; color: #FFD;}
+div.menu-info ul li:hover  { background-color :#a66; }
+
+h2.part-title { color :#A66;}
+h2.component-title { color :#975; margin-bottom: 1em;}
+
+/*  Table list*/
+table.list {border-collapse: collapse; border: 1px solid #A66; width: 100%; margin: 3px 2px 2px 3px; background-color: white;}
+table.list tr th {background-color: #A66; font-weight : normal;	color: white;}
+table.list tr th.actiony    {background-color: #cca3a3;	color: white;}
+table.list tr td.navigation {background-color: #F0F7FF; border-top: 1px solid #c4c789; text-align: center;}
+table.list tr td.norecord   {background-color: #fe9;	text-align: center; color: #a66; padding: 0.5em;}
+table.list tr td {border-right: 1px solid #A66; padding: 1px 3px 1px 3px;}
+table.list tr td.action-special {background-color: #EEd38f; border-right: 1px solid #A66; text-align: center; width: 16px; padding: 1px;}
+table.list tr td.actiony    {border : none; text-align: center; width: 16px; padding: 1px;}
+table.list tr.line-odd  td  {background-color: white;}
+table.list tr.line-even td  {background-color: #eee0e0; color: #221414;}
+table.list tr.line-odd  td.actiony {background-color: #fff7cc;}
+table.list tr.line-even td.actiony {background-color: #f7e7bd;}
+table.list tr.tree td   {border:none; vertical-align: middle;}
+table.list tr.level0 td {background-color :#eed38f; font-weight : bold;}
+table.list tr.level1 td {background-color :#ffe299; padding-left: 2em;}
+table.list tr.level2 td {background-color : #fff2a4; padding-left: 4em;}
+table.discret tr td     {border: none;}
+
+/* ERROR */
+.fieldWithErrors {
+//  background-color: #c00;
+//  display: table;
+}
+
+.fieldWithErrors input{
+  background-color: #FDD;
+}
+
+#errorExplanation {
+  border: 2px solid #c00;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #fff0f0;
+}
+
+#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 3px;
+  margin: -7px;
+  background-color: #c00;
+  color: #fff;
+	text-align: center;
+}
+
+#errorExplanation p {
+  color: #300;
+  margin-bottom: 0;
+	margin-top:1em;
+  padding: 5px;
+}
+
+

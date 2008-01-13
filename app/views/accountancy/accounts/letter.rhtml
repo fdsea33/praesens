@@ -1,0 +1,32 @@
+<%form_tag do%>
+<table class="list">
+<tr>
+<th class="action-special">&bull;</th>
+<th><%= Entry.columns_hash["letter"].human_name-%></th>
+<th><%= Entry.columns_hash["name"].human_name-%></th>
+<th><%= Entry.columns_hash["debit"].human_name-%></th>
+<th><%= Entry.columns_hash["credit"].human_name-%></th>
+<th><%= Entry.columns_hash["expired_on"].human_name-%></th>
+<th><%= Entry.columns_hash["comment"].human_name-%></th>
+<th><%= JournalRecord.columns_hash["number"].human_name-%></th>
+<th><%= JournalRecord.columns_hash["created_on"].human_name-%></th>
+<th><%= JournalRecord.columns_hash["printed_on"].human_name-%></th>
+</tr>
+<%for @entry in @entries-%>
+<tr style="background : <%=@entry.letter_color-%>">
+<td class="action-special"><%=check_box "entry[]", "to_letter" -%></td>
+<td style="text-align:center;"><%=h @entry.letter-%></td>
+<td><%=h @entry.name-%></td>
+<td class="number"><%=h number_to_currency @entry.debit-%></td>
+<td class="number"><%=h number_to_currency @entry.credit-%></td>
+<td><%=h @entry.expired_on-%></td>
+<td><%=h @entry.comment-%></td>
+<td><%=h @entry.record.number-%></td>
+<td><%=h @entry.record.created_on-%></td>
+<td><%=h @entry.record.printed_on-%></td>
+</tr>
+<%end-%>
+</table>
+<%=submit_tag "Letter".t, :url=>{:action=>:letter, :id=>params[:id]}-%>
+<%=submit_tag "Unletter".t, :url=>{:action=>:unletter, :id=>params[:id]} -%>
+<%end-%>

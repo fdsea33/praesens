@@ -1,0 +1,14 @@
+<%= error_messages_for BankAccount.to_s.underscore %>
+<%= text_box BankAccount, :bank, :select_label=>:name%>
+<%= text_box BankAccount, :name%>
+<%= text_box BankAccount, :iban%>
+
+<table class="form"><tr><td>
+<%= text_box BankAccount, :agency%></td><td>
+<%= text_box BankAccount, :counter%></td></tr><tr><td>
+<%= text_box BankAccount, :number%></td><td>
+<%= text_box BankAccount, :key%></td></tr></table>
+<%= text_box BankAccount, :bic%>
+<%= text_box BankAccount, :journal,  :select_label=>:name%>
+<%= text_box BankAccount, :currency, :select_label=>:name%>
+<%= text_box BankAccount, :account,  :select_label=>:label %>

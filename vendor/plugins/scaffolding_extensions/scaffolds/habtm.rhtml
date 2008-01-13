@@ -1,0 +1,20 @@
+<h3>Edit <%=h @singular_object.scaffold_name %>'s <%= @many_name %> </h3>
+
+<%= form_tag(:action=>@scaffold_update_page, :id=>params[:id]) %>
+
+<% if @many_class.scaffold_use_auto_complete %>
+  <h4>Add This <%= @many_name.singularize.humanize %></h4>
+  <%= scaffold_text_field_tag_with_auto_complete('add', @many_class) %>
+<% elsif @items_to_add.length > 0 %>
+  <h4>Add These <%= @many_name.humanize %></h4>
+  <%= select_tag('add[]', options_for_select(@items_to_add), :id=>'add', :multiple=>'multiple') %>
+<% end %>
+
+<% if @items_to_remove.length > 0 %> 
+  <h4>Remove These <%= @many_name.humanize %></h4>
+  <%= select_tag('remove[]', options_for_select(@items_to_remove), :id=>'remove', :multiple=>'multiple') %>
+<% end %>
+
+<br /><br />
+<%= submit_tag("Update") %>
+</form>

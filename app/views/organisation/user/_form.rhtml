@@ -1,0 +1,12 @@
+<%= error_messages_for 'user' %>
+
+<!--[form:user]-->
+<%= text_box User, "name" -%>
+
+<%= text_box User, "password", :label=>"Password", :type=>:password, :required_on=>true -%>
+<%= text_box User, "password_confirmation", :label=>"Confirmation", :type=>:password, :required_on=>true -%>
+<%= text_box User, "email" -%>
+<%= select_box User, "role_id", @current_company.roles.find(:all).collect {|r| [ r.name, r.id ] } -%>
+<%= select_box User, "language_id", Language.find(:all, :order=>:code).collect {|l| [ l.title, l.id ] } -%>
+<!--[eoform:user]-->
+

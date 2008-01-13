@@ -1,0 +1,25 @@
+<%form_tag do-%>
+<table class="read"><tr><td>
+<fieldset>
+  <legend><%="Period".t-%></legend>
+  <div id="with-dates">
+    <div><%=radio_button_tag("balance[period]", "dates",true)-%> <%="From".t -%> <%= text_field("balance","started_on", {:size=>16, :maxlength=>16, :value=>@started_on})-%> <%="To".t -%> <%= text_field("balance","stopped_on", {:size=>16, :maxlength=>16, :value=>@stopped_on})-%></div>
+  </div>
+  <div id="with-year">
+  <%=radio_button_tag("balance[period]", "year")-%> <%="By financial year".t-%>
+    <%= select "balance", "financialyear_id", @current_company.financialyears.collect {|p| [ p.code, p.id ] }-%>
+  </div>
+</fieldset>
+<fieldset>
+  <legend><%="Accounts".t-%></legend>
+  <div><%="From".t -%> <%= text_field("balance","from_account",{:size=>16, :maxlength=>16, :value=>"1"})-%> <%="To".t -%> <%= text_field("balance","to_account",{:size=>16, :maxlength=>16, :value=>"9999999999999999"})-%></div>
+</fieldset>
+</td><td>
+<fieldset>
+  <legend><%="Breaks".t-%></legend>
+  <div><%=check_box("balance","break_accounts",{:checked=>true})-%> <%= "Accounts".t-%></div>
+  <%for b in 1..16-%><div><%=check_box("balance","break_#{b.to_s}")-%> <%= "Break #".t(b.to_s)-%></div><%end-%>
+</fieldset>
+</td></tr></table>
+<%=submit_tag "Create document".t -%>
+<%end-%>

@@ -1,0 +1,29 @@
+<h1>Utilisateurs</h1>
+
+<table class="list">
+  <tr>
+    <th>Nom</th>
+    <th>E-mail</th>
+		<th><%= Role.localized_model_name %></th>
+		<th><%= Language.localized_model_name %></th>
+		<%= action_columns_header 4 %>
+  </tr>
+  
+<% for user in @users %>
+  <tr>
+		<td><%=h user.name %></td>
+		<td><%=h user.email %></td>
+		<td><%= link_to user.role.name, {:controller=>'/organisation/role', :action=>'show', :id=> user.role_id }%></td>
+		<td><img src="/images/country/<%= user.language.code%>.png"/>&nbsp;<%= user.language.title%></td>
+		<%= action_columns user, [{:use=>:locked, :actions=>{"true"=>:unlock_access, "false"=>:lock_access}, :method=>:post, :condition=>(not user.role.admin)}] %>
+		<%= action_columns user %>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page'.t, { :page => @user_pages.current.previous } if @user_pages.current.previous %>
+<%= link_to 'Next page'.t, { :page => @user_pages.current.next } if @user_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New user', :action => 'new' %>

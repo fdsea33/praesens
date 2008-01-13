@@ -1,0 +1,9 @@
+<%form_tag do-%>
+<%= error_messages_for 'financialyear' %>
+<%= text_box :financialyear, :code -%>
+<%= text_box :financialyear, :started_on -%>
+<%= text_box :financialyear, :stopped_on -%>
+<%= text_box :financialyear, :written_on -%>
+<%= submit_tag "Validate the opening of the financial year".t -%>
+<%= link_to "Cancel".t, :action=>:financialyear_list -%>
+<%end-%>

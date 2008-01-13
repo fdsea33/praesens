@@ -1,0 +1,12 @@
+<%=
+print_table :company_establishments do |t|
+  t.datum :name
+  t.datum :siret
+  t.datum :address
+  t.action :default
+end
+-%>
+
+<%= link_to 'PDF::Writer', :action => 'pdf' %> &bull; 
+<%= link_to 'FPDF', :action => 'fpdf' %> &bull; 
+<%= link_to_action :new-%>

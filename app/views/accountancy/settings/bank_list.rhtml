@@ -1,0 +1,10 @@
+<%=
+print_table :banks do |t|
+  t.datum :name
+  t.datum :code
+  t.action :action=>:bank_edit, :image=>:edit
+  t.action :action=>:bank_destroy, :image=>:destroy, :method=>:post, :confirm=>'Are you sure?'
+end
+-%>
+
+<%= link_to 'New bank'.t, :action => 'bank_new' %>

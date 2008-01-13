@@ -1,0 +1,1370 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: ActiveRecord::Base</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">ActiveRecord::Base</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions_rb.html">
+                vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Modifying class variables allows you to set various defaults for
+scaffolding. Note that if multiple subclasses each modify the class
+variables, chaos will ensue. Class variables have cattr_accessor so that
+you can set them in environment.rb, such as:
+ActiveRecord::Base.scaffold_convert_text_to_string = true
+</p>
+<p>
+Available class variables:
+</p>
+<ul>
+<li>scaffold_convert_text_to_string: If true, by default, use input type text
+instead of textarea for fields of type text (default: false)
+
+</li>
+<li>scaffold_table_classes: Set the default table classes for different
+scaffolded HTML tables (default: {:form=&gt;&#8217;formtable&#8217;,
+:list=&gt;&#8217;sortable&#8217;, :show=&gt;&#8217;sortable&#8217;})
+
+</li>
+<li>scaffold_column_types: Override the default column type for a given
+attribute (default: {&#8216;password&#8217;=&gt;:password})
+
+</li>
+<li>scaffold_column_options_hash: Override the default column options for a
+given attribute (default: {})
+
+</li>
+<li>scaffold_default_column_names: Override the visible names of columns for
+each attribute (default: {})
+
+</li>
+<li>scaffold_association_list_class: Override the html class for the
+association list in the edit view (default: &#8217;&#8217;)
+
+</li>
+<li>scaffold_browse_default_records_per_page - The default number of records
+per page to show in the browse scaffold (default: 10)
+
+</li>
+<li>scaffold_search_results_default_limit - The default limit on scaffolded
+search results. If nil, the search results will be displayed on one page
+instead of being paginated (default: 10)
+
+</li>
+<li>scaffold_habtm_with_ajax_default - Whether or not to use Ajax (instead of a
+separate page) for habtm associations for all models (default: false)
+
+</li>
+<li>scaffold_load_associations_with_ajax_default - Whether or not to use Ajax
+to load the display of associations on the edit page, used if the default
+display is too slow (default: false)
+
+</li>
+<li>scaffold_auto_complete_default_options: Hash containing the default options
+to use for the scaffold autocompleter (default: {:enable=&gt;false,
+:sql_name=&gt;&#8217;LOWER(name)&#8217;,
+:text_field_options=&gt;{:size=&gt;50}, :format_string=&gt;:substring,
+:search_operator=&gt;&#8217;LIKE&#8217;, :results_limit=&gt;10,
+:phrase_modifier=&gt;:downcase, :skip_style=&gt;false})
+
+</li>
+</ul>
+<p>
+Modifying instance variables in each class affects scaffolding for that
+class only. Available instance variables:
+</p>
+<ul>
+<li><a href="Base.html#M000038">scaffold_fields</a>: List of field names to
+include in the scaffolded forms. Values in the list should be either actual
+fields names, or names of belongs_to associations (in which case select
+boxes will be used in the scaffolded forms). Uses content_columns +
+belongs_to associations if not specified. (example: %w&#8217;name number
+rating&#8217;)
+
+</li>
+<li>scaffold_(new|edit|show|search|browse)_fields: Different scaffold actions
+can have different fields displayed. Defaults to <a
+href="Base.html#M000038">scaffold_fields</a> if not specified.
+
+</li>
+<li>scaffold_select_order: SQL fragment string setting the order in which
+scaffolded records are shown (example: &#8216;firstname, lastname&#8217;)
+
+</li>
+<li>scaffold_include: Any associations that should be included by default when
+displaying the scaffold name. Eager loading is used so that N+1 queries
+aren&#8217;t used for displaying N records, assuming that associated
+records used in <a href="Base.html#M000066">scaffold_name</a> are included
+in this. (example: [:artist, :album])
+
+</li>
+<li>scaffold_(search|browse)_(select_order|include): Search and browse can have
+their own select order and include. For select order, defaults to
+scaffold_select_order if not given. For include, defaults to the subset of
+scaffold_(search|browse)_fields that are associations instead of
+attributes.
+
+</li>
+<li>scaffold_column_names: Override the visible names of columns for each
+attribute. By default, this is just the humanized name. (example:
+{:modelnum=&gt;&#8217;Model Number&#8217;})
+
+</li>
+<li><a href="Base.html#M000036">scaffold_associations</a>: List of associations
+to display on the scaffolded edit page for the object. Uses all
+associations if not specified (example: %w&#8217;artist albums&#8217;)
+
+</li>
+<li>scaffold_associations_path: String path to the template to use to render
+the associations for the show/edit page. Uses the controller&#8217;s
+scaffold path if not specified. (example:
+&quot;#{RAILS_ROOT}/lib/model_associations.rhtml&quot;)
+
+</li>
+<li>scaffold_habtm_ajax_path: String path to the template to use to render the
+habtm ajax entries for the edit page. Uses the controller&#8217;s scaffold
+path if not specified. (example:
+&quot;#{RAILS_ROOT}/lib/model_habtm_ajax.rhtml&quot;)
+
+</li>
+<li><a href="Base.html#M000048">scaffold_browse_records_per_page</a> - The
+number of records per page to show in the browse scaffold. Uses
+scaffold_browse_default_records_per_page if not specified (example: 25)
+
+</li>
+<li><a href="Base.html#M000049">scaffold_search_results_limit</a> - The limit
+on the number of records in the scaffolded search results page (example:
+25)
+
+</li>
+<li><a href="Base.html#M000050">scaffold_habtm_with_ajax</a> - Whether to use
+Ajax for habtm associations for this class (example: true)
+
+</li>
+<li><a href="Base.html#M000052">scaffold_auto_complete_options</a> - Hash
+merged with the auto complete default options to set the auto complete
+options for the model. If the auto complete default options are set with
+:enable=&gt;false, setting this variable turns on autocompleting. If the
+auto complete default options are set with :enable=&gt;true, autocompleting
+can be turned off for this model with {:enable=&gt;false}. (example: {})
+
+</li>
+</ul>
+<p>
+scaffold_table_classes, scaffold_column_types, and
+scaffold_column_options_hash can also be specified as instance variables,
+in which case they will override the class variable defaults.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000033">all_models</a>&nbsp;&nbsp;
+      <a href="#M000064">merge_into</a>&nbsp;&nbsp;
+      <a href="#M000034">merge_records</a>&nbsp;&nbsp;
+      <a href="#M000035">reflection_merge</a>&nbsp;&nbsp;
+      <a href="#M000036">scaffold_associations</a>&nbsp;&nbsp;
+      <a href="#M000062">scaffold_auto_complete_conditions</a>&nbsp;&nbsp;
+      <a href="#M000060">scaffold_auto_complete_conditions_phrase</a>&nbsp;&nbsp;
+      <a href="#M000063">scaffold_auto_complete_find</a>&nbsp;&nbsp;
+      <a href="#M000052">scaffold_auto_complete_options</a>&nbsp;&nbsp;
+      <a href="#M000061">scaffold_auto_complete_phrase_modifier</a>&nbsp;&nbsp;
+      <a href="#M000059">scaffold_auto_complete_results_limit</a>&nbsp;&nbsp;
+      <a href="#M000057">scaffold_auto_complete_search_format_string</a>&nbsp;&nbsp;
+      <a href="#M000058">scaffold_auto_complete_search_operator</a>&nbsp;&nbsp;
+      <a href="#M000056">scaffold_auto_complete_skip_style</a>&nbsp;&nbsp;
+      <a href="#M000055">scaffold_auto_complete_text_field_options</a>&nbsp;&nbsp;
+      <a href="#M000040">scaffold_browse_include</a>&nbsp;&nbsp;
+      <a href="#M000048">scaffold_browse_records_per_page</a>&nbsp;&nbsp;
+      <a href="#M000047">scaffold_column_name</a>&nbsp;&nbsp;
+      <a href="#M000046">scaffold_column_options</a>&nbsp;&nbsp;
+      <a href="#M000045">scaffold_column_type</a>&nbsp;&nbsp;
+      <a href="#M000038">scaffold_fields</a>&nbsp;&nbsp;
+      <a href="#M000042">scaffold_fields_replacing_associations</a>&nbsp;&nbsp;
+      <a href="#M000037">scaffold_habtm_reflections</a>&nbsp;&nbsp;
+      <a href="#M000050">scaffold_habtm_with_ajax</a>&nbsp;&nbsp;
+      <a href="#M000051">scaffold_load_associations_with_ajax</a>&nbsp;&nbsp;
+      <a href="#M000066">scaffold_name</a>&nbsp;&nbsp;
+      <a href="#M000054">scaffold_name_sql</a>&nbsp;&nbsp;
+      <a href="#M000067">scaffold_name_with_id</a>&nbsp;&nbsp;
+      <a href="#M000039">scaffold_search_include</a>&nbsp;&nbsp;
+      <a href="#M000043">scaffold_search_null_options</a>&nbsp;&nbsp;
+      <a href="#M000049">scaffold_search_results_limit</a>&nbsp;&nbsp;
+      <a href="#M000044">scaffold_table_class</a>&nbsp;&nbsp;
+      <a href="#M000053">scaffold_use_auto_complete</a>&nbsp;&nbsp;
+      <a href="#M000041">search_pagination_enabled?</a>&nbsp;&nbsp;
+      <a href="#M000065">update_scaffold_attributes</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">scaffold_associations_path</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">scaffold_habtm_ajax_path</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">scaffold_include</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">scaffold_select_order</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000033" class="method-detail">
+        <a name="M000033"></a>
+
+        <div class="method-heading">
+          <a href="#M000033" class="method-signature">
+          <span class="method-name">all_models</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Checks all files in the models directory to return strings for all models
+that are a subclass of the current class
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000033-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000033-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 97</span>
+97:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">all_models</span>
+98:         <span class="ruby-constant">Dir</span>[<span class="ruby-node">&quot;#{RAILS_ROOT}/app/models/*.rb&quot;</span>].<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">file</span>).<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/\.rb$/</span>, <span class="ruby-value str">''</span>)}.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">reject</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">model</span><span class="ruby-operator">|</span> (<span class="ruby-operator">!</span> <span class="ruby-identifier">model</span>.<span class="ruby-identifier">camelize</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-keyword kw">self</span>)) <span class="ruby-keyword kw">rescue</span> <span class="ruby-keyword kw">true</span>}
+99:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000034" class="method-detail">
+        <a name="M000034"></a>
+
+        <div class="method-heading">
+          <a href="#M000034" class="method-signature">
+          <span class="method-name">merge_records</span><span class="method-args">(from, to)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Merges the record with id from into the record with id to. Updates all
+associated records for the record with id from to be assocatiated with the
+record with id to instead, and then deletes the record with id from.
+</p>
+<p>
+Returns false if the ids given are the same.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000034-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000034-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 106</span>
+106:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">merge_records</span>(<span class="ruby-identifier">from</span>, <span class="ruby-identifier">to</span>)
+107:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">from</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">to</span>
+108:         <span class="ruby-identifier">transaction</span> <span class="ruby-keyword kw">do</span>
+109:           <span class="ruby-identifier">reflect_on_all_associations</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">reflection</span><span class="ruby-operator">|</span> <span class="ruby-identifier">reflection_merge</span>(<span class="ruby-identifier">reflection</span>, <span class="ruby-identifier">from</span>, <span class="ruby-identifier">to</span>)}
+110:           <span class="ruby-identifier">destroy</span>(<span class="ruby-identifier">from</span>)
+111:         <span class="ruby-keyword kw">end</span>
+112:         <span class="ruby-keyword kw">true</span>
+113:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000035" class="method-detail">
+        <a name="M000035"></a>
+
+        <div class="method-heading">
+          <a href="#M000035" class="method-signature">
+          <span class="method-name">reflection_merge</span><span class="method-args">(reflection, from, to)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Updates associated records for a given reflection and from record to point
+to the to record
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000035-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000035-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 123</span>
+123:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reflection_merge</span>(<span class="ruby-identifier">reflection</span>, <span class="ruby-identifier">from</span>, <span class="ruby-identifier">to</span>)
+124:         <span class="ruby-identifier">foreign_key</span> = <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:foreign_key</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">table_name</span>.<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">foreign_key</span>
+125:         <span class="ruby-identifier">sql</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">macro</span>
+126:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:has_one</span>, <span class="ruby-identifier">:has_many</span>
+127:             <span class="ruby-node">&quot;UPDATE #{reflection.klass.table_name} SET #{foreign_key} = #{to} WHERE #{foreign_key} = #{from}\n&quot;</span> 
+128:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:has_and_belongs_to_many</span>
+129:             <span class="ruby-identifier">join_table</span> = <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:join_table</span>] <span class="ruby-operator">||</span> ( <span class="ruby-identifier">table_name</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">klass</span>.<span class="ruby-identifier">table_name</span> <span class="ruby-value">? </span><span class="ruby-value str">'#{table_name}_#{reflection.klass.table_name}'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'#{reflection.klass.table_name}_#{table_name}'</span>)
+130:             <span class="ruby-node">&quot;UPDATE #{join_table} SET #{foreign_key} = #{to} WHERE #{foreign_key} = #{from}\n&quot;</span> 
+131:           <span class="ruby-keyword kw">else</span> <span class="ruby-keyword kw">return</span>
+132:         <span class="ruby-keyword kw">end</span>
+133:         <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">sql</span>)
+134:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000036" class="method-detail">
+        <a name="M000036"></a>
+
+        <div class="method-heading">
+          <a href="#M000036" class="method-signature">
+          <span class="method-name">scaffold_associations</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+List of strings for associations to display on the scaffolded edit page
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000036-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000036-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 137</span>
+137:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_associations</span>
+138:         <span class="ruby-ivar">@scaffold_associations</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">reflect_on_all_associations</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span><span class="ruby-identifier">r</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword kw">unless</span> (<span class="ruby-identifier">r</span>.<span class="ruby-identifier">options</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">:through</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">options</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">:polymorphic</span>))}.<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">sort</span>
+139:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000062" class="method-detail">
+        <a name="M000062"></a>
+
+        <div class="method-heading">
+          <a href="#M000062" class="method-signature">
+          <span class="method-name">scaffold_auto_complete_conditions</span><span class="method-args">(phrase)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+The conditions to use for the scaffolded autocomplete find.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000062-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000062-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 344</span>
+344:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_auto_complete_conditions</span>(<span class="ruby-identifier">phrase</span>)
+345:         [<span class="ruby-identifier">scaffold_auto_complete_conditions_phrase</span>, (<span class="ruby-identifier">scaffold_auto_complete_search_format_string</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">phrase</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">scaffold_auto_complete_phrase_modifier</span>))]
+346:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000060" class="method-detail">
+        <a name="M000060"></a>
+
+        <div class="method-heading">
+          <a href="#M000060" class="method-signature">
+          <span class="method-name">scaffold_auto_complete_conditions_phrase</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+The conditions phrase (the sql code with ? place holders) used in the
+scaffolded autocomplete find.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000060-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000060-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 332</span>
+332:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_auto_complete_conditions_phrase</span>
+333:         <span class="ruby-identifier">scaffold_auto_complete_options</span>[<span class="ruby-identifier">:conditions_phrase</span>] <span class="ruby-operator">||=</span> <span class="ruby-node">&quot;#{scaffold_name_sql} #{scaffold_auto_complete_search_operator} ?&quot;</span>
+334:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000063" class="method-detail">
+        <a name="M000063"></a>
+
+        <div class="method-heading">
+          <a href="#M000063" class="method-signature">
+          <span class="method-name">scaffold_auto_complete_find</span><span class="method-args">(phrase, options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Return all records that match the given phrase (usually a substring of the
+most important column).
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000063-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000063-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 350</span>
+350:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_auto_complete_find</span>(<span class="ruby-identifier">phrase</span>, <span class="ruby-identifier">options</span> = {})
+351:         <span class="ruby-identifier">find_options</span> = { <span class="ruby-identifier">:limit</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">scaffold_auto_complete_results_limit</span>,
+352:             <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">scaffold_auto_complete_conditions</span>(<span class="ruby-identifier">phrase</span>), 
+353:             <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">scaffold_select_order</span>,
+354:             <span class="ruby-identifier">:include</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">scaffold_include</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
+355:         <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">find_options</span>)
+356:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000052" class="method-detail">
+        <a name="M000052"></a>
+
+        <div class="method-heading">
+          <a href="#M000052" class="method-signature">
+          <span class="method-name">scaffold_auto_complete_options</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+If the auto complete options have been setup, return them. Otherwise,
+create the auto complete options using the defaults and the existing class
+instance variable.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000052-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000052-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 280</span>
+280:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_auto_complete_options</span>
+281:         <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@scaffold_auto_complete_options</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@scaffold_auto_complete_options</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@scaffold_auto_complete_options</span>[<span class="ruby-identifier">:setup</span>]
+282:         <span class="ruby-ivar">@scaffold_auto_complete_options</span> = <span class="ruby-ivar">@scaffold_auto_complete_options</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span>{} <span class="ruby-operator">:</span> {<span class="ruby-identifier">:enable=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-ivar">@scaffold_auto_complete_options</span>)
+283:         <span class="ruby-ivar">@scaffold_auto_complete_options</span> = <span class="ruby-identifier">scaffold_auto_complete_default_options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-ivar">@scaffold_auto_complete_options</span>)
+284:         <span class="ruby-ivar">@scaffold_auto_complete_options</span>[<span class="ruby-identifier">:setup</span>] = <span class="ruby-keyword kw">true</span>
+285:         <span class="ruby-ivar">@scaffold_auto_complete_options</span>
+286:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000061" class="method-detail">
+        <a name="M000061"></a>
+
+        <div class="method-heading">
+          <a href="#M000061" class="method-signature">
+          <span class="method-name">scaffold_auto_complete_phrase_modifier</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+A symbol for a string method to send to the submitted phrase. Usually
+:downcase to preform a case insensitive search, but may be :to_s for a case
+sensitive search.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000061-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000061-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 339</span>
+339:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_auto_complete_phrase_modifier</span>
+340:         <span class="ruby-identifier">scaffold_auto_complete_options</span>[<span class="ruby-identifier">:phrase_modifier</span>]
+341:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000059" class="method-detail">
+        <a name="M000059"></a>
+
+        <div class="method-heading">
+          <a href="#M000059" class="method-signature">
+          <span class="method-name">scaffold_auto_complete_results_limit</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+The number of results to return for the scaffolded autocomplete text box.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000059-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000059-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 326</span>
+326:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_auto_complete_results_limit</span>
+327:         <span class="ruby-identifier">scaffold_auto_complete_options</span>[<span class="ruby-identifier">:results_limit</span>]
+328:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000057" class="method-detail">
+        <a name="M000057"></a>
+
+        <div class="method-heading">
+          <a href="#M000057" class="method-signature">
+          <span class="method-name">scaffold_auto_complete_search_format_string</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Format string used with the phrase to choose the type of search. Can be a
+user defined format string or one of these special symbols:
+</p>
+<ul>
+<li>:substring - Phase matches any substring of <a
+href="Base.html#M000054">scaffold_name_sql</a>
+
+</li>
+<li>:starting - Phrase matches the start of <a
+href="Base.html#M000054">scaffold_name_sql</a>
+
+</li>
+<li>:ending - Phrase matches the end of <a
+href="Base.html#M000054">scaffold_name_sql</a>
+
+</li>
+<li>:exact - Phrase matches <a href="Base.html#M000054">scaffold_name_sql</a>
+exactly
+
+</li>
+</ul>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000057-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000057-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 315</span>
+315:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_auto_complete_search_format_string</span>
+316:         {<span class="ruby-identifier">:substring=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">'%%%s%%'</span>, <span class="ruby-identifier">:starting=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">'%s%%'</span>, <span class="ruby-identifier">:ending=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">'%%%s'</span>, <span class="ruby-identifier">:exact=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">'%s'</span>}[<span class="ruby-identifier">scaffold_auto_complete_options</span>[<span class="ruby-identifier">:format_string</span>]] <span class="ruby-operator">||</span> <span class="ruby-identifier">scaffold_auto_complete_options</span>[<span class="ruby-identifier">:format_string</span>]
+317:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000058" class="method-detail">
+        <a name="M000058"></a>
+
+        <div class="method-heading">
+          <a href="#M000058" class="method-signature">
+          <span class="method-name">scaffold_auto_complete_search_operator</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Search operator for matching <a
+href="Base.html#M000054">scaffold_name_sql</a> to format_string % phrase,
+usally &#8216;LIKE&#8217;, but might be &#8216;ILIKE&#8217; on some
+databases.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000058-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000058-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 321</span>
+321:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_auto_complete_search_operator</span>
+322:         <span class="ruby-identifier">scaffold_auto_complete_options</span>[<span class="ruby-identifier">:search_operator</span>]
+323:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000056" class="method-detail">
+        <a name="M000056"></a>
+
+        <div class="method-heading">
+          <a href="#M000056" class="method-signature">
+          <span class="method-name">scaffold_auto_complete_skip_style</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Don&#8216;t use the style tags, used if they are already defined in the CSS
+file
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000056-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000056-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 305</span>
+305:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_auto_complete_skip_style</span>
+306:         <span class="ruby-identifier">scaffold_auto_complete_options</span>[<span class="ruby-identifier">:skip_style</span>]
+307:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000055" class="method-detail">
+        <a name="M000055"></a>
+
+        <div class="method-heading">
+          <a href="#M000055" class="method-signature">
+          <span class="method-name">scaffold_auto_complete_text_field_options</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Options for the scaffold autocompleting text field
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000055-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000055-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 300</span>
+300:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_auto_complete_text_field_options</span>
+301:         <span class="ruby-identifier">scaffold_auto_complete_options</span>[<span class="ruby-identifier">:text_field_options</span>]
+302:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
+
+        <div class="method-heading">
+          <a href="#M000040" class="method-signature">
+          <span class="method-name">scaffold_browse_include</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+A list of symbols for including in the query for the browse scaffold
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000040-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000040-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 197</span>
+197:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_browse_include</span>
+198:         <span class="ruby-ivar">@scaffold_browse_include</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">scaffold_browse_fields</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">field</span><span class="ruby-operator">|</span> <span class="ruby-identifier">field</span>.<span class="ruby-identifier">to_sym</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reflection</span> = <span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-identifier">field</span>.<span class="ruby-identifier">to_sym</span>)}.<span class="ruby-identifier">compact</span>
+199:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000048" class="method-detail">
+        <a name="M000048"></a>
+
+        <div class="method-heading">
+          <a href="#M000048" class="method-signature">
+          <span class="method-name">scaffold_browse_records_per_page</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+The number of records to show on each page when using the browse scaffold
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000048-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000048-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 258</span>
+258:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_browse_records_per_page</span>
+259:         <span class="ruby-ivar">@scaffold_browse_records_per_page</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">scaffold_browse_default_records_per_page</span>
+260:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000047" class="method-detail">
+        <a name="M000047"></a>
+
+        <div class="method-heading">
+          <a href="#M000047" class="method-signature">
+          <span class="method-name">scaffold_column_name</span><span class="method-args">(column_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the visable name for a given attribute
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000047-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000047-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 252</span>
+252:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_column_name</span>(<span class="ruby-identifier">column_name</span>)
+253:         <span class="ruby-ivar">@scaffold_column_names</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">scaffold_default_column_names</span>
+254:         <span class="ruby-ivar">@scaffold_column_names</span>[<span class="ruby-identifier">column_name</span>.<span class="ruby-identifier">to_sym</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">column_name</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">humanize</span>
+255:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000046" class="method-detail">
+        <a name="M000046"></a>
+
+        <div class="method-heading">
+          <a href="#M000046" class="method-signature">
+          <span class="method-name">scaffold_column_options</span><span class="method-args">(column_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns any special options for a given attribute
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000046-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000046-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 246</span>
+246:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_column_options</span>(<span class="ruby-identifier">column_name</span>)
+247:         <span class="ruby-ivar">@scaffold_column_options_hash</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">scaffold_column_options_hash</span>
+248:         <span class="ruby-ivar">@scaffold_column_options_hash</span>[<span class="ruby-identifier">column_name</span>]
+249:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000045" class="method-detail">
+        <a name="M000045"></a>
+
+        <div class="method-heading">
+          <a href="#M000045" class="method-signature">
+          <span class="method-name">scaffold_column_type</span><span class="method-args">(column_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the column type for the given scaffolded column name. First checks
+to see if a value has been overriden using a class or instance variable,
+otherwise uses the default column type.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000045-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000045-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 235</span>
+235:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_column_type</span>(<span class="ruby-identifier">column_name</span>)
+236:         <span class="ruby-ivar">@scaffold_column_types</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">scaffold_column_types</span>
+237:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@scaffold_column_types</span>[<span class="ruby-identifier">column_name</span>]
+238:           <span class="ruby-ivar">@scaffold_column_types</span>[<span class="ruby-identifier">column_name</span>]
+239:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">columns_hash</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">column_name</span>)
+240:           <span class="ruby-identifier">type</span> = <span class="ruby-identifier">columns_hash</span>[<span class="ruby-identifier">column_name</span>].<span class="ruby-identifier">type</span>
+241:           (<span class="ruby-identifier">scaffold_convert_text_to_string</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:text</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">:string</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">type</span>
+242:         <span class="ruby-keyword kw">end</span>
+243:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000038" class="method-detail">
+        <a name="M000038"></a>
+
+        <div class="method-heading">
+          <a href="#M000038" class="method-signature">
+          <span class="method-name">scaffold_fields</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the list of fields to display on the scaffolded forms. Defaults to
+displaying all usually scaffolded columns with the addition of belongs to
+associations that aren&#8217;t polymorphic.
+</p>
+<p>
+This the basis for the display of fields in the scaffolds. Each type of
+scaffold that displays fields (new, edit, show, search, and browse), can
+have a different set of fields by overriding scaffold_*_fields (e.g.
+scaffold_new_fields) via a class method or class instance variable.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000038-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000038-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 157</span>
+157:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_fields</span>
+158:         <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@scaffold_fields</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@scaffold_fields</span>
+159:         <span class="ruby-ivar">@scaffold_fields</span> = <span class="ruby-identifier">columns</span>.<span class="ruby-identifier">reject</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">primary</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/_count$/</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">inheritance_column</span> }.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">name</span>}
+160:         <span class="ruby-identifier">reflect_on_all_associations</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">reflection</span><span class="ruby-operator">|</span>
+161:           <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">macro</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">:belongs_to</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">options</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">:polymorphic</span>)
+162:           <span class="ruby-ivar">@scaffold_fields</span>.<span class="ruby-identifier">delete</span>((<span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:foreign_key</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">klass</span>.<span class="ruby-identifier">table_name</span>.<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">foreign_key</span>).<span class="ruby-identifier">to_s</span>)
+163:           <span class="ruby-ivar">@scaffold_fields</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>)
+164:         <span class="ruby-keyword kw">end</span>
+165:         <span class="ruby-ivar">@scaffold_fields</span>.<span class="ruby-identifier">sort!</span>
+166:         <span class="ruby-ivar">@scaffold_fields</span>
+167:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000042" class="method-detail">
+        <a name="M000042"></a>
+
+        <div class="method-heading">
+          <a href="#M000042" class="method-signature">
+          <span class="method-name">scaffold_fields_replacing_associations</span><span class="method-args">(fields = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="Base.html#M000038">scaffold_fields</a> with associations replaced
+by foreign key fields
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000042-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000042-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 208</span>
+208:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_fields_replacing_associations</span>(<span class="ruby-identifier">fields</span> = <span class="ruby-keyword kw">nil</span>)
+209:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fields</span>.<span class="ruby-identifier">nil?</span>
+210:           <span class="ruby-ivar">@scaffold_fields_replacing_associations</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">scaffold_fields_replacing_associations</span>(<span class="ruby-identifier">scaffold_fields</span>)
+211:         <span class="ruby-keyword kw">else</span>
+212:           <span class="ruby-identifier">fields</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">field</span><span class="ruby-operator">|</span>
+213:             <span class="ruby-identifier">reflection</span> = <span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-identifier">field</span>.<span class="ruby-identifier">to_sym</span>)
+214:             <span class="ruby-identifier">reflection</span> <span class="ruby-value">? </span>(<span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:foreign_key</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">klass</span>.<span class="ruby-identifier">table_name</span>.<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">foreign_key</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">field</span>
+215:           <span class="ruby-keyword kw">end</span>
+216:         <span class="ruby-keyword kw">end</span>
+217:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000037" class="method-detail">
+        <a name="M000037"></a>
+
+        <div class="method-heading">
+          <a href="#M000037" class="method-signature">
+          <span class="method-name">scaffold_habtm_reflections</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Array of all habtm reflections for this model&#8217;s <a
+href="Base.html#M000036">scaffold_associations</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000037-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000037-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 142</span>
+142:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_habtm_reflections</span>
+143:         <span class="ruby-ivar">@scaffold_habtm_reflections</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">scaffold_associations</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">association</span><span class="ruby-operator">|</span>
+144:           <span class="ruby-identifier">reflection</span> = <span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-identifier">association</span>.<span class="ruby-identifier">to_sym</span>)
+145:           <span class="ruby-identifier">reflection</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reflection</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">macro</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:has_and_belongs_to_many</span>
+146:         <span class="ruby-keyword kw">end</span>).<span class="ruby-identifier">compact</span>
+147:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000050" class="method-detail">
+        <a name="M000050"></a>
+
+        <div class="method-heading">
+          <a href="#M000050" class="method-signature">
+          <span class="method-name">scaffold_habtm_with_ajax</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Whether to use Ajax when scaffolding habtm associations for this model
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000050-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000050-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 268</span>
+268:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_habtm_with_ajax</span>
+269:         <span class="ruby-ivar">@scaffold_habtm_with_ajax</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">scaffold_habtm_with_ajax_default</span>
+270:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000051" class="method-detail">
+        <a name="M000051"></a>
+
+        <div class="method-heading">
+          <a href="#M000051" class="method-signature">
+          <span class="method-name">scaffold_load_associations_with_ajax</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Whether to use Ajax when loading associations on the edit page
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000051-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000051-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 273</span>
+273:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_load_associations_with_ajax</span>
+274:         <span class="ruby-ivar">@scaffold_load_associations_with_ajax</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">scaffold_load_associations_with_ajax_default</span>
+275:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000054" class="method-detail">
+        <a name="M000054"></a>
+
+        <div class="method-heading">
+          <a href="#M000054" class="method-signature">
+          <span class="method-name">scaffold_name_sql</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+SQL fragment (usually column name) that is used when scaffold
+autocompleting is turned on.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000054-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000054-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 295</span>
+295:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_name_sql</span>
+296:         <span class="ruby-identifier">scaffold_auto_complete_options</span>[<span class="ruby-identifier">:sql_name</span>]
+297:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000039" class="method-detail">
+        <a name="M000039"></a>
+
+        <div class="method-heading">
+          <a href="#M000039" class="method-signature">
+          <span class="method-name">scaffold_search_include</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+A list of symbols for including in the query for the search scaffold
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000039-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000039-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 192</span>
+192:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_search_include</span>
+193:         <span class="ruby-ivar">@scaffold_search_include</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">scaffold_search_fields</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">field</span><span class="ruby-operator">|</span> <span class="ruby-identifier">field</span>.<span class="ruby-identifier">to_sym</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reflection</span> = <span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-identifier">field</span>.<span class="ruby-identifier">to_sym</span>)}.<span class="ruby-identifier">compact</span>
+194:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000043" class="method-detail">
+        <a name="M000043"></a>
+
+        <div class="method-heading">
+          <a href="#M000043" class="method-signature">
+          <span class="method-name">scaffold_search_null_options</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+List of human visible names and field names to use for NULL/NOT NULL fields
+on the scaffolded search page
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000043-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000043-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 220</span>
+220:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_search_null_options</span>
+221:         <span class="ruby-ivar">@scaffold_search_null_options</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">scaffold_search_fields_replacing_associations</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">field</span><span class="ruby-operator">|</span>
+222:           [<span class="ruby-identifier">scaffold_column_name</span>(<span class="ruby-identifier">field</span>), <span class="ruby-identifier">field</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">columns_hash</span>[<span class="ruby-identifier">field</span>]
+223:         <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">compact</span>
+224:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000049" class="method-detail">
+        <a name="M000049"></a>
+
+        <div class="method-heading">
+          <a href="#M000049" class="method-signature">
+          <span class="method-name">scaffold_search_results_limit</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+The maximum number of results to show on the scaffolded search results page
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000049-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000049-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 263</span>
+263:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_search_results_limit</span>
+264:         <span class="ruby-ivar">@scaffold_search_results_limit</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">scaffold_search_results_default_limit</span>
+265:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000044" class="method-detail">
+        <a name="M000044"></a>
+
+        <div class="method-heading">
+          <a href="#M000044" class="method-signature">
+          <span class="method-name">scaffold_table_class</span><span class="method-args">(type)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the scaffolded table class for a given scaffold type.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000044-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000044-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 227</span>
+227:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_table_class</span>(<span class="ruby-identifier">type</span>)
+228:         <span class="ruby-ivar">@scaffold_table_classes</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">scaffold_table_classes</span>
+229:         <span class="ruby-ivar">@scaffold_table_classes</span>[<span class="ruby-identifier">type</span>]
+230:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000053" class="method-detail">
+        <a name="M000053"></a>
+
+        <div class="method-heading">
+          <a href="#M000053" class="method-signature">
+          <span class="method-name">scaffold_use_auto_complete</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Whether this class should use an autocompleting text box instead of a
+select box for choosing items.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000053-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000053-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 290</span>
+290:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_use_auto_complete</span>
+291:         <span class="ruby-identifier">scaffold_auto_complete_options</span>[<span class="ruby-identifier">:enable</span>]
+292:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000041" class="method-detail">
+        <a name="M000041"></a>
+
+        <div class="method-heading">
+          <a href="#M000041" class="method-signature">
+          <span class="method-name">search_pagination_enabled?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+If search pagination is enabled (by default it is if <a
+href="Base.html#M000049">scaffold_search_results_limit</a> is not nil)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000041-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000041-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 203</span>
+203:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">search_pagination_enabled?</span>
+204:         <span class="ruby-operator">!</span><span class="ruby-identifier">scaffold_search_results_limit</span>.<span class="ruby-identifier">nil?</span>
+205:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000064" class="method-detail">
+        <a name="M000064"></a>
+
+        <div class="method-heading">
+          <a href="#M000064" class="method-signature">
+          <span class="method-name">merge_into</span><span class="method-args">(record)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Merges the current record into the record given and returns the record
+given. Returns false if the record isn&#8217;t the same class as the
+current class or if you try to merge a record into itself (which would be
+the same as deleting it).
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000064-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000064-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 362</span>
+362:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">merge_into</span>(<span class="ruby-identifier">record</span>)
+363:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">record</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">merge_records</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">record</span>.<span class="ruby-identifier">id</span>)
+364:       <span class="ruby-identifier">record</span>.<span class="ruby-identifier">reload</span>
+365:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000066" class="method-detail">
+        <a name="M000066"></a>
+
+        <div class="method-heading">
+          <a href="#M000066" class="method-signature">
+          <span class="method-name">scaffold_name</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+The name given to the item that is used in various places in the scaffold.
+For example, it is used whenever the record is displayed in a select box.
+Should be unique for each record. Should be overridden by subclasses unless
+they have a unique attribute named &#8216;name&#8217;.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000066-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000066-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 385</span>
+385:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_name</span>
+386:       <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:name</span>] <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">id</span>
+387:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000067" class="method-detail">
+        <a name="M000067"></a>
+
+        <div class="method-heading">
+          <a href="#M000067" class="method-signature">
+          <span class="method-name">scaffold_name_with_id</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="Base.html#M000066">scaffold_name</a> prefixed with id, used for
+scaffold autocompleting (a nice hack thanks to String#to_i)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000067-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000067-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 391</span>
+391:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold_name_with_id</span>
+392:       <span class="ruby-node">&quot;#{id} - #{scaffold_name}&quot;</span>
+393:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000065" class="method-detail">
+        <a name="M000065"></a>
+
+        <div class="method-heading">
+          <a href="#M000065" class="method-signature">
+          <span class="method-name">update_scaffold_attributes</span><span class="method-args">(allowed_fields, new_attributes)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Only update the attributes given in allowed_fields
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000065-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000065-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/scaffolding_extensions/lib/scaffolding_extensions.rb, line 368</span>
+368:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_scaffold_attributes</span>(<span class="ruby-identifier">allowed_fields</span>, <span class="ruby-identifier">new_attributes</span>)
+369:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_attributes</span>.<span class="ruby-identifier">nil?</span>
+370:       <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">new_attributes</span>.<span class="ruby-identifier">dup</span>
+371:       <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">stringify_keys!</span>
+372:       <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">delete_if</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">allowed_fields</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">k</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'('</span>)[<span class="ruby-value">0</span>])}
+373:       
+374:       <span class="ruby-identifier">multi_parameter_attributes</span> = []
+375:       <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+376:         <span class="ruby-identifier">k</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">&quot;(&quot;</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">multi_parameter_attributes</span> <span class="ruby-operator">&lt;&lt;</span> [ <span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span> ] <span class="ruby-operator">:</span> <span class="ruby-identifier">send</span>(<span class="ruby-identifier">k</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;=&quot;</span>, <span class="ruby-identifier">v</span>)
+377:       <span class="ruby-keyword kw">end</span>
+378:       
+379:       <span class="ruby-identifier">assign_multiparameter_attributes</span>(<span class="ruby-identifier">multi_parameter_attributes</span>)
+380:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

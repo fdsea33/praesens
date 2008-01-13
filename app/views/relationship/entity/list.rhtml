@@ -1,0 +1,30 @@
+<h1>Listing entities</h1>
+
+<%= render :partial => 'search_form' %>
+
+<table class="list">
+  <tr>
+    <th><%=Entity.columns_hash["code"].human_name%></th>
+    <th><%=Entity.columns_hash["surname"].human_name%></th>
+    <th><%=Entity.columns_hash["first_name"].human_name%></th>
+    <th><%=Entity.columns_hash["active"].human_name%></th>
+		<%= action_columns_header -%>
+  </tr>
+  
+<% for entity in @entities %>
+  <tr>
+    <td><%=h entity.code %></td>
+    <td><%=h entity.surname %></td>
+    <td><%=h entity.first_name %></td>
+    <td><%=h entity.active %></td>
+		<%= action_columns entity -%>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page'.t, { :page => @entity_pages.current.previous } if @entity_pages.current.previous %>
+<%= link_to 'Next page'.t, { :page => @entity_pages.current.next } if @entity_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New entity'.t, :action => 'new' %>

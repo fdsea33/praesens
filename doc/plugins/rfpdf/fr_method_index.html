@@ -1,0 +1,145 @@
+
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--
+
+    Methods
+
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Methods</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="rdoc-style.css" type="text/css" />
+  <base target="docwin" />
+</head>
+<body>
+<div id="index">
+  <h1 class="section-bar">Methods</h1>
+  <div id="index-entries">
+    <a href="classes/FPDF.html#M000046">AcceptPageBreak (FPDF)</a><br />
+    <a href="classes/PDF_Chinese.html#M000089">AddBig5Font (PDF_Chinese)</a><br />
+    <a href="classes/PDF_Chinese.html#M000090">AddBig5hwFont (PDF_Chinese)</a><br />
+    <a href="classes/PDF_Chinese.html#M000087">AddCIDFont (PDF_Chinese)</a><br />
+    <a href="classes/PDF_Japanese.html#M000109">AddCIDFont (PDF_Japanese)</a><br />
+    <a href="classes/PDF_Korean.html#M000099">AddCIDFont (PDF_Korean)</a><br />
+    <a href="classes/PDF_Korean.html#M000100">AddCIDFonts (PDF_Korean)</a><br />
+    <a href="classes/PDF_Chinese.html#M000088">AddCIDFonts (PDF_Chinese)</a><br />
+    <a href="classes/PDF_Japanese.html#M000110">AddCIDFonts (PDF_Japanese)</a><br />
+    <a href="classes/FPDF.html#M000039">AddFont (FPDF)</a><br />
+    <a href="classes/PDF_Chinese.html#M000091">AddGBFont (PDF_Chinese)</a><br />
+    <a href="classes/PDF_Chinese.html#M000092">AddGBhwFont (PDF_Chinese)</a><br />
+    <a href="classes/FPDF.html#M000042">AddLink (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000027">AddPage (FPDF)</a><br />
+    <a href="classes/PDF_Japanese.html#M000111">AddSJISFont (PDF_Japanese)</a><br />
+    <a href="classes/PDF_Japanese.html#M000112">AddSJIShwFont (PDF_Japanese)</a><br />
+    <a href="classes/PDF_Korean.html#M000101">AddUHCFont (PDF_Korean)</a><br />
+    <a href="classes/PDF_Korean.html#M000102">AddUHChwFont (PDF_Korean)</a><br />
+    <a href="classes/FPDF.html#M000023">AliasNbPages (FPDF)</a><br />
+    <a href="classes/PDF_Bookmark.html#M000073">Bookmark (PDF_Bookmark)</a><br />
+    <a href="classes/FPDF.html#M000047">BreakThePage (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000048">Cell (FPDF)</a><br />
+    <a href="files/vendor/plugins/rfpdf/lib/rfpdf/makefont_rb.html#M000007">CheckTTF (vendor/plugins/rfpdf/lib/rfpdf/makefont.rb)</a><br />
+    <a href="classes/FPDF.html#M000036">Circle (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000026">Close (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000024">Error (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000029">Footer (FPDF)</a><br />
+    <a href="classes/PDF_Chinese.html#M000094">GetMBStringWidth (PDF_Chinese)</a><br />
+    <a href="classes/PDF_Korean.html#M000104">GetMBStringWidth (PDF_Korean)</a><br />
+    <a href="classes/FPDF.html#M000010">GetMargins (FPDF)</a><br />
+    <a href="classes/PDF_Japanese.html#M000114">GetSJISStringWidth (PDF_Japanese)</a><br />
+    <a href="classes/FPDF.html#M000034">GetStringWidth (FPDF)</a><br />
+    <a href="classes/PDF_Japanese.html#M000113">GetStringWidth (PDF_Japanese)</a><br />
+    <a href="classes/PDF_Korean.html#M000103">GetStringWidth (PDF_Korean)</a><br />
+    <a href="classes/PDF_Chinese.html#M000093">GetStringWidth (PDF_Chinese)</a><br />
+    <a href="classes/FPDF.html#M000053">GetX (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000055">GetY (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000028">Header (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000051">Image (FPDF)</a><br />
+    <a href="classes/PDF_EPS.html#M000119">ImageEps (PDF_EPS)</a><br />
+    <a href="classes/FPDF.html#M000037">Line (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000044">Link (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000052">Ln (FPDF)</a><br />
+    <a href="classes/PDF_Korean.html#M000106">MBMultiCell (PDF_Korean)</a><br />
+    <a href="classes/PDF_Chinese.html#M000096">MBMultiCell (PDF_Chinese)</a><br />
+    <a href="classes/PDF_Korean.html#M000108">MBWrite (PDF_Korean)</a><br />
+    <a href="classes/PDF_Chinese.html#M000098">MBWrite (PDF_Chinese)</a><br />
+    <a href="files/vendor/plugins/rfpdf/lib/rfpdf/makefont_rb.html#M000008">MakeFont (vendor/plugins/rfpdf/lib/rfpdf/makefont.rb)</a><br />
+    <a href="files/vendor/plugins/rfpdf/lib/rfpdf/makefont_rb.html#M000002">MakeFontDescriptor (vendor/plugins/rfpdf/lib/rfpdf/makefont.rb)</a><br />
+    <a href="files/vendor/plugins/rfpdf/lib/rfpdf/makefont_rb.html#M000004">MakeFontEncoding (vendor/plugins/rfpdf/lib/rfpdf/makefont.rb)</a><br />
+    <a href="files/vendor/plugins/rfpdf/lib/rfpdf/makefont_rb.html#M000003">MakeWidthArray (vendor/plugins/rfpdf/lib/rfpdf/makefont.rb)</a><br />
+    <a href="classes/PDF_Japanese.html#M000115">MultiCell (PDF_Japanese)</a><br />
+    <a href="classes/PDF_Korean.html#M000105">MultiCell (PDF_Korean)</a><br />
+    <a href="classes/FPDF.html#M000049">MultiCell (FPDF)</a><br />
+    <a href="classes/PDF_Chinese.html#M000095">MultiCell (PDF_Chinese)</a><br />
+    <a href="classes/FPDF.html#M000025">Open (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000058">Output (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000030">PageNo (FPDF)</a><br />
+    <a href="files/vendor/plugins/rfpdf/lib/rfpdf/makefont_rb.html#M000001">ReadAFM (vendor/plugins/rfpdf/lib/rfpdf/makefont.rb)</a><br />
+    <a href="files/vendor/plugins/rfpdf/lib/rfpdf/makefont_rb.html#M000006">ReadLong (vendor/plugins/rfpdf/lib/rfpdf/makefont.rb)</a><br />
+    <a href="files/vendor/plugins/rfpdf/lib/rfpdf/makefont_rb.html#M000005">ReadShort (vendor/plugins/rfpdf/lib/rfpdf/makefont.rb)</a><br />
+    <a href="classes/FPDF.html#M000038">Rect (FPDF)</a><br />
+    <a href="classes/PDF_Japanese.html#M000116">SJISMultiCell (PDF_Japanese)</a><br />
+    <a href="classes/PDF_Japanese.html#M000118">SJISWrite (PDF_Japanese)</a><br />
+    <a href="classes/FPDF.html#M000020">SetAuthor (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000015">SetAutoPageBreak (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000017">SetCompression (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000022">SetCreator (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000016">SetDisplayMode (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000031">SetDrawColor (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000032">SetFillColor (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000040">SetFont (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000041">SetFontSize (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000021">SetKeywords (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000012">SetLeftMargin (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000035">SetLineWidth (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000043">SetLink (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000011">SetMargins (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000014">SetRightMargin (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000019">SetSubject (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000033">SetTextColor (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000018">SetTitle (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000013">SetTopMargin (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000054">SetX (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000057">SetXY (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000056">SetY (FPDF)</a><br />
+    <a href="classes/FPDF.html#M000045">Text (FPDF)</a><br />
+    <a href="classes/PDF_Korean.html#M000107">Write (PDF_Korean)</a><br />
+    <a href="classes/PDF_Japanese.html#M000117">Write (PDF_Japanese)</a><br />
+    <a href="classes/PDF_Chinese.html#M000097">Write (PDF_Chinese)</a><br />
+    <a href="classes/FPDF.html#M000050">Write (FPDF)</a><br />
+    <a href="classes/FontDef.html#M000082">cw (FontDef)</a><br />
+    <a href="classes/FontDef.html#M000079">desc (FontDef)</a><br />
+    <a href="classes/FontDef.html#M000084">diff (FontDef)</a><br />
+    <a href="classes/RFPDF.html#M000063">draw_box (RFPDF)</a><br />
+    <a href="classes/RFPDF.html#M000059">draw_circle (RFPDF)</a><br />
+    <a href="classes/RFPDF.html#M000060">draw_line (RFPDF)</a><br />
+    <a href="classes/RFPDF.html#M000061">draw_text (RFPDF)</a><br />
+    <a href="classes/RFPDF.html#M000062">draw_text_block (RFPDF)</a><br />
+    <a href="classes/RFPDF.html#M000064">draw_text_box (RFPDF)</a><br />
+    <a href="classes/RFPDF.html#M000065">draw_title (RFPDF)</a><br />
+    <a href="classes/FontDef.html#M000083">enc (FontDef)</a><br />
+    <a href="classes/PDF_Bookmark.html#M000072">extend_object (PDF_Bookmark)</a><br />
+    <a href="classes/FontDef.html#M000085">file (FontDef)</a><br />
+    <a href="classes/FontDef.html#M000078">name (FontDef)</a><br />
+    <a href="classes/FPDF.html#M000009">new (FPDF)</a><br />
+    <a href="classes/RFPDF/View.html#M000070">new (RFPDF::View)</a><br />
+    <a href="classes/FontDef.html#M000086">originalsize (FontDef)</a><br />
+    <a href="classes/PDF_Bookmark.html#M000074">putbookmarks (PDF_Bookmark)</a><br />
+    <a href="classes/PDF_Bookmark.html#M000076">putcatalog (PDF_Bookmark)</a><br />
+    <a href="classes/PDF_Bookmark.html#M000075">putresources (PDF_Bookmark)</a><br />
+    <a href="classes/RFPDF/View.html#M000071">render (RFPDF::View)</a><br />
+    <a href="classes/RFPDF.html#M000066">set_draw_color (RFPDF)</a><br />
+    <a href="classes/RFPDF.html#M000067">set_fill_color (RFPDF)</a><br />
+    <a href="classes/RFPDF.html#M000068">set_text_color (RFPDF)</a><br />
+    <a href="classes/FontDef.html#M000077">type (FontDef)</a><br />
+    <a href="classes/FontDef.html#M000080">up (FontDef)</a><br />
+    <a href="classes/FontDef.html#M000081">ut (FontDef)</a><br />
+    <a href="classes/RFPDF.html#M000069">write_html (RFPDF)</a><br />
+  </div>
+</div>
+</body>
+</html>

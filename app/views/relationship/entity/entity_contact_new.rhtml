@@ -1,0 +1,8 @@
+<% form_tag do %>
+<fieldset>
+  <legend><%= "Adding a contact to".t @entity.full_name %></legend>
+  <%= render :partial=>"entity_contact_form" %>
+  <%= submit_tag "Edit".t %> 
+  <%= link_to "Back".t, {:action=>:show, :id=>@entity} %>
+</fieldset>
+<% end -%>
