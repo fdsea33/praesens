@@ -26,10 +26,10 @@ class CreateSales < ActiveRecord::Migration
       t.column :has_downpayment,  :boolean, :null=>false, :default=>false
       t.column :downpayment_price,:decimal, :null=>false, :precision=>16, :scale=>2, :default=>0.0.to_d
       t.column :client_id,        :integer, :null=>false, :references=>:entities
-      t.column :contact_id,       :integer, :null=>false, :references=>:entity_contact
-      t.column :contact_version_id,  :integer, :null=>false, :references=>:entities_contact_version
-      t.column :invoice_contact_id,  :integer, :null=>false, :references=>:entities_contact
-      t.column :delivery_contact_id, :integer, :null=>false, :references=>:entities_contact
+      t.column :contact_id,       :integer, :null=>false, :references=>:entity_contacts
+      t.column :contact_version_id,  :integer, :null=>false, :references=>:entity_contact_versions
+      t.column :invoice_contact_id,  :integer, :null=>false, :references=>:entity_contacts
+      t.column :delivery_contact_id, :integer, :null=>false, :references=>:entity_contacts
       t.column :object,           :string
       t.column :function_title,   :string
       t.column :introduction,     :text
@@ -69,10 +69,10 @@ class CreateSales < ActiveRecord::Migration
       t.column :has_downpayment,  :boolean, :null=>false, :default=>false
       t.column :downpayment_price,:decimal, :null=>false, :precision=>16, :scale=>2, :default=>0.0.to_d
       t.column :client_id,        :integer, :null=>false, :references=>:entities
-      t.column :contact_id,       :integer, :null=>false, :references=>:entity_contact
-      t.column :contact_version_id,  :integer, :null=>false, :references=>:entities_contact_version
-      t.column :delivery_contact_id,  :integer, :null=>false, :references=>:entities_contact
-      t.column :delivery_contact_version_id, :integer, :null=>false, :references=>:entities_contact_version
+      t.column :contact_id,       :integer, :null=>false, :references=>:entity_contacts
+      t.column :contact_version_id,  :integer, :null=>false, :references=>:entity_contact_versions
+      t.column :delivery_contact_id,  :integer, :null=>false, :references=>:entity_contacts
+      t.column :delivery_contact_version_id, :integer, :null=>false, :references=>:entity_contact_versions
       t.column :object,           :string
       t.column :function_title,   :string
       t.column :introduction,     :text
@@ -108,5 +108,11 @@ class CreateSales < ActiveRecord::Migration
   end
 
   def self.down
+		drop_table :delivery_lines
+		drop_table :deliveries
+		drop_table :invoices
+		drop_table :estimate_lines
+		drop_table :estimates
+		drop_table :estimate_natures
   end
 end
