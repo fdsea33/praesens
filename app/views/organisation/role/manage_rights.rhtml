@@ -15,8 +15,8 @@
 <tr class="tree level1">
   <td><%= "nav.introduce".t h(component.title), h(component.description) %></td>
 </tr>
-    <% for @right in @role.rights.find_all_by_part_component_id(component.id) -%>
-<tr class="tree level2"><td><%= check_box "right[]", "active" , {:code=>@right.part_component_procedure_id, :parent_code=>@right.part_component_procedure.parent_id}, "true", "false" %><label><%= @right.title %></label></td></tr><% end -%>
+    <% for @right in @role.rights.find_all_by_part_id(component.id) -%>
+<tr class="tree level2"><td><%= check_box "right[]", "active" , {:code=>@right.procedure_id, :parent_code=>@right.procedure.parent_id}, "true", "false" %><label><%= @right.title %></label></td></tr><% end -%>
     <% end -%>
   <% end -%>
 </table>

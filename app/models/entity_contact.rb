@@ -51,7 +51,7 @@ class EntityContact < ActiveRecord::Base
       case item.nature
         when "surname" : address += self.entity.surname
         when "first_name" : address += self.entity.first_name
-        when "title" : address += self.entity.entity_nature.title
+        when "title" : address += self.entity.nature.title
         when "line_2" : address += self.line_2
         when "line_3" : address += self.line_3
         when "line_4_number" : address += self.line_4_number
