@@ -327,8 +327,8 @@ models:
     name: Contact
     attributes:
       entity_id: Partenaire
-      contact_nature_id: Type
-      contact_norm_id: Norme
+      nature_id: Type
+      norm_id: Norme
       active: Actif
       closed_on: Désactivé le
       line_2: N°appartement ou de boîte à lettres - Étage - Couloir - Escalier ou service - Identité du destinataire

@@ -91,7 +91,7 @@ class Relationship::SettingsController < ApplicationController
     @entity_contact_norm = EntityContactNorm.find(session[:entity_contact_norm_id])
     if request.post?
       params[:entity_contact_norm_item][:company_id] = @current_company_id
-      params[:entity_contact_norm_item][:entity_contact_norm_id] = @entity_contact_norm.id
+      params[:entity_contact_norm_item][:contact_norm_id] = @entity_contact_norm.id
       @entity_contact_norm_item = EntityContactNormItem.new(params[:entity_contact_norm_item])
       if @entity_contact_norm_item.save
         @entity_contact_norm_item = @entity_contact_norm.items.new
@@ -103,7 +103,7 @@ class Relationship::SettingsController < ApplicationController
 
   def contact_norm_item_push_up
     entity_contact_norm_item = EntityContactNormItem.find(params[:id])
-    @entity_contact_norm = entity_contact_norm_item.entity_contact_norm
+    @entity_contact_norm = entity_contact_norm_item.contact_norm
     @entity_contact_norm_item = @entity_contact_norm.items.new
     entity_contact_norm_item.move_higher
     render :action => 'contact_norm_manage_items', :id=>@entity_contact_norm.id
@@ -111,7 +111,7 @@ class Relationship::SettingsController < ApplicationController
   
   def contact_norm_item_push_down
     entity_contact_norm_item = EntityContactNormItem.find(params[:id])
-    @entity_contact_norm = entity_contact_norm_item.entity_contact_norm
+    @entity_contact_norm = entity_contact_norm_item.contact_norm
     @entity_contact_norm_item = @entity_contact_norm.items.new
     entity_contact_norm_item.move_lower
     render :action => 'contact_norm_manage_items', :id=>@entity_contact_norm.id
@@ -119,49 +119,49 @@ class Relationship::SettingsController < ApplicationController
 
   def contact_norm_item_destroy
     entity_contact_norm_item = EntityContactNormItem.find(params[:id])
-    @entity_contact_norm = entity_contact_norm_item.entity_contact_norm
+    @entity_contact_norm = entity_contact_norm_item.contact_norm
     @entity_contact_norm_item = @entity_contact_norm.items.new
     entity_contact_norm_item.destroy
     render :action => 'contact_norm_manage_items', :id=>@entity_contact_norm.id
   end
 
 
-# ContactType
+# ContactNature
 
-  def contact_type_list
-    @entity_contact_type_pages, @entity_contact_types = paginate :entity_contact_types, :per_page => 10, :conditions => ["company_id=?",@current_company_id], :order=>:name
+  def contact_nature_list
+    @entity_contact_nature_pages, @entity_contact_natures = paginate :entity_contact_natures, :per_page => 10, :conditions => ["company_id=?",@current_company_id], :order=>:name
   end
 
-  def contact_type_new
+  def contact_nature_new
     if request.post? 
-      params[:entity_contact_type][:company_id] = @current_company_id
-      @entity_contact_type = EntityContactType.new(params[:entity_contact_type])
-      if @entity_contact_type.save
-        flash[:notice] = 'EntityContactType was successfully created.'
-        redirect_to :action => 'contact_type_list'
+      params[:entity_contact_nature][:company_id] = @current_company_id
+      @entity_contact_nature = EntityContactNature.new(params[:entity_contact_nature])
+      if @entity_contact_nature.save
+        flash[:notice] = 'EntityContactNature was successfully created.'
+        redirect_to :action => 'contact_nature_list'
 #      else
 #        render :action => 'new'
       end
     else
-      @entity_contact_type = EntityContactType.new
+      @entity_contact_nature = EntityContactNature.new
     end
   end
 
-  def contact_type_edit
-    @entity_contact_type = EntityContactType.find(params[:id])
+  def contact_nature_edit
+    @entity_contact_nature = EntityContactNature.find(params[:id])
     if request.post?
-      if @entity_contact_type.update_attributes(params[:entity_contact_type])
-        flash[:notice] = 'EntityContactType was successfully updated.'
-        redirect_to :action => 'contact_type_list', :id => @entity_contact_type
+      if @entity_contact_nature.update_attributes(params[:entity_contact_nature])
+        flash[:notice] = 'EntityContactNature was successfully updated.'
+        redirect_to :action => 'contact_nature_list', :id => @entity_contact_nature
 #      else
 #        render :action => 'edit'
       end
     end
   end
 
-  def contact_type_destroy
-    EntityContactType.find(params[:id]).destroy
-    redirect_to :action => 'contact_type_list'
+  def contact_nature_destroy
+    EntityContactNature.find(params[:id]).destroy
+    redirect_to :action => 'contact_nature_list'
   end
 
 

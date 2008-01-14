@@ -28,10 +28,10 @@
   <tr><td><%= read_box @account, :transferable-%></td><td></td></tr>
   </table>
 </fieldset>
-<%if @account.deadline-%>
+<%if @account.delay-%>
 <fieldset class="detail">
-  <legend><%="Deadline".t-%></legend>
-  <div><%= read_box @account.deadline, :name-%></div>
+  <legend><%="Delay".t-%></legend>
+  <div><%= read_box @account.delay, :name-%></div>
 </fieldset>
 <%end-%>
 </td></tr></table>

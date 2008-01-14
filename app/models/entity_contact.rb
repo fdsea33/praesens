@@ -30,7 +30,7 @@
 
 class EntityContact < ActiveRecord::Base
   def formatted_address
-    norm = self.entity_contact_norm
+    norm = self.norm
     ltr = !norm.rtl
     address = ""
     for item in norm.items

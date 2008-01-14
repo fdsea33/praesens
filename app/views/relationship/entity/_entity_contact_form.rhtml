@@ -1,7 +1,7 @@
 <%= error_messages_for 'entity_contact' %>
 
-<%=select_box EntityContact, "contact_type_id", @current_company.entity_contact_types.collect {|p| [ p.name, p.id ] } %>
-<%=select_box EntityContact, "contact_norm_id", @current_company.entity_contact_norms.collect {|p| [ p.name, p.id ] } %>
+<%=select_box EntityContact, "nature_id", @current_company.entity_contact_natures.collect {|p| [ p.name, p.id ] } %>
+<%=select_box EntityContact, "norm_id", @current_company.entity_contact_norms.collect {|p| [ p.name, p.id ] } %>
 <%=text_box EntityContact, "line_2", {:position=>:bottom}%>
 <%=text_box EntityContact, "line_3", {:position=>:bottom}%>
 <table><tr><td>

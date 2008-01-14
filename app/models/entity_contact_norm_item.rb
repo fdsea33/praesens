@@ -24,7 +24,7 @@
 
 class EntityContactNormItem < ActiveRecord::Base
   validates_inclusion_of :maxlength, :in=> 1..38
-  acts_as_list :scope=>:entity_contact_norm_id
+  acts_as_list :scope=>:contact_norm_id
   
   NATURE = [["Surname".t,"surname"],["First name".t,"first_name"],["Entity title".t,"title"],["Room - Addressee".t,"line_2"],["Building - Zone".t,"line_3"],["Number in the street".t,"line_4_number"],["Type and name of the street".t,"line_4_street"],["Delivery mention".t,"line_5"],["Postal code".t,"line_6_code"],["City".t,"line_6_city"], ["Static text".t,"text"]]
   LEFT_NATURE = [["Empty".t,"nil"],["End of line".t,"eol"],["Space".t,"space"],["Static text".t,"text"]]
